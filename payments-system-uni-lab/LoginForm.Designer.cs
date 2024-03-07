@@ -29,20 +29,21 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.loginSwitherButton = new System.Windows.Forms.Button();
+            this.loginSwitcherButton = new System.Windows.Forms.Button();
             this.loginUsernameTextBox = new System.Windows.Forms.TextBox();
             this.loginPasswordTextBox = new System.Windows.Forms.TextBox();
             this.loginButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // loginSwitherButton
+            // loginSwitcherButton
             // 
-            this.loginSwitherButton.Location = new System.Drawing.Point(15, 18);
-            this.loginSwitherButton.Name = "loginSwitherButton";
-            this.loginSwitherButton.Size = new System.Drawing.Size(107, 33);
-            this.loginSwitherButton.TabIndex = 0;
-            this.loginSwitherButton.Text = "User";
-            this.loginSwitherButton.UseVisualStyleBackColor = true;
+            this.loginSwitcherButton.Location = new System.Drawing.Point(15, 18);
+            this.loginSwitcherButton.Name = "loginSwitcherButton";
+            this.loginSwitcherButton.Size = new System.Drawing.Size(107, 33);
+            this.loginSwitcherButton.TabIndex = 0;
+            this.loginSwitcherButton.Text = "Client";
+            this.loginSwitcherButton.UseVisualStyleBackColor = true;
+            this.loginSwitcherButton.Click += new System.EventHandler(this.loginSwitcherButton_Click);
             // 
             // loginUsernameTextBox
             // 
@@ -67,6 +68,7 @@
             this.loginButton.TabIndex = 3;
             this.loginButton.Text = "Login";
             this.loginButton.UseVisualStyleBackColor = true;
+            this.loginButton.Click += new System.EventHandler(this.loginButton_Click);
             // 
             // LoginForm
             // 
@@ -76,7 +78,7 @@
             this.Controls.Add(this.loginButton);
             this.Controls.Add(this.loginPasswordTextBox);
             this.Controls.Add(this.loginUsernameTextBox);
-            this.Controls.Add(this.loginSwitherButton);
+            this.Controls.Add(this.loginSwitcherButton);
             this.Name = "LoginForm";
             this.Text = "Login";
             this.ResumeLayout(false);
@@ -86,7 +88,7 @@
         private System.Windows.Forms.Button loginButton;
 
         private System.Windows.Forms.TextBox loginUsernameTextBox;
-        private System.Windows.Forms.Button loginSwitherButton;
+        private System.Windows.Forms.Button loginSwitcherButton;
         private System.Windows.Forms.TextBox loginPasswordTextBox;
 
         private System.Windows.Forms.TabPage userLoginPage;
