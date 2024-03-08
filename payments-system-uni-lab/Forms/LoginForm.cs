@@ -30,9 +30,7 @@ namespace payments_system_uni_lab
             if (_loginType == LoginType.LAST) 
                 _loginType = 0;
 
-            var button = sender as Button;
-            if (button == null)
-                throw new InvalidCastException();
+            var button = sender as Button ?? throw new InvalidCastException();
             button.Text = _loginType.ToString();
         }
         
@@ -42,27 +40,36 @@ namespace payments_system_uni_lab
             var password = loginPasswordTextBox.Text;
             // password = Utilities.CreateMD5(password); todo after database connection
 
-            bool userExists = false;
+            BaseUser baseUser = null;
             
             switch (_loginType)
             {
                 case LoginType.Client:
                     // todo here will be check in users database
-                    if (username == "TestClient" && password == "TestPassword")
-                        userExists = true;
+                    if (username == "A" && password == "B")
+                    {
+                        baseUser = new Client(username, password);
+                    }
                     break;
                 
                 case LoginType.Admin:
                     // todo here will be check in admin database
                     if (username == "TestAdmin" && password == "TestAdminPassword")
-                        userExists = true;
+                    {
+                        baseUser = new Admin(username, password);
+                    }
                     break;
                 
                 default:
                     throw new ArgumentOutOfRangeException();
             }
 
-            Console.WriteLine(userExists);
+            if (baseUser != null)
+            {
+                var userForm = Owner as UserForm ?? throw new InvalidCastException();
+                userForm.InitFrom(baseUser);
+                this.Close();
+            }
         }
 
         private LoginType _loginType = LoginType.Client;

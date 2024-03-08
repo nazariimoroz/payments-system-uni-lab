@@ -16,7 +16,7 @@ namespace payments_system_uni_lab
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new LoginForm());
+            Application.Run(new UserForm());
         }
     }
 }
