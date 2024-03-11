@@ -5,8 +5,18 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:payments_system_uni_lab"
         mc:Ignorable="d"
+
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.Foreground="{DynamicResource MaterialDesign.Brush.Foreground}"
+        Background="{DynamicResource MaterialDesign.Brush.Background}"
+        TextElement.FontWeight="Medium"
+        TextElement.FontSize="14"
+        FontFamily="{materialDesign:MaterialDesignFont}"
+
         Title="MainWindow" Height="350" Width="525">
     <Grid>
-        <Button Click="ButtonBase_OnClick"><Label>"Hello World"</Label></Button>
+        <Button Click="ButtonBase_OnClick" Margin="156,64,166.4,189.8" Height="Auto">
+            <Label>Hello World</Label>
+        </Button>
     </Grid>
 </Window>
