@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using payments_system_uni_lab.Users;
 
 namespace payments_system_uni_lab.UI
 {
@@ -27,7 +28,25 @@ namespace payments_system_uni_lab.UI
 
         private void BackButton_Click(object sender, RoutedEventArgs e)
         {
-            ClickBackButtonEvent(this, null);
+            ClickBackButtonEvent(this, EventArgs.Empty);
+        }
+
+        private void RegisterButton_Click(object sender, RoutedEventArgs e)
+        {
+            var phoneNumber = ClientPhoneNumberTextBox.Text;
+            var password = Utilities.CreateMD5(ClientPasswordBox.Password);
+
+            var client = Client.TryGetFromDb(phoneNumber, password);
+            if (client != null)
+            {
+                Console.WriteLine("User is already existed");
+            }
+
+            Client.CreateNew(phoneNumber, password);
+        }
+
+        private void LoginButton_Click(object sender, RoutedEventArgs e)
+        {
         }
     }
 }
