@@ -19,15 +19,48 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="40px"></RowDefinition>
-            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="0.4*"></RowDefinition>
+            <RowDefinition Height="0.1*"></RowDefinition>
+            <RowDefinition Height="0.4*"></RowDefinition>
+            <RowDefinition Height="0.1*"></RowDefinition>
+            <RowDefinition Height="0.4*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="40px"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="40px"></ColumnDefinition>
-            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="0.9*"></ColumnDefinition>
+            <ColumnDefinition Width="10"></ColumnDefinition>
+            <ColumnDefinition Width="0.9*"></ColumnDefinition>
+            <ColumnDefinition Width="40px"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Button Grid.Column="0" Grid.Row="0" Height="40" Width="40" Click="BackButton_Click">
             <TextBlock FontSize="14" 
                        VerticalAlignment="Center" HorizontalAlignment="Center" > B </TextBlock>
         </Button>
+
+        <TextBox Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="3"
+                 VerticalAlignment="Center" HorizontalAlignment="Center"
+                 TextAlignment="Center"
+                 materialDesign:HintAssist.Hint="PHONE NUMBER"
+                 Width="200px"/>
+
+        <PasswordBox Grid.Column="1" Grid.Row="4" Grid.ColumnSpan="3"
+                 VerticalAlignment="Center" HorizontalAlignment="Center"
+                 HorizontalContentAlignment="Center"
+                 materialDesign:HintAssist.Hint="PASSWORD"
+                 Width="200px"/>
+
+        <Button Grid.Column="1" Grid.Row="6"
+                VerticalAlignment="Center" HorizontalAlignment="Right"
+                Content="REGISTER"
+                Width="95px"/>
+
+        <Button Grid.Column="3" Grid.Row="6"
+                VerticalAlignment="Center" HorizontalAlignment="Left"
+                Content="LOGIN"
+                Width="95px"/>
+
     </Grid>
 </ui:BaseRegistrationMenu>
