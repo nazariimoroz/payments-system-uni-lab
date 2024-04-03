@@ -10,15 +10,27 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace payments_system_uni_lab.UI
 {
-    public partial class ClientWindow : Window
+    /// <summary>
+    /// Interaction logic for ChoosingRegistrationUser.xaml
+    /// </summary>
+    public partial class ChoosingRegistrationUser : Page
     {
-        public ClientWindow()
+        public ChoosingRegistrationUser()
         {
             InitializeComponent();
+        }
+
+        private void ClientButton_Click(object sender, RoutedEventArgs e)
+        {
+        }
+
+        private void AdminButton_Click(object sender, RoutedEventArgs e)
+        {
         }
     }
 }

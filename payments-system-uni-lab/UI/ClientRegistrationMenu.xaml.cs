@@ -18,7 +18,7 @@ namespace payments_system_uni_lab.UI
     /// <summary>
     /// Interaction logic for ClientRegistrationMenu.xaml
     /// </summary>
-    public partial class ClientRegistrationMenu : Page
+    public partial class ClientRegistrationMenu : UI.BaseRegistrationMenu
     {
         public ClientRegistrationMenu()
         {

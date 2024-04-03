@@ -65,11 +65,18 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="UI\BaseRegistrationMenu.cs" />
+    <Compile Include="UI\ChoosingRegistrationUser.xaml.cs">
+      <DependentUpon>ChoosingRegistrationUser.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI\ClientRegistrationMenu.xaml.cs">
       <DependentUpon>ClientRegistrationMenu.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UI\ClientWindow.xaml.cs">
-      <DependentUpon>ClientWindow.xaml</DependentUpon>
+    <Compile Include="Windows\MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\RegistrationWindow.xaml.cs">
+      <DependentUpon>RegistrationWindow.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -94,11 +101,19 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Page Include="UI\ChoosingRegistrationUser.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UI\ClientRegistrationMenu.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UI\ClientWindow.xaml">
+    <Page Include="Windows\MainWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\RegistrationWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
