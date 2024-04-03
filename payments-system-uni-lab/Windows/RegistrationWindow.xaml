@@ -9,5 +9,13 @@
         mc:Ignorable="d"
         Title="RegistrationWindow" Height="450" Width="800">
     
-    <ui:ChoosingRegistrationUser></ui:ChoosingRegistrationUser>
+    <TabControl Name="Tabs">
+        <TabControl.ItemContainerStyle>
+            <Style TargetType="{x:Type TabItem}">
+                <Setter Property="Visibility" Value="Collapsed"/>
+            </Style>
+        </TabControl.ItemContainerStyle>
+        <Frame Name="ChoosingRegistrationUserFrame" Source="/UI/ChoosingRegistrationUser.xaml"></Frame>
+        <Frame Name="RegistrationMenuFrame"></Frame>
+    </TabControl>
 </Window>

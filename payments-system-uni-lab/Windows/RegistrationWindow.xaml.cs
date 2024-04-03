@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Windows;
+using System.Windows.Navigation;
+using payments_system_uni_lab.UI;
 
 namespace payments_system_uni_lab.Windows
 {
@@ -11,6 +13,41 @@ namespace payments_system_uni_lab.Windows
         public RegistrationWindow()
         {
             InitializeComponent();
+
+            ChoosingRegistrationUserFrame.LoadCompleted += ChoosingRegistrationUserFrameLoaded;
+            RegistrationMenuFrame.LoadCompleted += RegistrationMenuFrameLoaded;
         }
+
+        private void ChoosingRegistrationUserFrameLoaded(object sender, NavigationEventArgs e)
+        {
+            _choosingRegistrationUser = e.Content as UI.ChoosingRegistrationUser;
+            if (_choosingRegistrationUser != null)
+            {
+                _choosingRegistrationUser.UserChosen = UserChosen;
+            }
+        }
+
+        private void UserChosen(object sender, UserChosenArgs e)
+        {
+            RegistrationMenuFrame.Source = e.RegistrationPageUri;
+        }
+
+        private void RegistrationMenuFrameLoaded(object frame, NavigationEventArgs frameArgs)
+        {
+            _registrationMenu = frameArgs.Content as BaseRegistrationMenu;
+            if (_registrationMenu != null)
+            {
+                Tabs.SelectedIndex = 1;
+
+                _registrationMenu.ClickBackButtonEvent += (o, args) =>
+                {
+                    _registrationMenu = null;
+                    Tabs.SelectedIndex = 0;
+                };
+            }
+        }
+
+        private ChoosingRegistrationUser _choosingRegistrationUser;
+        private BaseRegistrationMenu _registrationMenu;
     }
 }

@@ -24,5 +24,10 @@ namespace payments_system_uni_lab.UI
         {
             InitializeComponent();
         }
+
+        private void BackButton_Click(object sender, RoutedEventArgs e)
+        {
+            ClickBackButtonEvent(this, null);
+        }
     }
 }

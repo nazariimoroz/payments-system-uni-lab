@@ -27,10 +27,23 @@ namespace payments_system_uni_lab.UI
 
         private void ClientButton_Click(object sender, RoutedEventArgs e)
         {
+            UserChosen(this, new UserChosenArgs()
+            {
+                RegistrationPageUri = new Uri("/UI/ClientRegistrationMenu.xaml", UriKind.RelativeOrAbsolute)
+            });
         }
 
         private void AdminButton_Click(object sender, RoutedEventArgs e)
         {
+            throw new Exception();
         }
+
+        public EventHandler<UserChosenArgs> UserChosen;
+    }
+
+
+    public class UserChosenArgs : EventArgs
+    {
+        public Uri RegistrationPageUri { get; set; }
     }
 }

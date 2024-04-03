@@ -17,7 +17,7 @@
             <ColumnDefinition Width="40px"></ColumnDefinition>
             <ColumnDefinition Width="*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <Button Grid.Column="0" Grid.Row="0" Height="40" Width="40">
+        <Button Grid.Column="0" Grid.Row="0" Height="40" Width="40" Click="BackButton_Click">
             <TextBlock FontSize="14" 
                        VerticalAlignment="Center" HorizontalAlignment="Center" > B </TextBlock>
         </Button>
