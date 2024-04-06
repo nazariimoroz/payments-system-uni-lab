@@ -193,8 +193,11 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ApplicationContext.cs" />
+    <Compile Include="Users\Creators\BaseUserCreator.cs" />
+    <Compile Include="Users\Creators\ClientCreator.cs" />
+    <Compile Include="Utilities\ApplicationContext.cs" />
     <Compile Include="Interfaces\DbAgent.cs" />
+    <Compile Include="Users\BaseUser.cs" />
     <Compile Include="UI\BaseRegistrationMenu.cs" />
     <Compile Include="UI\ChoosingRegistrationUser.xaml.cs">
       <DependentUpon>ChoosingRegistrationUser.xaml</DependentUpon>
@@ -202,7 +205,7 @@
     <Compile Include="UI\ClientRegistrationMenu.xaml.cs">
       <DependentUpon>ClientRegistrationMenu.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Utilities.cs" />
+    <Compile Include="Utilities\Utilities.cs" />
     <Compile Include="Windows\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>

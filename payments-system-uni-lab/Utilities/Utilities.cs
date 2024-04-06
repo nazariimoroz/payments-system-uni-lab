@@ -1,12 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using payments_system_uni_lab.Users;
 
-namespace payments_system_uni_lab
+namespace payments_system_uni_lab.Utilities
 {
     public static class Utilities
     {

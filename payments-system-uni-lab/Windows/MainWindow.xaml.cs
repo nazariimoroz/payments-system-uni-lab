@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using MaterialDesignThemes.Wpf;
+using payments_system_uni_lab.Users;
 using payments_system_uni_lab.Windows;
 
 namespace payments_system_uni_lab.Windows
@@ -41,12 +42,17 @@ namespace payments_system_uni_lab.Windows
         {
             _registrationWindow = new Windows.RegistrationWindow();
             _registrationWindow.Owner = this;
-            if (_registrationWindow.ShowDialog() == false)
+            if (_registrationWindow.ShowDialog() == true)
+            {
+                _currentUser = _registrationWindow.LoggedUser;
+            }
+            else
             {
                 CreateRegistrationWindow();
             }
         }
 
+        private BaseUser _currentUser = null;
         private bool _registrationCompleted = false;
         private RegistrationWindow _registrationWindow;
     }

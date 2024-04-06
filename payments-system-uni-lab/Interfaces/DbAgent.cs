@@ -2,7 +2,7 @@
 {
     public interface IDbAgent
     {
+        int Id { get; }
         bool SaveToDb();
-        bool ReadFromDb();
     }
 }

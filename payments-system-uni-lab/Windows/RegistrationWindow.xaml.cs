@@ -10,6 +10,8 @@ namespace payments_system_uni_lab.Windows
     /// </summary>
     public partial class RegistrationWindow : Window
     {
+        public Users.BaseUser LoggedUser { get; private set; } = null;
+
         public RegistrationWindow()
         {
             InitializeComponent();
@@ -43,6 +45,18 @@ namespace payments_system_uni_lab.Windows
                 {
                     _registrationMenu = null;
                     Tabs.SelectedIndex = 0;
+                };
+
+                _registrationMenu.UserLoggedEvent += (menu, user) =>
+                {
+                    if (user == null)
+                    {
+                        DialogResult = false;
+                        return;
+                    }
+
+                    DialogResult = true;
+                    LoggedUser = user;
                 };
             }
         }
