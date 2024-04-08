@@ -27,7 +27,7 @@ namespace payments_system_uni_lab.Utilities
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .Build();
 
-            optionsBuilder.UseMySql(config.GetConnectionString("DefaultConnection"));
+            optionsBuilder.UseMySql(config.GetConnectionString("WithPasswordConnection"));
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

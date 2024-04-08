@@ -27,6 +27,8 @@ namespace payments_system_uni_lab.Users
         {
             PhoneNumber = phoneNumber;
             EncryptedPassword = encryptedPassword;
+
+            UserMainUi = new Uri("/UI/Main/ClientMainUI.xaml", UriKind.RelativeOrAbsolute);
         }
 
         public bool SaveToDb()

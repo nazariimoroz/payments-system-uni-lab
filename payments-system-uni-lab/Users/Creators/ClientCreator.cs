@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace payments_system_uni_lab.Users.Creators
@@ -17,7 +18,7 @@ namespace payments_system_uni_lab.Users.Creators
                 return null;
             }
             var phoneNumber = cargs.PhoneNumber;
-            var encryptedPassword = cargs.EncryptedPassword;
+            var encryptedPassword = Utilities.Utilities.CreateMD5(cargs.RealPassword);
 
             using (var db = new ApplicationContext())
             {
@@ -40,7 +41,7 @@ namespace payments_system_uni_lab.Users.Creators
                 return null;
             }
             var phoneNumber = cargs.PhoneNumber;
-            var encryptedPassword = cargs.EncryptedPassword;
+            var encryptedPassword = Utilities.Utilities.CreateMD5(cargs.RealPassword);
 
             var client = new Client(phoneNumber, encryptedPassword);
 
@@ -51,7 +52,7 @@ namespace payments_system_uni_lab.Users.Creators
                     .ToList();
 
                 if (query.Count != 0)
-                    throw new DbException("This PhoneNumber has been already used");
+                    return null;
 
                 db.Clients.Add(client);
                 db.CreditCards.UpdateRange(client.CreditCards);
@@ -61,6 +62,26 @@ namespace payments_system_uni_lab.Users.Creators
             CreditCard.CreateNew(client);
 
             return client;
+        }
+
+        public override bool CanBeRegistered(BaseUserArgs args)
+        {
+            if (!IsValidArgs(args))
+                return false;
+
+            if (!(args is ClientArgs cargs))
+            {
+                return false;
+            }
+            var phoneNumber = cargs.PhoneNumber;
+
+            using (var db = new ApplicationContext())
+            {
+                var query = db.Clients
+                    .FirstOrDefault(c => c.PhoneNumber == phoneNumber);
+
+                return query == null;
+            }
         }
 
         public override bool IsValidArgs(BaseUserArgs args)
@@ -73,14 +94,12 @@ namespace payments_system_uni_lab.Users.Creators
             if (cargs.RealPassword.Length < 8)
                 return false;
 
-            using (var db = new ApplicationContext())
-            {
-                var client = db
-                    .Clients
-                    .FirstOrDefault(c => c.PhoneNumber == cargs.PhoneNumber);
+            if (!Regex.IsMatch(
+                    cargs.PhoneNumber, 
+                    "^[\\+]?[(]?[0-9]{3}[)]?[-\\s\\.]?[0-9]{3}[-\\s\\.]?[0-9]{4,6}$"))
+                return false;
 
-                return client == null;
-            }
+            return true;
         }
     }
 
@@ -88,6 +107,5 @@ namespace payments_system_uni_lab.Users.Creators
     {
         public string PhoneNumber { get; set; }
         public string RealPassword { get; set; }
-        public string EncryptedPassword { get; set; }
     }
 }

@@ -45,18 +45,42 @@ namespace payments_system_uni_lab.UI
                 PhoneNumber = phoneNumber,
                 RealPassword = realPassword
             };
-            if (creator.IsValidArgs(args))
+            if (!creator.CanBeRegistered(args))
             {
-                Console.WriteLine("User is already existed");
+                Console.WriteLine("User cannot be registered");
                 return;
             }
 
             var client = creator.CreateNew(args);
-            UserLoggedEvent(this, client);
+            if (client != null)
+            {
+                UserLoggedEvent(this, client);
+            }
         }
 
         private void LoginButton_Click(object sender, RoutedEventArgs e)
         {
+            var phoneNumber = ClientPhoneNumberTextBox.Text;
+            var realPassword = ClientPasswordBox.Password;
+
+            var creator = new ClientCreator();
+
+            BaseUserArgs args = new ClientArgs()
+            {
+                PhoneNumber = phoneNumber,
+                RealPassword = realPassword
+            };
+            if (!creator.IsValidArgs(args))
+            {
+                Console.WriteLine("Invalid args");
+                return;
+            }
+
+            var client = creator.TryGetFromDb(args);
+            if (client != null)
+            {
+                UserLoggedEvent(this, client);
+            }
         }
     }
 }

@@ -193,6 +193,10 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="UI\Main\ClientMainUI.xaml.cs">
+      <DependentUpon>ClientMainUI.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Main\UserMainUI.cs" />
     <Compile Include="Users\Creators\BaseUserCreator.cs" />
     <Compile Include="Users\Creators\ClientCreator.cs" />
     <Compile Include="Utilities\ApplicationContext.cs" />
@@ -254,6 +258,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UI\ClientRegistrationMenu.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Main\ClientMainUI.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

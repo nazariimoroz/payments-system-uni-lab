@@ -15,6 +15,8 @@ namespace payments_system_uni_lab.Users.Creators
 
         public abstract BaseUser CreateNew(BaseUserArgs args);
 
+        public abstract bool CanBeRegistered(BaseUserArgs args);
+
         public abstract bool IsValidArgs(BaseUserArgs args);
     }
 

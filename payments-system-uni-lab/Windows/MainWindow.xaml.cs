@@ -11,8 +11,10 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 using MaterialDesignThemes.Wpf;
+using payments_system_uni_lab.UI.Main;
 using payments_system_uni_lab.Users;
 using payments_system_uni_lab.Windows;
 
@@ -28,11 +30,12 @@ namespace payments_system_uni_lab.Windows
             InitializeComponent();
 
             this.Activated += OnActivated;
+            UserMainUi.LoadCompleted += UserMainUiOnLoadCompleted;
         }
 
         private void OnActivated(object sender, EventArgs e)
         {
-            if (_registrationCompleted || _registrationWindow != null)
+            if (_currentUser != null || _registrationWindow != null)
                 return;
 
             CreateRegistrationWindow();
@@ -45,6 +48,7 @@ namespace payments_system_uni_lab.Windows
             if (_registrationWindow.ShowDialog() == true)
             {
                 _currentUser = _registrationWindow.LoggedUser;
+                UserMainUi.Source = _currentUser.UserMainUi;
             }
             else
             {
@@ -52,8 +56,25 @@ namespace payments_system_uni_lab.Windows
             }
         }
 
+        private void UserMainUiOnLoadCompleted(object sender, NavigationEventArgs e)
+        {
+            if (!(e.Content is UserMainUI ui))
+            {
+                throw new UserUiException("Ui should be derived from UserMainUI");
+            }
+
+            ui.User = _currentUser;
+        }
+
         private BaseUser _currentUser = null;
-        private bool _registrationCompleted = false;
         private RegistrationWindow _registrationWindow;
+    }
+
+    class UserUiException : Exception
+    {
+        public UserUiException(string message) : base(message)
+        {
+
+        }
     }
 }

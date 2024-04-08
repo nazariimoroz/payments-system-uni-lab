@@ -15,7 +15,7 @@
         xmlns:ui="clr-namespace:payments_system_uni_lab.UI"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+    
+    <Frame Name="UserMainUi" />
+
 </Window>
