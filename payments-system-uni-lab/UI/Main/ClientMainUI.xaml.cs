@@ -18,7 +18,8 @@ namespace payments_system_uni_lab.UI.Main
                 }
                 _user = value;
 
-                ClientPhone.Text = client.PhoneNumber;
+                ClientPhone.Content = client.PhoneNumber;
+                CreditCardNumber.Text = client.CreditCards[0].Num;
             }
         }
         
@@ -28,5 +29,6 @@ namespace payments_system_uni_lab.UI.Main
         }
 
         private BaseUser _user;
+
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text;
+using payments_system_uni_lab.Interfaces;
 
 namespace payments_system_uni_lab.Utilities
 {
@@ -33,6 +34,11 @@ namespace payments_system_uni_lab.Utilities
             var buffer = new byte[sizeof(UInt64)];
             rnd.NextBytes(buffer);
             return BitConverter.ToUInt64(buffer, 0);
+        }
+
+        public static void SaveToDb<T>(T toSave) where T : IDbAgent
+        {
+            toSave.SaveToDb();
         }
     }
 }

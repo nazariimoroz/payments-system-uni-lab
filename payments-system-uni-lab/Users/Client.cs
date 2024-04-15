@@ -15,9 +15,9 @@ namespace payments_system_uni_lab.Users
     public class Client : BaseUser, IDbAgent
     {
         public int Id { get; set; }
-        public string PhoneNumber { get; protected set; }
-        public string EncryptedPassword { get; protected set; }
-        public List<CreditCard> CreditCards { get; protected set; } = new List<CreditCard>();
+        public string PhoneNumber { get; set; }
+        public string EncryptedPassword { get; set; }
+        public List<CreditCard> CreditCards { get; set; } = new List<CreditCard>();
 
 
         /*

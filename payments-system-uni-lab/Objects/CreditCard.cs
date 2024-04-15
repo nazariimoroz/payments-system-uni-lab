@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using System.Text;
 using payments_system_uni_lab.Users;
 using payments_system_uni_lab.Utilities;
 
@@ -10,7 +11,7 @@ namespace payments_system_uni_lab.Objects
     public class CreditCard
     {
         public int Id { get; set; }
-        public UInt64 Num { get; protected set; }
+        public string Num { get; protected set; }
         public UInt16 Cvc { get; protected set; }
         public UInt64 ClientMoney { get; protected set; }
         public UInt64 CreditLimit { get; protected set; }
@@ -25,8 +26,12 @@ namespace payments_system_uni_lab.Objects
         public static CreditCard CreateNew(Client client)
         {
             var random = new Random();
-                
-            UInt64 num = random.NextUInt64();
+
+
+            var numBuilder = new StringBuilder();
+            for (int i = 0; i < 16; ++i)
+                numBuilder.Append(random.Next(0, 9));
+            var num = numBuilder.ToString();
             UInt16 cvc = (UInt16)random.Next(0, 999);
             UInt64 clientMoney = 0;
             UInt64 creditLimit = 100000;
@@ -54,7 +59,7 @@ namespace payments_system_uni_lab.Objects
         /*
          * For EC Core
          */
-        protected CreditCard(UInt64 num, UInt16 cvc, UInt64 clientMoney, UInt64 creditLimit)
+        protected CreditCard(string num, UInt16 cvc, UInt64 clientMoney, UInt64 creditLimit)
         {
             Num = num;
             Cvc = cvc;
@@ -62,7 +67,7 @@ namespace payments_system_uni_lab.Objects
             CreditLimit = creditLimit;
         }
 
-        protected CreditCard(UInt64 num, UInt16 cvc, UInt64 clientMoney, UInt64 creditLimit, Client client)
+        protected CreditCard(string num, UInt16 cvc, UInt64 clientMoney, UInt64 creditLimit, Client client)
         {
             Num = num;
             Cvc = cvc;

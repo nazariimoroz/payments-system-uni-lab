@@ -25,13 +25,17 @@ namespace payments_system_uni_lab.Users.Creators
                 var client = db
                     .Clients
                     .FirstOrDefault(c => c.PhoneNumber == phoneNumber && c.EncryptedPassword == encryptedPassword);
-                if (client != null)
+                if (client == null)
                 {
-                    return client;
+                    return null;
                 }
-            }
 
-            return null;
+                client.CreditCards = db.CreditCards
+                    .Where(card => card.Client == client)
+                    .ToList();
+
+                return client;
+            }
         }
 
         public override BaseUser CreateNew(BaseUserArgs args)
