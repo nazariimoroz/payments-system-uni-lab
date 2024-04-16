@@ -4,16 +4,9 @@ namespace payments_system_lib.Classes.Creators
 {
     public abstract class BaseUserCreator
     {
-        public abstract BaseUser TryGetFromDb(BaseUserArgs args);
-
-        public abstract BaseUser CreateNew(BaseUserArgs args);
-
-        public abstract bool CanBeRegistered(BaseUserArgs args);
-
-        public abstract bool IsValidArgs(BaseUserArgs args);
-    }
-
-    public abstract class BaseUserArgs
-    {
+        public abstract BaseUser TryGetFromDb();
+        public abstract BaseUser CreateNew();
+        public abstract bool CanBeRegistered();
+        public abstract bool IsValidArgs();
     }
 }

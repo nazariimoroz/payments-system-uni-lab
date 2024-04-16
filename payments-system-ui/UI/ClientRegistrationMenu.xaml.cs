@@ -26,20 +26,19 @@ namespace payments_system_ui.UI
             var realPassword = ClientPasswordBox.Password;
             var password = Utilities.CreateMD5(ClientPasswordBox.Password);
 
-            var creator = new ClientCreator();
-
-            BaseUserArgs args = new ClientArgs()
+            var creator = new ClientCreator()
             {
                 PhoneNumber = phoneNumber,
                 RealPassword = realPassword
             };
-            if (!creator.CanBeRegistered(args))
+
+            if (!creator.CanBeRegistered())
             {
                 Console.WriteLine("User cannot be registered");
                 return;
             }
 
-            var client = creator.CreateNew(args);
+            var client = creator.CreateNew();
             if (client != null)
             {
                 UserLoggedEvent(this, client);
@@ -51,20 +50,19 @@ namespace payments_system_ui.UI
             var phoneNumber = ClientPhoneNumberTextBox.Text;
             var realPassword = ClientPasswordBox.Password;
 
-            var creator = new ClientCreator();
-
-            BaseUserArgs args = new ClientArgs()
+            var creator = new ClientCreator()
             {
                 PhoneNumber = phoneNumber,
                 RealPassword = realPassword
             };
-            if (!creator.IsValidArgs(args))
+
+            if (!creator.IsValidArgs())
             {
                 Console.WriteLine("Invalid args");
                 return;
             }
 
-            var client = creator.TryGetFromDb(args);
+            var client = creator.TryGetFromDb();
             if (client != null)
             {
                 UserLoggedEvent(this, client);

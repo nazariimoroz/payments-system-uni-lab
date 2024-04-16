@@ -8,20 +8,18 @@ namespace payments_system_lib.Classes.Creators
 {
     public class ClientCreator : BaseUserCreator
     {
-        public override BaseUser TryGetFromDb(BaseUserArgs args)
+        public string PhoneNumber { get; set; } = null;
+        public string RealPassword { get; set; } = null;
+        
+        public override BaseUser TryGetFromDb()
         {
-            if (!(args is ClientArgs cargs))
-            {
-                return null;
-            }
-            var phoneNumber = cargs.PhoneNumber;
-            var encryptedPassword = Utilities.Utilities.CreateMD5(cargs.RealPassword);
+            var encryptedPassword = Utilities.Utilities.CreateMD5(RealPassword);
 
             using (var db = new ApplicationContext())
             {
                 var client = db
                     .Clients
-                    .FirstOrDefault(c => c.PhoneNumber == phoneNumber && c.EncryptedPassword == encryptedPassword);
+                    .FirstOrDefault(c => c.PhoneNumber == PhoneNumber && c.EncryptedPassword == encryptedPassword);
                 if (client == null)
                 {
                     return null;
@@ -35,16 +33,11 @@ namespace payments_system_lib.Classes.Creators
             }
         }
 
-        public override BaseUser CreateNew(BaseUserArgs args)
+        public override BaseUser CreateNew()
         {
-            if (!(args is ClientArgs cargs))
-            {
-                return null;
-            }
-            var phoneNumber = cargs.PhoneNumber;
-            var encryptedPassword = Utilities.Utilities.CreateMD5(cargs.RealPassword);
+            var encryptedPassword = Utilities.Utilities.CreateMD5(RealPassword);
 
-            var client = new Client(phoneNumber, encryptedPassword);
+            var client = new Client(PhoneNumber, encryptedPassword);
 
             using (var db = new ApplicationContext())
             {
@@ -65,48 +58,31 @@ namespace payments_system_lib.Classes.Creators
             return client;
         }
 
-        public override bool CanBeRegistered(BaseUserArgs args)
+        public override bool CanBeRegistered()
         {
-            if (!IsValidArgs(args))
+            if (!IsValidArgs())
                 return false;
-
-            if (!(args is ClientArgs cargs))
-            {
-                return false;
-            }
-            var phoneNumber = cargs.PhoneNumber;
 
             using (var db = new ApplicationContext())
             {
                 var query = db.Clients
-                    .FirstOrDefault(c => c.PhoneNumber == phoneNumber);
+                    .FirstOrDefault(c => c.PhoneNumber == PhoneNumber);
 
                 return query == null;
             }
         }
 
-        public override bool IsValidArgs(BaseUserArgs args)
+        public override bool IsValidArgs()
         {
-            if (!(args is ClientArgs cargs))
-            {
-                return false;
-            }
-
-            if (cargs.RealPassword != null && cargs.RealPassword.Length < 8)
+            if (RealPassword != null && RealPassword.Length < 8)
                 return false;
 
-            if (!Regex.IsMatch(
-                    cargs.PhoneNumber, 
+            if (PhoneNumber != null && !Regex.IsMatch(
+                    PhoneNumber, 
                     "^[\\+]?[(]?[0-9]{3}[)]?[-\\s\\.]?[0-9]{3}[-\\s\\.]?[0-9]{4,6}$"))
                 return false;
 
             return true;
         }
-    }
-
-    public class ClientArgs : BaseUserArgs
-    {
-        public string PhoneNumber { get; set; } = null;
-        public string RealPassword { get; set; } = null;
     }
 }

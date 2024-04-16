@@ -46,13 +46,11 @@ namespace payments_system_ui.UI.Main
         {
             if (!(User is Client client)) return;
 
-            var clientCreator = new ClientCreator();
-
-            var clientArgs = new ClientArgs
+            var clientCreator = new ClientCreator()
             {
                 PhoneNumber = NewPhoneNumberTextBox.Text
             };
-            if(clientCreator.IsValidArgs(clientArgs))
+            if(clientCreator.IsValidArgs())
             {
                 client.PhoneNumber = NewPhoneNumberTextBox.Text;
 
