@@ -35,9 +35,10 @@ namespace payments_system_uni_lab.Users
         {
             using (var db = new ApplicationContext())
             {
-                var client = db.Clients.FirstOrDefault(c => c == this);
+                var client = db.Clients.FirstOrDefault(c => c.Id == Id);
                 if (client != null)
                 {
+                    db.Entry(client).CurrentValues.SetValues(this);
                     db.Update(client);
                     db.SaveChanges();
                     return true;

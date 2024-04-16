@@ -36,9 +36,9 @@ namespace payments_system_uni_lab.Utilities
             return BitConverter.ToUInt64(buffer, 0);
         }
 
-        public static void SaveToDb<T>(T toSave) where T : IDbAgent
+        public static bool SaveToDb<T>(T toSave) where T : IDbAgent
         {
-            toSave.SaveToDb();
+            return toSave.SaveToDb();
         }
     }
 }

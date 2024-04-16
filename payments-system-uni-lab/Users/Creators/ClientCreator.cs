@@ -95,7 +95,7 @@ namespace payments_system_uni_lab.Users.Creators
                 return false;
             }
 
-            if (cargs.RealPassword.Length < 8)
+            if (cargs.RealPassword != null && cargs.RealPassword.Length < 8)
                 return false;
 
             if (!Regex.IsMatch(
@@ -109,7 +109,7 @@ namespace payments_system_uni_lab.Users.Creators
 
     public class ClientArgs : BaseUserArgs
     {
-        public string PhoneNumber { get; set; }
-        public string RealPassword { get; set; }
+        public string PhoneNumber { get; set; } = null;
+        public string RealPassword { get; set; } = null;
     }
 }

@@ -15,7 +15,8 @@ namespace payments_system_uni_lab.Objects
         public UInt16 Cvc { get; protected set; }
         public UInt64 ClientMoney { get; protected set; }
         public UInt64 CreditLimit { get; protected set; }
-        public int ClientId { get; protected set; }
+        
+        [ForeignKey("ClientId")]
         public Client Client { get; protected set; }
 
         public static CreditCard TryGetFromDb()
