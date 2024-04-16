@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Navigation;
+using payments_system_lib.Classes.Users;
 using payments_system_ui.UI;
 
 namespace payments_system_ui.Windows
@@ -9,7 +10,7 @@ namespace payments_system_ui.Windows
     /// </summary>
     public partial class RegistrationWindow : Window
     {
-        public Users.BaseUser LoggedUser { get; private set; } = null;
+        public BaseUser LoggedUser { get; private set; } = null;
 
         public RegistrationWindow()
         {

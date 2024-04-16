@@ -2,10 +2,10 @@
 using System.IO;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using payments_system_ui.Objects;
-using payments_system_ui.Users;
+using payments_system_lib.Classes.Cards;
+using payments_system_lib.Classes.Users;
 
-namespace payments_system_ui.Utilities
+namespace payments_system_lib.Utilities
 {
     public class DbException : Exception
     {

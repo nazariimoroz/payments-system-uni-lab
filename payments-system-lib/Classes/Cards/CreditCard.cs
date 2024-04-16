@@ -2,10 +2,10 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
-using payments_system_ui.Users;
-using payments_system_ui.Utilities;
+using payments_system_lib.Classes.Users;
+using payments_system_lib.Utilities;
 
-namespace payments_system_ui.Objects
+namespace payments_system_lib.Classes.Cards
 {
     public class CreditCard
     {

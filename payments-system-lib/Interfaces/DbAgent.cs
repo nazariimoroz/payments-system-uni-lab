@@ -1,4 +1,4 @@
-﻿namespace payments_system_ui.Interfaces
+﻿namespace payments_system_lib.Interfaces
 {
     public interface IDbAgent
     {

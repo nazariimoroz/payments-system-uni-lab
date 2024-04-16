@@ -1,4 +1,6 @@
-﻿namespace payments_system_ui.Users.Creators
+﻿using payments_system_lib.Classes.Users;
+
+namespace payments_system_lib.Classes.Creators
 {
     public abstract class BaseUserCreator
     {

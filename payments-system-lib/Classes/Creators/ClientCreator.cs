@@ -1,9 +1,10 @@
 ﻿using System.Linq;
 using System.Text.RegularExpressions;
-using payments_system_ui.Objects;
-using payments_system_ui.Utilities;
+using payments_system_lib.Classes.Cards;
+using payments_system_lib.Classes.Users;
+using payments_system_lib.Utilities;
 
-namespace payments_system_ui.Users.Creators
+namespace payments_system_lib.Classes.Creators
 {
     public class ClientCreator : BaseUserCreator
     {

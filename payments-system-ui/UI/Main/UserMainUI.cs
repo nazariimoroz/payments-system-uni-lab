@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Windows.Controls;
-using payments_system_ui.Users;
+using payments_system_lib.Classes.Users;
 
 namespace payments_system_ui.UI.Main
 {

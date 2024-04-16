@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows;
-using payments_system_ui.Users.Creators;
+using payments_system_lib.Classes.Creators;
+using payments_system_lib.Utilities;
 
 namespace payments_system_ui.UI
 {
@@ -23,7 +24,7 @@ namespace payments_system_ui.UI
         {
             var phoneNumber = ClientPhoneNumberTextBox.Text;
             var realPassword = ClientPasswordBox.Password;
-            var password = Utilities.Utilities.CreateMD5(ClientPasswordBox.Password);
+            var password = Utilities.CreateMD5(ClientPasswordBox.Password);
 
             var creator = new ClientCreator();
 

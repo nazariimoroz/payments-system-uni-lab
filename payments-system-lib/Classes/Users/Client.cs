@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using payments_system_ui.Interfaces;
-using payments_system_ui.Objects;
-using payments_system_ui.Utilities;
+using payments_system_lib.Classes.Cards;
+using payments_system_lib.Interfaces;
+using payments_system_lib.Utilities;
 
-namespace payments_system_ui.Users
+namespace payments_system_lib.Classes.Users
 {
     public class Client : BaseUser, IDbAgent
     {

@@ -1,6 +1,7 @@
 ﻿using System.Windows;
-using payments_system_ui.Users;
-using payments_system_ui.Users.Creators;
+using payments_system_lib.Classes.Creators;
+using payments_system_lib.Classes.Users;
+using payments_system_lib.Utilities;
 
 namespace payments_system_ui.UI.Main
 {
@@ -55,7 +56,7 @@ namespace payments_system_ui.UI.Main
             {
                 client.PhoneNumber = NewPhoneNumberTextBox.Text;
 
-                if (Utilities.Utilities.SaveToDb(client))
+                if (Utilities.SaveToDb(client))
                 {
                     SettingsCanvas.Visibility = Visibility.Collapsed;
                     User = client;
