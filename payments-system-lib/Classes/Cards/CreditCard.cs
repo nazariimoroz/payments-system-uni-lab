@@ -14,7 +14,8 @@ namespace payments_system_lib.Classes.Cards
         public UInt16 Cvc { get; protected set; }
         public UInt64 ClientMoney { get; protected set; }
         public UInt64 CreditLimit { get; protected set; }
-        
+        public DateTime ExpiresEnd { get; protected set; }
+
         [ForeignKey("ClientId")]
         public Client Client { get; protected set; }
 
@@ -35,6 +36,7 @@ namespace payments_system_lib.Classes.Cards
             UInt16 cvc = (UInt16)random.Next(0, 999);
             UInt64 clientMoney = 0;
             UInt64 creditLimit = 100000;
+            var expiresEnd = new DateTime(DateTime.Now.Year + 5, DateTime.Now.Month, DateTime.Now.Day);
 
             CreditCard toRet;
 
@@ -46,7 +48,7 @@ namespace payments_system_lib.Classes.Cards
                     card = db.CreditCards.FirstOrDefault(c => c.Num == num);
                 } while (card != null);
 
-                toRet = new CreditCard(num, cvc, clientMoney, creditLimit, client);
+                toRet = new CreditCard(num, cvc, clientMoney, creditLimit, expiresEnd, client);
 
                 db.CreditCards.Add(toRet);
                 db.Clients.Update(toRet.Client);
@@ -59,20 +61,22 @@ namespace payments_system_lib.Classes.Cards
         /*
          * For EC Core
          */
-        protected CreditCard(string num, UInt16 cvc, UInt64 clientMoney, UInt64 creditLimit)
+        protected CreditCard(string num, UInt16 cvc, UInt64 clientMoney, UInt64 creditLimit, DateTime expiresEnd)
         {
             Num = num;
             Cvc = cvc;
             ClientMoney = clientMoney;
             CreditLimit = creditLimit;
+            ExpiresEnd = expiresEnd;
         }
 
-        protected CreditCard(string num, UInt16 cvc, UInt64 clientMoney, UInt64 creditLimit, Client client)
+        protected CreditCard(string num, UInt16 cvc, UInt64 clientMoney, UInt64 creditLimit, DateTime expiresEnd, Client client)
         {
             Num = num;
             Cvc = cvc;
             ClientMoney = clientMoney;
             CreditLimit = creditLimit;
+            ExpiresEnd = expiresEnd;
             Client = client;
         }
     }

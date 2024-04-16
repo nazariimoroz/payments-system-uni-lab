@@ -3,12 +3,12 @@ using System.Windows;
 using payments_system_lib.Classes.Creators;
 using payments_system_lib.Utilities;
 
-namespace payments_system_ui.UI
+namespace payments_system_ui.UI.Registration
 {
     /// <summary>
     /// Interaction logic for ClientRegistrationMenu.xaml
     /// </summary>
-    public partial class ClientRegistrationMenu : UI.BaseRegistrationMenu
+    public partial class ClientRegistrationMenu : BaseRegistrationMenu
     {
         public ClientRegistrationMenu()
         {

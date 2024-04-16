@@ -99,11 +99,11 @@
       <DependentUpon>ClientMainUI.xaml</DependentUpon>
     </Compile>
     <Compile Include="UI\Main\UserMainUI.cs" />
-    <Compile Include="UI\BaseRegistrationMenu.cs" />
-    <Compile Include="UI\ChoosingRegistrationUser.xaml.cs">
+    <Compile Include="UI\Registration\BaseRegistrationMenu.cs" />
+    <Compile Include="UI\Registration\ChoosingRegistrationUser.xaml.cs">
       <DependentUpon>ChoosingRegistrationUser.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UI\ClientRegistrationMenu.xaml.cs">
+    <Compile Include="UI\Registration\ClientRegistrationMenu.xaml.cs">
       <DependentUpon>ClientRegistrationMenu.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\MainWindow.xaml.cs">
@@ -144,11 +144,11 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="UI\ChoosingRegistrationUser.xaml">
+    <Page Include="UI\Registration\ChoosingRegistrationUser.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UI\ClientRegistrationMenu.xaml">
+    <Page Include="UI\Registration\ClientRegistrationMenu.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

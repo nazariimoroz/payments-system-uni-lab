@@ -1,4 +1,4 @@
-﻿<ui:BaseRegistrationMenu x:Class="payments_system_ui.UI.ClientRegistrationMenu"
+﻿<registration:BaseRegistrationMenu x:Class="payments_system_ui.UI.Registration.ClientRegistrationMenu"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -6,6 +6,7 @@
 
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       xmlns:ui="clr-namespace:payments_system_ui.UI"
+      xmlns:registration="clr-namespace:payments_system_ui.UI.Registration"
       TextElement.Foreground="{DynamicResource MaterialDesign.Brush.Foreground}"
       Background="{DynamicResource MaterialDesign.Brush.Background}"
       TextElement.FontWeight="Medium"
@@ -65,4 +66,4 @@
                 Width="95px" Click="LoginButton_Click"/>
 
     </Grid>
-</ui:BaseRegistrationMenu>
+</registration:BaseRegistrationMenu>

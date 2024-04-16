@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Text;
+using System.Windows;
 using payments_system_lib.Classes.Creators;
 using payments_system_lib.Classes.Users;
 using payments_system_lib.Utilities;
@@ -23,6 +24,22 @@ namespace payments_system_ui.UI.Main
 
                 ClientPhone.Content = client.PhoneNumber;
                 CreditCardNumber.Text = client.CreditCards[0].Num;
+                CreditCardCvc.Text = client.CreditCards[0].Cvc.ToString();
+
+                var expiresEndText = new StringBuilder(5);
+                if (client.CreditCards[0].ExpiresEnd.Month < 10)
+                {
+                    expiresEndText.Append(0);
+                }
+                expiresEndText.Append(client.CreditCards[0].ExpiresEnd.Month);
+                expiresEndText.Append("/");
+                if (client.CreditCards[0].ExpiresEnd.Year - 2000 < 10)
+                {
+                    expiresEndText.Append(0);
+                }
+                expiresEndText.Append(client.CreditCards[0].ExpiresEnd.Year - 2000);
+
+                CreditCardExpiresEnd.Text = expiresEndText.ToString();
             }
         }
         

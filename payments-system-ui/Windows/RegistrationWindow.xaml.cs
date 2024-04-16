@@ -2,6 +2,7 @@
 using System.Windows.Navigation;
 using payments_system_lib.Classes.Users;
 using payments_system_ui.UI;
+using payments_system_ui.UI.Registration;
 
 namespace payments_system_ui.Windows
 {
@@ -22,7 +23,7 @@ namespace payments_system_ui.Windows
 
         private void ChoosingRegistrationUserFrameLoaded(object sender, NavigationEventArgs e)
         {
-            _choosingRegistrationUser = e.Content as UI.ChoosingRegistrationUser;
+            _choosingRegistrationUser = e.Content as ChoosingRegistrationUser;
             if (_choosingRegistrationUser != null)
             {
                 _choosingRegistrationUser.UserChosen = UserChosen;

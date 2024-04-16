@@ -2,7 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 
-namespace payments_system_ui.UI
+namespace payments_system_ui.UI.Registration
 {
     /// <summary>
     /// Interaction logic for ChoosingRegistrationUser.xaml
@@ -18,7 +18,7 @@ namespace payments_system_ui.UI
         {
             UserChosen(this, new UserChosenArgs()
             {
-                RegistrationPageUri = new Uri("/UI/ClientRegistrationMenu.xaml", UriKind.RelativeOrAbsolute)
+                RegistrationPageUri = new Uri("/UI/Registration/ClientRegistrationMenu.xaml", UriKind.RelativeOrAbsolute)
             });
         }
 
