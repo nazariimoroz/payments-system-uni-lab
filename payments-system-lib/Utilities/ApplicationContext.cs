@@ -2,6 +2,7 @@
 using System.IO;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using payments_system_lib.Classes;
 using payments_system_lib.Classes.Cards;
 using payments_system_lib.Classes.Users;
 
@@ -14,8 +15,10 @@ namespace payments_system_lib.Utilities
 
     public class ApplicationContext : DbContext
     {
-        public DbSet<Client> Clients => Set<Client>();
-        public DbSet<BaseCard> ClientCards => Set<BaseCard>();
+        public DbSet<Client> Client => Set<Client>();
+        public DbSet<BaseCard> ClientCard => Set<BaseCard>();
+        //public DbSet<Transaction> Transaction => Set<Transaction>();
+
         public ApplicationContext()
         {
             Database.EnsureCreated();

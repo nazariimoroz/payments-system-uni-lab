@@ -175,6 +175,7 @@
     <Compile Include="Classes\Cards\Creators\BaseCardCreator.cs" />
     <Compile Include="Classes\Cards\Creators\CreditCardCreator.cs" />
     <Compile Include="Classes\Cards\CreditCard.cs" />
+    <Compile Include="Classes\Transaction.cs" />
     <Compile Include="Interfaces\DbAgent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Classes\Users\BaseUser.cs" />

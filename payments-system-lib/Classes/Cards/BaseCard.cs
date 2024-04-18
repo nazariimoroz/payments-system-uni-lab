@@ -43,7 +43,7 @@ namespace payments_system_lib.Classes.Cards
             CreditLimit = 0;
         }
 
-        public bool SendMoneyToOtherCard(float amountOfMoney, BaseCard otherCard)
+        public virtual bool SendMoneyToOtherCard(float amountOfMoney, BaseCard otherCard)
         {
             if (otherCard == null)
                 return false;
@@ -56,7 +56,7 @@ namespace payments_system_lib.Classes.Cards
             return true;
         }
 
-        public bool ReplenishFromSource(float amountOfMoney, object source /*TODO*/)
+        public virtual bool ReplenishFromSource(float amountOfMoney, object source /*TODO*/)
         {
             if (source == null)
             {

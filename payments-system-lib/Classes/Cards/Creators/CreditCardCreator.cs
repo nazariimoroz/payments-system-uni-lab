@@ -42,7 +42,7 @@ namespace payments_system_lib.Classes.Cards.Creators
                 BaseCard card;
                 do
                 {
-                    card = db.ClientCards.FirstOrDefault(c => c.Num == num);
+                    card = db.ClientCard.FirstOrDefault(c => c.Num == num);
 
                     numBuilder = new StringBuilder();
                     for (int i = 0; i < 16; ++i)
@@ -52,8 +52,8 @@ namespace payments_system_lib.Classes.Cards.Creators
 
                 toRet = new CreditCard(num, cvc, clientMoney, creditLimit, expiresEnd, Client);
 
-                db.ClientCards.Add(toRet);
-                db.Clients.Update(toRet.Client);
+                db.ClientCard.Add(toRet);
+                db.Client.Update(toRet.Client);
                 db.SaveChanges();
             }
 

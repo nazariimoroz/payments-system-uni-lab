@@ -32,7 +32,7 @@ namespace payments_system_lib.Classes.Users
         {
             using (var db = new ApplicationContext())
             {
-                var client = db.Clients.FirstOrDefault(c => c.Id == Id);
+                var client = db.Client.FirstOrDefault(c => c.Id == Id);
                 if (client != null)
                 {
                     db.Entry(client).CurrentValues.SetValues(this);

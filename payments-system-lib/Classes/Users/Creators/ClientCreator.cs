@@ -19,7 +19,7 @@ namespace payments_system_lib.Classes.Users.Creators
             using (var db = new ApplicationContext())
             {
                 var client = db
-                    .Clients
+                    .Client
                     .Include(c => c.Cards)
                     .FirstOrDefault(c => c.PhoneNumber == PhoneNumber && c.EncryptedPassword == encryptedPassword);
 
@@ -35,15 +35,15 @@ namespace payments_system_lib.Classes.Users.Creators
 
             using (var db = new ApplicationContext())
             {
-                var query = db.Clients
+                var query = db.Client
                     .Where(c => c.PhoneNumber == client.PhoneNumber)
                     .ToList();
 
                 if (query.Count != 0)
                     return null;
 
-                db.Clients.Add(client);
-                db.ClientCards.UpdateRange(client.Cards);
+                db.Client.Add(client);
+                db.ClientCard.UpdateRange(client.Cards);
                 db.SaveChanges();
             }
 
@@ -63,7 +63,7 @@ namespace payments_system_lib.Classes.Users.Creators
 
             using (var db = new ApplicationContext())
             {
-                var query = db.Clients
+                var query = db.Client
                     .FirstOrDefault(c => c.PhoneNumber == PhoneNumber);
 
                 return query == null;
@@ -90,15 +90,15 @@ namespace payments_system_lib.Classes.Users.Creators
             using (var db = new ApplicationContext())
             {
                 var foundClient = db
-                    .Clients
+                    .Client
                     .Include(c => c.Cards)
                     .FirstOrDefault(c => c.Id == client.Id);
 
                 if (foundClient == null)
                     return false;
 
-                db.ClientCards.RemoveRange(foundClient.Cards);
-                db.Clients.Remove(foundClient);
+                db.ClientCard.RemoveRange(foundClient.Cards);
+                db.Client.Remove(foundClient);
                 db.SaveChanges();
             }
 
