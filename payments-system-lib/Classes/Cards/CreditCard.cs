@@ -11,7 +11,7 @@ namespace payments_system_lib.Classes.Cards
     {
         public int Id { get; set; }
         public string Num { get; protected set; }
-        public UInt16 Cvc { get; protected set; }
+        public string Cvc { get; protected set; }
         public UInt64 ClientMoney { get; protected set; }
         public UInt64 CreditLimit { get; protected set; }
         public DateTime ExpiresEnd { get; protected set; }
@@ -33,7 +33,12 @@ namespace payments_system_lib.Classes.Cards
             for (int i = 0; i < 16; ++i)
                 numBuilder.Append(random.Next(0, 9));
             var num = numBuilder.ToString();
-            UInt16 cvc = (UInt16)random.Next(0, 999);
+
+            numBuilder = new StringBuilder();
+            for (int i = 0; i < 3; ++i)
+                numBuilder.Append(random.Next(0, 9));
+            var cvc = numBuilder.ToString();
+
             UInt64 clientMoney = 0;
             UInt64 creditLimit = 100000;
             var expiresEnd = new DateTime(DateTime.Now.Year + 5, DateTime.Now.Month, DateTime.Now.Day);
@@ -61,7 +66,7 @@ namespace payments_system_lib.Classes.Cards
         /*
          * For EC Core
          */
-        protected CreditCard(string num, UInt16 cvc, UInt64 clientMoney, UInt64 creditLimit, DateTime expiresEnd)
+        protected CreditCard(string num, string cvc, UInt64 clientMoney, UInt64 creditLimit, DateTime expiresEnd)
         {
             Num = num;
             Cvc = cvc;
@@ -70,7 +75,7 @@ namespace payments_system_lib.Classes.Cards
             ExpiresEnd = expiresEnd;
         }
 
-        protected CreditCard(string num, UInt16 cvc, UInt64 clientMoney, UInt64 creditLimit, DateTime expiresEnd, Client client)
+        protected CreditCard(string num, string cvc, UInt64 clientMoney, UInt64 creditLimit, DateTime expiresEnd, Client client)
         {
             Num = num;
             Cvc = cvc;

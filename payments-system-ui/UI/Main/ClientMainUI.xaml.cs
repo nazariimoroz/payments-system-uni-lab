@@ -47,14 +47,14 @@ namespace payments_system_ui.UI.Main
         {
             InitializeComponent();
 
-            SettingsCanvas.Visibility = Visibility.Collapsed;
+            SettingsGrid.Visibility = Visibility.Collapsed;
         }
 
         private BaseUser _user;
 
         private void ClientPhone_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            SettingsCanvas.Visibility = SettingsCanvas.Visibility == Visibility.Collapsed
+            SettingsGrid.Visibility = SettingsGrid.Visibility == Visibility.Collapsed
                 ? Visibility.Visible
                 : Visibility.Collapsed;
         }
@@ -73,10 +73,15 @@ namespace payments_system_ui.UI.Main
 
                 if (Utilities.SaveToDb(client))
                 {
-                    SettingsCanvas.Visibility = Visibility.Collapsed;
+                    SettingsGrid.Visibility = Visibility.Collapsed;
                     User = client;
                 }
             }
+        }
+
+        private void SendButton_Click(object sender, RoutedEventArgs e)
+        {
+            
         }
     }
 }

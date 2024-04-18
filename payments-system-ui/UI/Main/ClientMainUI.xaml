@@ -17,6 +17,28 @@
                  Title="ClientMainUI">
 
     <Canvas Name="MainCanvas">
+
+        <Grid Canvas.ZIndex="0"
+              Width="{Binding ActualWidth, ElementName=MainCanvas}"
+              Height="{Binding ActualHeight, ElementName=MainCanvas}">
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="33*"></ColumnDefinition>
+                <ColumnDefinition Width="127*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <Rectangle>
+                <Rectangle.Fill>
+                    <SolidColorBrush Color="Azure"/>
+                </Rectangle.Fill>
+                <Rectangle.Stroke>
+                    <SolidColorBrush Color="Black"/>
+                </Rectangle.Stroke>
+            </Rectangle>
+        </Grid>
+
         <Grid Canvas.ZIndex="1"
               Width="{Binding ActualWidth, ElementName=MainCanvas}"
               Height="{Binding ActualHeight, ElementName=MainCanvas}">
@@ -156,7 +178,44 @@
             </Canvas>
         </Grid>
 
-        <Grid Visibility="Collapsed"
+        <Grid Canvas.ZIndex="1"
+              Width="{Binding ActualWidth, ElementName=MainCanvas}"
+              Height="{Binding ActualHeight, ElementName=MainCanvas}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="127*" />
+                <RowDefinition Height="18*" />
+                <RowDefinition Height="35*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="219*" />
+                <ColumnDefinition Width="239*" />
+                <ColumnDefinition Width="239*" />
+                <ColumnDefinition Width="239*" />
+                <ColumnDefinition Width="22*" />
+            </Grid.ColumnDefinitions>
+
+            <Button Name="SendButton"
+                    Grid.Column="1" Grid.Row="1"
+                    Margin="10,0,10,0"
+                    HorizontalContentAlignment="Center"
+                    VerticalContentAlignment="Center"
+                    Content="SEND" Click="SendButton_Click"/>
+            <Button Name="ReplenishButton"
+                    Grid.Column="2" Grid.Row="1"
+                    Margin="10,0,10,0"
+                    HorizontalContentAlignment="Center"
+                    VerticalContentAlignment="Center"
+                    Content="REPLENISH"/>
+            <Button Name="PaymentsButton"
+                    Grid.Column="3" Grid.Row="1"
+                    Margin="10,0,10,0"
+                    HorizontalContentAlignment="Center"
+                    VerticalContentAlignment="Center"
+                    Content="PAYMENTS"/>
+        </Grid>
+
+        <Grid Name="SettingsGrid"
+              Visibility="Collapsed"
               Canvas.ZIndex="2"
               Width="{Binding ActualWidth, ElementName=MainCanvas}"
               Height="{Binding ActualHeight, ElementName=MainCanvas}">
