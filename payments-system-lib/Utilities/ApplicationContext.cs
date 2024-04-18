@@ -15,7 +15,7 @@ namespace payments_system_lib.Utilities
     public class ApplicationContext : DbContext
     {
         public DbSet<Client> Clients => Set<Client>();
-        public DbSet<CreditCard> CreditCards => Set<CreditCard>();
+        public DbSet<BaseCard> ClientCards => Set<BaseCard>();
         public ApplicationContext()
         {
             Database.EnsureCreated();
@@ -32,7 +32,9 @@ namespace payments_system_lib.Utilities
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            
+            modelBuilder.Entity<Client>()
+                .HasIndex(u => u.PhoneNumber)
+                .IsUnique();
         }
     }
 }

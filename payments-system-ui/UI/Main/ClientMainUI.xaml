@@ -215,7 +215,7 @@
         </Grid>
 
         <Grid Name="SettingsGrid"
-              Visibility="Collapsed"
+              Visibility="Visible"
               Canvas.ZIndex="2"
               Width="{Binding ActualWidth, ElementName=MainCanvas}"
               Height="{Binding ActualHeight, ElementName=MainCanvas}">
@@ -277,6 +277,20 @@
                         Grid.Row="1"
                         VerticalAlignment="Center" HorizontalAlignment="Center"
                         Content="OK" Click="NewPhoneNumberButton_Click" />
+
+                    <TextBlock
+                        Grid.Column="1"
+                        Grid.Row="3"
+                        VerticalAlignment="Center" HorizontalAlignment="Center"
+                        TextAlignment="Center"
+                        Text="DELETE CURRENT ACCOUNT"
+                        />
+                    <Button
+                        Name="DeleteCurrentAccountButton"
+                        Grid.Column="2"
+                        Grid.Row="3"
+                        VerticalAlignment="Center" HorizontalAlignment="Center"
+                        Content="OK" Click="DeleteCurrentAccountButton_Click" />
                 </Grid>
 
             </Canvas>

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.ComponentModel.DataAnnotations.Schema;
 using payments_system_lib.Classes.Cards;
 using payments_system_lib.Interfaces;
 using payments_system_lib.Utilities;
@@ -10,10 +12,10 @@ namespace payments_system_lib.Classes.Users
     public class Client : BaseUser, IDbAgent
     {
         public int Id { get; set; }
-        public string PhoneNumber { get; set; }
+        [Required]
+        public string PhoneNumber { get; set ; }
         public string EncryptedPassword { get; set; }
-        public List<CreditCard> CreditCards { get; set; } = new List<CreditCard>();
-
+        public List<BaseCard> Cards { get; set; } = new List<BaseCard>();
 
         /*
          * For EF Core and Creator

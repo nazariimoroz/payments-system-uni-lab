@@ -1,10 +1,11 @@
 ﻿using System.Linq;
 using System.Text.RegularExpressions;
+using Microsoft.EntityFrameworkCore;
 using payments_system_lib.Classes.Cards;
-using payments_system_lib.Classes.Users;
+using payments_system_lib.Classes.Cards.Creators;
 using payments_system_lib.Utilities;
 
-namespace payments_system_lib.Classes.Creators
+namespace payments_system_lib.Classes.Users.Creators
 {
     public class ClientCreator : BaseUserCreator
     {
@@ -19,15 +20,8 @@ namespace payments_system_lib.Classes.Creators
             {
                 var client = db
                     .Clients
+                    .Include(c => c.Cards)
                     .FirstOrDefault(c => c.PhoneNumber == PhoneNumber && c.EncryptedPassword == encryptedPassword);
-                if (client == null)
-                {
-                    return null;
-                }
-
-                client.CreditCards = db.CreditCards
-                    .Where(card => card.Client == client)
-                    .ToList();
 
                 return client;
             }
@@ -49,11 +43,15 @@ namespace payments_system_lib.Classes.Creators
                     return null;
 
                 db.Clients.Add(client);
-                db.CreditCards.UpdateRange(client.CreditCards);
+                db.ClientCards.UpdateRange(client.Cards);
                 db.SaveChanges();
             }
 
-            CreditCard.CreateNew(client);
+            var ccCreator = new CreditCardCreator()
+            {
+                Client = client
+            };
+            ccCreator.CreateNew(); // Will be added automatically to array 
 
             return client;
         }
@@ -81,6 +79,28 @@ namespace payments_system_lib.Classes.Creators
                     PhoneNumber, 
                     "^[\\+]?[(]?[0-9]{3}[)]?[-\\s\\.]?[0-9]{3}[-\\s\\.]?[0-9]{4,6}$"))
                 return false;
+
+            return true;
+        }
+
+        public override bool DestroyUser(BaseUser toDestroy)
+        {
+            if (!(toDestroy is Client client))
+                return false;
+            using (var db = new ApplicationContext())
+            {
+                var foundClient = db
+                    .Clients
+                    .Include(c => c.Cards)
+                    .FirstOrDefault(c => c.Id == client.Id);
+
+                if (foundClient == null)
+                    return false;
+
+                db.ClientCards.RemoveRange(foundClient.Cards);
+                db.Clients.Remove(foundClient);
+                db.SaveChanges();
+            }
 
             return true;
         }

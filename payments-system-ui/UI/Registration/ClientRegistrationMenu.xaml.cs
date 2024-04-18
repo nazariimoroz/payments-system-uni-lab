@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Windows;
-using payments_system_lib.Classes.Creators;
+using payments_system_lib.Classes.Users.Creators;
 using payments_system_lib.Utilities;
 
 namespace payments_system_ui.UI.Registration

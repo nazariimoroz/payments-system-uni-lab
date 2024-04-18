@@ -1,8 +1,10 @@
-﻿using System.Text;
+﻿using System;
+using System.Text;
 using System.Windows;
-using payments_system_lib.Classes.Creators;
 using payments_system_lib.Classes.Users;
+using payments_system_lib.Classes.Users.Creators;
 using payments_system_lib.Utilities;
+using payments_system_ui.Windows;
 
 namespace payments_system_ui.UI.Main
 {
@@ -23,21 +25,21 @@ namespace payments_system_ui.UI.Main
                 _user = value;
 
                 ClientPhone.Content = client.PhoneNumber;
-                CreditCardNumber.Text = client.CreditCards[0].Num;
-                CreditCardCvc.Text = client.CreditCards[0].Cvc.ToString();
+                CreditCardNumber.Text = client.Cards[0].Num;
+                CreditCardCvc.Text = client.Cards[0].Cvc.ToString();
 
                 var expiresEndText = new StringBuilder(5);
-                if (client.CreditCards[0].ExpiresEnd.Month < 10)
+                if (client.Cards[0].ExpiresEnd.Month < 10)
                 {
                     expiresEndText.Append(0);
                 }
-                expiresEndText.Append(client.CreditCards[0].ExpiresEnd.Month);
+                expiresEndText.Append(client.Cards[0].ExpiresEnd.Month);
                 expiresEndText.Append("/");
-                if (client.CreditCards[0].ExpiresEnd.Year - 2000 < 10)
+                if (client.Cards[0].ExpiresEnd.Year - 2000 < 10)
                 {
                     expiresEndText.Append(0);
                 }
-                expiresEndText.Append(client.CreditCards[0].ExpiresEnd.Year - 2000);
+                expiresEndText.Append(client.Cards[0].ExpiresEnd.Year - 2000);
 
                 CreditCardExpiresEnd.Text = expiresEndText.ToString();
             }
@@ -67,7 +69,7 @@ namespace payments_system_ui.UI.Main
             {
                 PhoneNumber = NewPhoneNumberTextBox.Text
             };
-            if(clientCreator.IsValidArgs())
+            if(clientCreator.CanBeRegistered())
             {
                 client.PhoneNumber = NewPhoneNumberTextBox.Text;
 
@@ -82,6 +84,15 @@ namespace payments_system_ui.UI.Main
         private void SendButton_Click(object sender, RoutedEventArgs e)
         {
             
+        }
+
+        private void DeleteCurrentAccountButton_Click(object sender, RoutedEventArgs e)
+        {
+            var creator = new ClientCreator();
+            creator.DestroyUser(User);
+            if (!(Window.GetWindow(this) is MainWindow mainWindow))
+                throw new InvalidCastException("Window.GetWindow(this)");
+            mainWindow.RestartFromRegistrationWindow();
         }
     }
 }

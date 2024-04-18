@@ -19,6 +19,16 @@ namespace payments_system_ui.Windows
             UserMainUi.LoadCompleted += UserMainUiOnLoadCompleted;
         }
 
+        public void RestartFromRegistrationWindow()
+        {
+            UserMainUi.LoadCompleted -= UserMainUiOnLoadCompleted;
+            _registrationWindow = null;
+            _currentUser = null;
+            UserMainUi.Content = null;
+            UserMainUi.LoadCompleted += UserMainUiOnLoadCompleted;
+            CreateRegistrationWindow();
+        }
+
         private void OnActivated(object sender, EventArgs e)
         {
             if (_currentUser != null || _registrationWindow != null)
@@ -38,7 +48,7 @@ namespace payments_system_ui.Windows
             }
             else
             {
-                CreateRegistrationWindow();
+                Close();
             }
         }
 
@@ -46,7 +56,7 @@ namespace payments_system_ui.Windows
         {
             if (!(e.Content is UserMainUI ui))
             {
-                throw new UserUiException("Ui should be derived from UserMainUI");
+                return;
             }
 
             ui.User = _currentUser;
@@ -54,13 +64,5 @@ namespace payments_system_ui.Windows
 
         private BaseUser _currentUser = null;
         private RegistrationWindow _registrationWindow;
-    }
-
-    class UserUiException : Exception
-    {
-        public UserUiException(string message) : base(message)
-        {
-
-        }
     }
 }

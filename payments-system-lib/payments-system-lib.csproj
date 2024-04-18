@@ -171,13 +171,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\Cards\BaseCard.cs" />
+    <Compile Include="Classes\Cards\Creators\BaseCardCreator.cs" />
+    <Compile Include="Classes\Cards\Creators\CreditCardCreator.cs" />
     <Compile Include="Classes\Cards\CreditCard.cs" />
     <Compile Include="Interfaces\DbAgent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Classes\Users\BaseUser.cs" />
     <Compile Include="Classes\Users\Client.cs" />
-    <Compile Include="Classes\Creators\BaseUserCreator.cs" />
-    <Compile Include="Classes\Creators\ClientCreator.cs" />
+    <Compile Include="Classes\Users\Creators\BaseUserCreator.cs" />
+    <Compile Include="Classes\Users\Creators\ClientCreator.cs" />
     <Compile Include="Utilities\ApplicationContext.cs" />
     <Compile Include="Utilities\Utilities.cs" />
   </ItemGroup>
@@ -188,5 +191,6 @@
     </None>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
