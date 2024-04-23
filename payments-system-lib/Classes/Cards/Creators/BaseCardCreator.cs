@@ -2,10 +2,9 @@
 
 namespace payments_system_lib.Classes.Cards.Creators
 {
-    public abstract class BaseCardCreator
+    public abstract class BaseCardCreator : DbAgentCreator<BaseCard>
     {
-        public abstract BaseCard TryGetFromDb();
-
-        public abstract BaseCard CreateNew();
+        public abstract override BaseCard TryGetFromDb();
+        public abstract override BaseCard CreateNew();
     }
 }

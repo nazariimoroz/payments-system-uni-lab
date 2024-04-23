@@ -9,9 +9,8 @@ using payments_system_lib.Utilities;
 
 namespace payments_system_lib.Classes.Users
 {
-    public class Client : BaseUser, IDbAgent
+    public class Client : BaseUser
     {
-        public int Id { get; set; }
         [Required]
         public string PhoneNumber { get; set ; }
         public string EncryptedPassword { get; set; }
@@ -28,7 +27,7 @@ namespace payments_system_lib.Classes.Users
             UserMainUi = new Uri("/UI/Main/ClientMainUI.xaml", UriKind.RelativeOrAbsolute);
         }
 
-        public bool SaveToDb()
+        public override bool SaveToDb()
         {
             using (var db = new ApplicationContext())
             {

@@ -3,11 +3,12 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using payments_system_lib.Classes.Users;
+using payments_system_lib.Interfaces;
 using payments_system_lib.Utilities;
 
 namespace payments_system_lib.Classes.Cards
 {
-    public class BaseCard
+    public class BaseCard : IDbAgent
     {
         public int Id { get; set; }
         public string Num { get; protected set; }
@@ -61,6 +62,23 @@ namespace payments_system_lib.Classes.Cards
             if (source == null)
             {
                 ClientMoney += amountOfMoney;
+            }
+
+            return false;
+        }
+
+        public bool SaveToDb()
+        {
+            using (var db = new ApplicationContext())
+            {
+                var card= db.ClientCard.FirstOrDefault(c => c.Id == Id);
+                if (card != null)
+                {
+                    db.Entry(card).CurrentValues.SetValues(this);
+                    db.Update(card);
+                    db.SaveChanges();
+                    return true;
+                }
             }
 
             return false;

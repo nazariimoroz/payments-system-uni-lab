@@ -171,6 +171,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\DbAgentCreator.cs" />
     <Compile Include="Classes\Cards\BaseCard.cs" />
     <Compile Include="Classes\Cards\Creators\BaseCardCreator.cs" />
     <Compile Include="Classes\Cards\Creators\CreditCardCreator.cs" />
