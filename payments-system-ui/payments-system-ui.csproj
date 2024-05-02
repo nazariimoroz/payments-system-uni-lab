@@ -95,10 +95,16 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="UI\Main\AdminMainUI.xaml.cs">
+      <DependentUpon>AdminMainUI.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI\Main\ClientMainUI.xaml.cs">
       <DependentUpon>ClientMainUI.xaml</DependentUpon>
     </Compile>
     <Compile Include="UI\Main\UserMainUI.cs" />
+    <Compile Include="UI\Registration\AdminRegistrationMenu.xaml.cs">
+      <DependentUpon>AdminRegistrationMenu.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI\Registration\BaseRegistrationMenu.cs" />
     <Compile Include="UI\Registration\ChoosingRegistrationUser.xaml.cs">
       <DependentUpon>ChoosingRegistrationUser.xaml</DependentUpon>
@@ -144,6 +150,14 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="UI\Main\AdminMainUI.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Registration\AdminRegistrationMenu.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UI\Registration\ChoosingRegistrationUser.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

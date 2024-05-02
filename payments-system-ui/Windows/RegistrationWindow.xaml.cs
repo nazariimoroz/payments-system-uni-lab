@@ -44,6 +44,7 @@ namespace payments_system_ui.Windows
 
                 _registrationMenu.ClickBackButtonEvent += (o, args) =>
                 {
+                    _registrationMenu.UserLoggedEvent = null;
                     _registrationMenu = null;
                     Tabs.SelectedIndex = 0;
                 };

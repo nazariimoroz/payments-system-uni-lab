@@ -19,10 +19,11 @@ namespace payments_system_lib.Classes.Users
         /*
          * For EF Core and Creator
          */
-        public Client(string phoneNumber, string encryptedPassword)
+        public Client(string phoneNumber, string encryptedPassword, DateTime registrationDate)
         {
             PhoneNumber = phoneNumber;
             EncryptedPassword = encryptedPassword;
+            RegistrationDate = registrationDate;
 
             UserMainUi = new Uri("/UI/Main/ClientMainUI.xaml", UriKind.RelativeOrAbsolute);
         }

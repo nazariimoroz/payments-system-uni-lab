@@ -1,0 +1,68 @@
+﻿<main:UserMainUI x:Class="payments_system_ui.UI.Main.AdminMainUI"
+                 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+                 xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+
+                 xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+                 xmlns:main="clr-namespace:payments_system_ui.UI.Main"
+                 TextElement.Foreground="{DynamicResource MaterialDesign.Brush.Foreground}"
+                 Background="{DynamicResource MaterialDesign.Brush.Background}"
+                 TextElement.FontWeight="Medium"
+                 TextElement.FontSize="14"
+                 FontFamily="{materialDesign:MaterialDesignFont}"
+
+                 xmlns:local="clr-namespace:payments_system_ui.UI.Main"
+                 mc:Ignorable="d" 
+                 d:DesignHeight="450" d:DesignWidth="800"
+                 Title="AdminMainUI">
+
+    <Canvas Name="MainCanvas">
+        <Grid  Canvas.ZIndex="0"
+               Width="{Binding ActualWidth, ElementName=MainCanvas}"
+               Height="{Binding ActualHeight, ElementName=MainCanvas}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="15*" />
+                <ColumnDefinition Width="323*" />
+                <ColumnDefinition Width="462*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="17*" />
+                <RowDefinition Height="283*" />
+                <RowDefinition Height="150*" />
+            </Grid.RowDefinitions>
+
+            <DataGrid Name="UsersDataGrid" IsReadOnly="True" AutoGenerateColumns="False" Grid.Column="1" Grid.Row="1" >
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Phone Number" Binding="{Binding Path=PhoneNumber}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Registration Date" Binding="{Binding Path=RegistrationDate}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Money" Binding="{Binding Path=Money}"></DataGridTextColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+        <Grid Canvas.ZIndex="0"
+              Width="{Binding ActualWidth, ElementName=MainCanvas}"
+              Height="{Binding ActualHeight, ElementName=MainCanvas}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="9*"/>
+                <RowDefinition Height="19*"/>
+                <RowDefinition Height="197*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="177*"/>
+                <ColumnDefinition Width="223*"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBox Name="PhoneRegexTextBox"
+                     Grid.Column="1" Grid.Row="1"
+                     materialDesign:HintAssist.Hint="PHONE REGEX"
+                     TextChanged="PhoneRegex_OnTextChanged"
+                     Text="\+[0-9]*"
+                     HorizontalAlignment="Left"
+                     VerticalAlignment="Center"
+                     Width="150"
+                     Margin="10,0,0,0" Height="24"/>
+        </Grid>
+    </Canvas>
+
+</main:UserMainUI>

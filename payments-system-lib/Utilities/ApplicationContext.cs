@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.Extensions.Configuration;
 using payments_system_lib.Classes;
 using payments_system_lib.Classes.Cards;
@@ -16,6 +17,7 @@ namespace payments_system_lib.Utilities
     public class ApplicationContext : DbContext
     {
         public DbSet<Client> Client => Set<Client>();
+        public DbSet<Admin> Admin => Set<Admin>();
         public DbSet<BaseCard> ClientCard => Set<BaseCard>();
         //public DbSet<Transaction> Transaction => Set<Transaction>();
 
@@ -37,6 +39,10 @@ namespace payments_system_lib.Utilities
         {
             modelBuilder.Entity<Client>()
                 .HasIndex(u => u.PhoneNumber)
+                .IsUnique();
+
+            modelBuilder.Entity<Admin>()
+                .HasIndex(u => u.Key)
                 .IsUnique();
         }
     }

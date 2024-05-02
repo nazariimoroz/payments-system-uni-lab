@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.EntityFrameworkCore;
 using payments_system_lib.Classes.Users;
 using payments_system_lib.Utilities;
 

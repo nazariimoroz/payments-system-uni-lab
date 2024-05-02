@@ -24,7 +24,10 @@ namespace payments_system_ui.UI.Registration
 
         private void AdminButton_Click(object sender, RoutedEventArgs e)
         {
-            throw new Exception();
+            UserChosen(this, new UserChosenArgs()
+            {
+                RegistrationPageUri = new Uri("/UI/Registration/AdminRegistrationMenu.xaml", UriKind.RelativeOrAbsolute)
+            });
         }
 
         public EventHandler<UserChosenArgs> UserChosen;

@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 using Microsoft.EntityFrameworkCore;
 using payments_system_lib.Classes.Cards;
@@ -31,7 +33,7 @@ namespace payments_system_lib.Classes.Users.Creators
         {
             var encryptedPassword = Utilities.Utilities.CreateMD5(RealPassword);
 
-            var client = new Client(PhoneNumber, encryptedPassword);
+            var client = new Client(PhoneNumber, encryptedPassword, DateTime.Now);
 
             using (var db = new ApplicationContext())
             {
@@ -103,6 +105,16 @@ namespace payments_system_lib.Classes.Users.Creators
             }
 
             return true;
+        }
+        public override List<T> GetAll<T>()
+        {
+            using (var db = new ApplicationContext())
+            {
+                return db
+                    .Client
+                    .Include(c => c.Cards)
+                    .Select(c => c as T).ToList();
+            }
         }
     }
 }
