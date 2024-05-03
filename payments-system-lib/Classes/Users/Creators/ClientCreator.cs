@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -114,6 +115,28 @@ namespace payments_system_lib.Classes.Users.Creators
                     .Client
                     .Include(c => c.Cards)
                     .Select(c => c as T).ToList();
+            }
+        }
+
+        public IEnumerable GetAllWIthRegex(string phoneRegex)
+        {
+            using (var db = new ApplicationContext())
+            {
+                return
+                    db.Client
+                        .Where(c => Regex.IsMatch(c.PhoneNumber, phoneRegex))
+                        .Join(db.ClientCard,
+                            c => c.Id,
+                            cc => cc.Client.Id,
+                            (c, cc) => new { Client = c, ClientCard = cc })
+                        .AsEnumerable()
+                        .GroupBy(arg => arg.Client.PhoneNumber)
+                        .Select(arg => new
+                        {
+                            PhoneNumber = arg.FirstOrDefault().Client.PhoneNumber,
+                            RegistrationDate = arg.FirstOrDefault().Client.RegistrationDate,
+                            Money = arg.Sum(sarg => sarg.ClientCard.ClientMoney)
+                        }).ToList();
             }
         }
     }

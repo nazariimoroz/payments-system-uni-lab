@@ -17,7 +17,7 @@ namespace payments_system_lib.Classes.Cards.Creators
             {
                 return db
                     .ClientCard
-                    .Include(c => c.Client)
+                    //.Include(c => c.Client)
                     .Select(c => c as T).ToList();
             }
         }

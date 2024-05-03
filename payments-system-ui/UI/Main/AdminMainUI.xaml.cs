@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Policy;
@@ -50,15 +51,7 @@ namespace payments_system_ui.UI.Main
             var cardCreator = new CreditCardCreator();
             try
             {
-                UsersDataGrid.ItemsSource =
-                    from client in clientCreator.GetAll<Client>()
-                    where Regex.IsMatch(client.PhoneNumber, phoneRegex)
-                    select new
-                    {
-                        PhoneNumber=client.PhoneNumber, 
-                        RegistrationDate=client.RegistrationDate, 
-                        Money=client.Cards.Sum(c => c.ClientMoney)
-                    };
+                UsersDataGrid.ItemsSource = clientCreator.GetAllWIthRegex(PhoneRegexTextBox.Text);
             }
             catch (Exception e)
             {
