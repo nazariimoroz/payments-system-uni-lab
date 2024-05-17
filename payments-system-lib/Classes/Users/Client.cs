@@ -24,8 +24,6 @@ namespace payments_system_lib.Classes.Users
             PhoneNumber = phoneNumber;
             EncryptedPassword = encryptedPassword;
             RegistrationDate = registrationDate;
-
-            UserMainUi = new Uri("/UI/Main/ClientMainUI.xaml", UriKind.RelativeOrAbsolute);
         }
 
         public override bool SaveToDb()

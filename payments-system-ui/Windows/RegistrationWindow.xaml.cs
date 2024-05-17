@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Navigation;
 using payments_system_lib.Classes.Users;
 using payments_system_ui.UI;
@@ -12,6 +13,7 @@ namespace payments_system_ui.Windows
     public partial class RegistrationWindow : Window
     {
         public BaseUser LoggedUser { get; private set; } = null;
+        public Uri LoggedUserUi { get; protected set; } = null;
 
         public RegistrationWindow()
         {
@@ -59,6 +61,7 @@ namespace payments_system_ui.Windows
 
                     DialogResult = true;
                     LoggedUser = user;
+                    LoggedUserUi = menu.LoggedUserUi;
                 };
             }
         }

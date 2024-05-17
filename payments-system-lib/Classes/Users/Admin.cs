@@ -21,8 +21,6 @@ namespace payments_system_lib.Classes.Users
             Key = key;
             EncryptedPassword = encryptedPassword;
             RegistrationDate = registrationDate;
-
-            UserMainUi = new Uri("/UI/Main/AdminMainUI.xaml", UriKind.RelativeOrAbsolute);
         }
 
         public override bool SaveToDb()

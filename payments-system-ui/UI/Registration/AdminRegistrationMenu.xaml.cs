@@ -23,6 +23,8 @@ namespace payments_system_ui.UI.Registration
         public AdminRegistrationMenu()
         {
             InitializeComponent();
+
+            LoggedUserUi = new Uri("/UI/Main/AdminMainUI.xaml", UriKind.RelativeOrAbsolute);
         }
 
         private void BackButton_Click(object sender, RoutedEventArgs e)

@@ -44,7 +44,7 @@ namespace payments_system_ui.Windows
             if (_registrationWindow.ShowDialog() == true)
             {
                 _currentUser = _registrationWindow.LoggedUser;
-                UserMainUi.Source = _currentUser.UserMainUi;
+                UserMainUi.Source = _registrationWindow.LoggedUserUi;
             }
             else
             {

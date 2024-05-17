@@ -12,9 +12,6 @@ namespace payments_system_lib.Classes.Users
         [Required]
         public DateTime RegistrationDate { get; protected set;  }
 
-        [NotMapped]
-        public Uri UserMainUi { get; set; } = null;
-
         public abstract bool SaveToDb();
     }
 }
