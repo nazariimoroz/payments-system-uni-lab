@@ -1,9 +1,13 @@
 ﻿using System;
 using System.Text;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using HexInnovation;
 using payments_system_lib.Classes.Users;
 using payments_system_lib.Classes.Users.Creators;
 using payments_system_lib.Utilities;
+using payments_system_ui.UI.Elements;
 using payments_system_ui.Windows;
 
 namespace payments_system_ui.UI.Main
@@ -15,36 +19,22 @@ namespace payments_system_ui.UI.Main
     {
         public override BaseUser User
         {
-            get => _user;
+            get => _client;
             set
             {
                 if(!(value is Client client))
                 {
                     throw new BadUserException("User should be derived from client");
                 }
-                _user = value;
+                _client = client;
 
                 ClientPhone.Content = client.PhoneNumber;
-                CreditCardNumber.Text = client.Cards[0].Num;
-                CreditCardCvc.Text = client.Cards[0].Cvc.ToString();
 
-                var expiresEndText = new StringBuilder(5);
-                if (client.Cards[0].ExpiresEnd.Month < 10)
-                {
-                    expiresEndText.Append(0);
-                }
-                expiresEndText.Append(client.Cards[0].ExpiresEnd.Month);
-                expiresEndText.Append("/");
-                if (client.Cards[0].ExpiresEnd.Year - 2000 < 10)
-                {
-                    expiresEndText.Append(0);
-                }
-                expiresEndText.Append(client.Cards[0].ExpiresEnd.Year - 2000);
-
-                CreditCardExpiresEnd.Text = expiresEndText.ToString();
+                InitCardsStackPanel();
             }
         }
-        
+        private Client _client;
+
         public ClientMainUI()
         {
             InitializeComponent();
@@ -52,7 +42,6 @@ namespace payments_system_ui.UI.Main
             SettingsGrid.Visibility = Visibility.Collapsed;
         }
 
-        private BaseUser _user;
 
         private void ClientPhone_Click(object sender, System.Windows.RoutedEventArgs e)
         {
@@ -63,20 +52,18 @@ namespace payments_system_ui.UI.Main
 
         private void NewPhoneNumberButton_Click(object sender, RoutedEventArgs e)
         {
-            if (!(User is Client client)) return;
-
             var clientCreator = new ClientCreator()
             {
                 PhoneNumber = NewPhoneNumberTextBox.Text
             };
             if(clientCreator.CanBeRegistered())
             {
-                client.PhoneNumber = NewPhoneNumberTextBox.Text;
+                _client.PhoneNumber = NewPhoneNumberTextBox.Text;
 
-                if (Utilities.SaveToDb(client))
+                if (Utilities.SaveToDb(_client))
                 {
                     SettingsGrid.Visibility = Visibility.Collapsed;
-                    User = client;
+                    User = _client;
                 }
             }
         }
@@ -93,6 +80,39 @@ namespace payments_system_ui.UI.Main
             if (!(Window.GetWindow(this) is MainWindow mainWindow))
                 throw new InvalidCastException("Window.GetWindow(this)");
             mainWindow.RestartFromRegistrationWindow();
+        }
+        private void InitCardsStackPanel()
+        {
+            var cards = _client.Cards;
+            foreach (var baseCard in cards)
+            {
+                var baseCardUi = new BaseCardUi("TODO",
+                    baseCard.Num,
+                    baseCard.Cvc,
+                    baseCard.ExpiresEnd.ToString("mm/yy"));
+                var frame = new Frame
+                {
+                    Content = baseCardUi
+                };
+
+                frame.SetBinding(FrameworkElement.HeightProperty,
+                    new Binding("ActualHeight")
+                    {
+                        Source = CardsScrollViewer,
+                        Converter = new MathConverter(),
+                        ConverterParameter = "x-20"
+                    });
+
+                frame.SetBinding(FrameworkElement.WidthProperty,
+                    new Binding("ActualHeight")
+                    {
+                        Source = CardsScrollViewer,
+                        Converter = new MathConverter(),
+                        ConverterParameter = "(x-20)*1.61"
+                    });
+
+                CardsStackPanel.Children.Add(frame);
+            }
         }
     }
 }
