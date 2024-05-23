@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using payments_system_lib.Utilities;
 using System.Linq;
+using Org.BouncyCastle.Security;
 
 namespace payments_system_lib.Classes.Users.Creators
 {
@@ -91,6 +92,21 @@ namespace payments_system_lib.Classes.Users.Creators
             using (var db = new ApplicationContext())
             {
                 return db.Admin.Select(admin => admin as T).ToList();
+            }
+        }
+
+        public override void Save(BaseUser toSave)
+        {
+            if (!(toSave is Admin adminToSave))
+                throw new InvalidParamException(nameof(toSave));
+            using (var db = new ApplicationContext())
+            {
+                var admin = db.Admin.FirstOrDefault(a => a.Id == adminToSave.Id);
+                if (admin == null)
+                    throw new InvalidParamException(nameof(toSave));
+                db.Entry(admin).CurrentValues.SetValues(adminToSave);
+                db.Update(admin);
+                db.SaveChanges();
             }
         }
     }

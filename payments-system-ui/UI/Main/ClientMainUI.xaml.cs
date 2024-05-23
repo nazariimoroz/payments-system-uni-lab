@@ -4,6 +4,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using HexInnovation;
+using payments_system_lib.Classes;
 using payments_system_lib.Classes.Users;
 using payments_system_lib.Classes.Users.Creators;
 using payments_system_lib.Utilities;
@@ -59,12 +60,13 @@ namespace payments_system_ui.UI.Main
             if(clientCreator.CanBeRegistered())
             {
                 _client.PhoneNumber = NewPhoneNumberTextBox.Text;
-
-                if (Utilities.SaveToDb(_client))
+                try
                 {
+                    new ClientCreator().Save(_client);
                     SettingsGrid.Visibility = Visibility.Collapsed;
                     User = _client;
                 }
+                catch (InvalidParamException) { }
             }
         }
 

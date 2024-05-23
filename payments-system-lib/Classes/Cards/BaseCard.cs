@@ -8,7 +8,7 @@ using payments_system_lib.Utilities;
 
 namespace payments_system_lib.Classes.Cards
 {
-    public class BaseCard : IDbAgent
+    public class BaseCard
     {
         public int Id { get; set; }
         public string Num { get; protected set; }
@@ -62,23 +62,6 @@ namespace payments_system_lib.Classes.Cards
             if (source == null)
             {
                 ClientMoney += amountOfMoney;
-            }
-
-            return false;
-        }
-
-        public bool SaveToDb()
-        {
-            using (var db = new ApplicationContext())
-            {
-                var card= db.ClientCard.FirstOrDefault(c => c.Id == Id);
-                if (card != null)
-                {
-                    db.Entry(card).CurrentValues.SetValues(this);
-                    db.Update(card);
-                    db.SaveChanges();
-                    return true;
-                }
             }
 
             return false;

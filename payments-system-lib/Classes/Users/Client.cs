@@ -25,22 +25,5 @@ namespace payments_system_lib.Classes.Users
             EncryptedPassword = encryptedPassword;
             RegistrationDate = registrationDate;
         }
-
-        public override bool SaveToDb()
-        {
-            using (var db = new ApplicationContext())
-            {
-                var client = db.Client.FirstOrDefault(c => c.Id == Id);
-                if (client != null)
-                {
-                    db.Entry(client).CurrentValues.SetValues(this);
-                    db.Update(client);
-                    db.SaveChanges();
-                    return true;
-                }
-            }
-
-            return false;
-        }
     }
 }

@@ -35,10 +35,5 @@ namespace payments_system_lib.Utilities
             rnd.NextBytes(buffer);
             return BitConverter.ToUInt64(buffer, 0);
         }
-
-        public static bool SaveToDb<T>(T toSave) where T : IDbAgent
-        {
-            return toSave.SaveToDb();
-        }
     }
 }

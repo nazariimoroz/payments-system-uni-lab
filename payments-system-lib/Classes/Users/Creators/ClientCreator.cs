@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Microsoft.EntityFrameworkCore;
+using Org.BouncyCastle.Security;
 using payments_system_lib.Classes.Cards;
 using payments_system_lib.Classes.Cards.Creators;
 using payments_system_lib.Utilities;
@@ -114,6 +115,22 @@ namespace payments_system_lib.Classes.Users.Creators
                     .Client
                     .Include(c => c.Cards)
                     .Select(c => c as T).ToList();
+            }
+        }
+
+        public override void Save(BaseUser toSave)
+        {
+            if (!(toSave is Client clientToSave))
+                throw new InvalidParamException(nameof(toSave));
+
+            using (var db = new ApplicationContext())
+            {
+                var client = db.Client.FirstOrDefault(c => c.Id == clientToSave.Id);
+                if (client == null)
+                    throw new InvalidParamException(nameof(toSave));
+                db.Entry(client).CurrentValues.SetValues(clientToSave);
+                db.Update(client);
+                db.SaveChanges();
             }
         }
     }
