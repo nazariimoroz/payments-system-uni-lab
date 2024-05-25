@@ -88,9 +88,11 @@
               Width="{Binding ActualWidth, ElementName=MainCanvas}"
               Height="{Binding ActualHeight, ElementName=MainCanvas}">
             <Grid.RowDefinitions>
-                <RowDefinition Height="127*" />
-                <RowDefinition Height="18*" />
-                <RowDefinition Height="35*" />
+                <RowDefinition Height="287*" />
+                <RowDefinition Height="60*" />
+                <RowDefinition Height="65*" />
+                <RowDefinition Height="62*"/>
+                <RowDefinition Height="66*"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="219*" />
@@ -102,22 +104,40 @@
 
             <Button Name="SendButton"
                     Grid.Column="1" Grid.Row="1"
-                    Margin="10,0,10,0"
+                    Margin="9.8,12.8,10.2,15.2"
                     HorizontalContentAlignment="Center"
                     VerticalContentAlignment="Center"
-                    Content="SEND" Click="SendButton_Click"/>
+                    Content="SEND" Click="SendButton_Click" Height="Auto"/>
             <Button Name="ReplenishButton"
                     Grid.Column="2" Grid.Row="1"
-                    Margin="10,0,10,0"
+                    Margin="9.8,12.8,10.4,15.2"
                     HorizontalContentAlignment="Center"
                     VerticalContentAlignment="Center"
-                    Content="REPLENISH"/>
+                    Content="REPLENISH" Height="Auto"/>
             <Button Name="PaymentsButton"
                     Grid.Column="3" Grid.Row="1"
-                    Margin="10,0,10,0"
+                    Margin="9.6,12.8,9.6,15.2"
                     HorizontalContentAlignment="Center"
                     VerticalContentAlignment="Center"
-                    Content="PAYMENTS"/>
+                    Content="PAYMENTS" Height="Auto"/>
+
+            <TextBlock Name ="CardBalanceTextBox"
+                     Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="2"
+                     TextAlignment="Left"
+                     VerticalAlignment="Center"
+                     FontSize="25"
+                     Margin="9.8,0,0,0" Height="30">
+                Card Balance: 255$
+            </TextBlock>
+
+            <TextBlock Name ="CardCreditLimitTextBox"
+                       Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="2"
+                       TextAlignment="Left"
+                       VerticalAlignment="Center"
+                       FontSize="25"
+                       Margin="9.8,0,0,0" Height="30">
+                Credit Limit: 100000$
+            </TextBlock>
         </Grid>
 
         <Grid Name="SettingsGrid"

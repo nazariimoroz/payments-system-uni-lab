@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -31,10 +32,14 @@ namespace payments_system_ui.UI.Main
 
                 ClientPhone.Content = client.PhoneNumber;
 
+                _currentCardIndex = 0;
+
                 InitCardsStackPanel();
+                InitCardInfo();
             }
         }
         private Client _client;
+        private int _currentCardIndex = 0;
 
         public ClientMainUI()
         {
@@ -83,9 +88,11 @@ namespace payments_system_ui.UI.Main
                 throw new InvalidCastException("Window.GetWindow(this)");
             mainWindow.RestartFromRegistrationWindow();
         }
+
         private void InitCardsStackPanel()
         {
             var cards = _client.Cards;
+            CardsStackPanel.Children.Clear();
             foreach (var baseCard in cards)
             {
                 var baseCardUi = new BaseCardUi("TODO",
@@ -113,8 +120,37 @@ namespace payments_system_ui.UI.Main
                         ConverterParameter = "(x-20)*1.61"
                     });
 
+                frame.MouseDoubleClick += (sender, args) =>
+                {
+                    if (!(sender is Frame f))
+                        return;
+                    if (!(f.Content is BaseCardUi cardUi))
+                        return;
+                    foreach (var cardIndex in cards.Select((value, i) => new { i, value }))
+                    {
+                        var card = cardIndex.value;
+                        var index = cardIndex.i;
+                        if (card.Num == cardUi.CreditCardNumber.Text)
+                        {
+                            _currentCardIndex = index;
+                            InitCardInfo();
+                            return;
+                        }
+                    }
+                };
+
                 CardsStackPanel.Children.Add(frame);
             }
+        }
+
+        private void InitCardInfo()
+        {
+            if (_client?.Cards.ElementAtOrDefault(_currentCardIndex) == null)
+                throw new ArgumentNullException();
+
+            var card = _client.Cards[_currentCardIndex];
+            CardBalanceTextBox.Text = $"Card Balance: {card.ClientMoney}";
+            CardCreditLimitTextBox.Text = $"Credit Limit: {card.CreditLimit}";
         }
     }
 }
