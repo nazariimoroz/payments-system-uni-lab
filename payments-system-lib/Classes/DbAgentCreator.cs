@@ -24,5 +24,7 @@ namespace payments_system_lib.Classes
         public abstract List<T2> GetAll<T2>() where T2 : T;
 
         public abstract void Save(T toSave);
+
+        public abstract void Destroy(T toDestroy);
     }
 }

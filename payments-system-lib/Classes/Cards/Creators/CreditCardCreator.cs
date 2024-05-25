@@ -65,5 +65,23 @@ namespace payments_system_lib.Classes.Cards.Creators
 
             return toRet;
         }
+
+        public override void Destroy(BaseCard toDestroy)
+        {
+            using (var db = new ApplicationContext())
+            {
+                var card = db.ClientCard.FirstOrDefault(c => c.Id == toDestroy.Id);
+                if (card == null)
+                    throw new InvalidParamException(nameof(toDestroy));
+
+                var client = db.Client.FirstOrDefault(c => c.Id == Client.Id);
+                if (client == null)
+                    throw new InvalidParamException(nameof(Client));
+
+                db.ClientCard.Remove(card);
+                db.Client.Update(client);
+                db.SaveChanges();
+            }
+        }
     }
 }

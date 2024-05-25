@@ -6,6 +6,7 @@
 
                  xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
                  xmlns:main="clr-namespace:payments_system_ui.UI.Main"
+                 xmlns:elements="clr-namespace:payments_system_ui.UI.Elements"
                  TextElement.Foreground="{DynamicResource MaterialDesign.Brush.Foreground}"
                  Background="{DynamicResource MaterialDesign.Brush.Background}"
                  TextElement.FontWeight="Medium"
@@ -266,7 +267,5 @@
 
             <Frame Name="PopupWindowFrame" Grid.Column="1" Grid.Row="1"></Frame>
         </Grid>
-
-
     </Canvas>
 </main:UserMainUI>

@@ -4,6 +4,7 @@ using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using System.Windows.Media.Imaging;
 using HexInnovation;
 using payments_system_lib.Classes;
 using payments_system_lib.Classes.Cards.Creators;
@@ -107,12 +108,27 @@ namespace payments_system_ui.UI.Main
 
             addNewCardUi.CloseEvent = (o, args) => ClosePopupWindow();
 
-            addNewCardUi.CreateCardEvent = CreateNewCard;
+            addNewCardUi.CreateCardEvent = (o, info) =>
+            {
+                CreateNewCard(o, info);
+                ClosePopupWindow();
+            };
         }
 
         private void CloseSelectedCardButton_Click(object sender, RoutedEventArgs e)
         {
+            if (_currentCardIndex == 0) return; // TODO
+            PopupWindowGrid.Visibility = Visibility.Visible;
 
+            var ui = new CloseSelectedCardUi(_client.Cards[_currentCardIndex]);
+            PopupWindowFrame.Content = ui;
+
+            ui.CloseEvent = (o, args) => ClosePopupWindow();
+            ui.CloseCardEvent = (o, args) =>
+            {
+                CloseSelectedCard();
+                ClosePopupWindow();
+            };
         }
 
 
@@ -198,8 +214,15 @@ namespace payments_system_ui.UI.Main
             creditCardCreator.Save(creditCard);
 
             User = new ClientCreator { PhoneNumber = _client.PhoneNumber, EncryptedPassword = _client.EncryptedPassword }.TryGetFromDb();
+        }
 
-            ClosePopupWindow();
+
+        private void CloseSelectedCard()
+        {
+            var selectedCard = _client.Cards[_currentCardIndex];
+            new CreditCardCreator(){Client = _client}.Destroy(selectedCard);
+
+            User = new ClientCreator { PhoneNumber = _client.PhoneNumber, EncryptedPassword = _client.EncryptedPassword }.TryGetFromDb();
         }
     }
 }

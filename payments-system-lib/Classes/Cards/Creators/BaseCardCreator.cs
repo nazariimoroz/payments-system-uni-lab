@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Org.BouncyCastle.Security;
+using Pomelo.EntityFrameworkCore.MySql.Storage;
 
 namespace payments_system_lib.Classes.Cards.Creators
 {
@@ -26,14 +27,12 @@ namespace payments_system_lib.Classes.Cards.Creators
 
         public override void Save(BaseCard toSave)
         {
-            if (!(toSave is BaseCard cardToSave))
-                throw new InvalidParamException(nameof(toSave));
             using (var db = new ApplicationContext())
             {
-                var card = db.ClientCard.FirstOrDefault(c => c.Id == cardToSave.Id);
+                var card = db.ClientCard.FirstOrDefault(c => c.Id == toSave.Id);
                 if (card == null)
                     throw new InvalidParamException(nameof(toSave));
-                db.Entry(card).CurrentValues.SetValues(cardToSave);
+                db.Entry(card).CurrentValues.SetValues(toSave);
                 db.Update(card);
                 db.SaveChanges();
             }

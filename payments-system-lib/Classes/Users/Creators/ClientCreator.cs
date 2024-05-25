@@ -136,5 +136,10 @@ namespace payments_system_lib.Classes.Users.Creators
                 db.SaveChanges();
             }
         }
+
+        public override void Destroy(BaseUser toDestroy)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

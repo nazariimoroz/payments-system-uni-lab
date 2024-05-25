@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using payments_system_lib.Classes.Cards;
 
 namespace payments_system_ui.UI.Elements
 {
@@ -28,6 +29,16 @@ namespace payments_system_ui.UI.Elements
             this.CreditCardNumber.Text = cardNumber;
             this.CreditCardCvc.Text = cardCvc;
             this.CreditCardExpiresEnd.Text = cardExpiresEnd;
+        }
+
+        public BaseCardUi(in BaseCard baseCard)
+        {
+            InitializeComponent();
+
+            this.CreditCardName.Text = "TODO";
+            this.CreditCardNumber.Text = baseCard.Num;
+            this.CreditCardCvc.Text = baseCard.Cvc;
+            this.CreditCardExpiresEnd.Text = baseCard.ExpiresEnd.ToString("mm/yy");
         }
     }
 }
