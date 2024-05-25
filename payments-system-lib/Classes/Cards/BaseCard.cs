@@ -14,8 +14,8 @@ namespace payments_system_lib.Classes.Cards
         public string Num { get; protected set; }
         public string Cvc { get; protected set; }
         public float ClientMoney { get; protected set; }
-        public float CreditLimit { get; protected set; }
-        public DateTime ExpiresEnd { get; protected set; }
+        public float CreditLimit { get; set; }
+        public DateTime ExpiresEnd { get; set; }
 
         [ForeignKey("ClientId")]
         public Client Client { get; protected set; }

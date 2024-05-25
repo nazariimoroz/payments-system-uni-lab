@@ -14,10 +14,13 @@ namespace payments_system_lib.Classes.Users.Creators
     {
         public string PhoneNumber { get; set; } = null;
         public string RealPassword { get; set; } = null;
-        
+        public string EncryptedPassword { get; set; } = null;
+
+        private string GetEncryptedPassword() => RealPassword == null ? EncryptedPassword : Utilities.Utilities.CreateMD5(RealPassword);
+
         public override BaseUser TryGetFromDb()
         {
-            var encryptedPassword = Utilities.Utilities.CreateMD5(RealPassword);
+            var encryptedPassword = GetEncryptedPassword();
 
             using (var db = new ApplicationContext())
             {
@@ -32,7 +35,7 @@ namespace payments_system_lib.Classes.Users.Creators
 
         public override BaseUser CreateNew()
         {
-            var encryptedPassword = Utilities.Utilities.CreateMD5(RealPassword);
+            var encryptedPassword = GetEncryptedPassword();
 
             var client = new Client(PhoneNumber, encryptedPassword, DateTime.Now);
 

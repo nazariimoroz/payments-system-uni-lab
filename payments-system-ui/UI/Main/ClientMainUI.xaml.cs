@@ -6,6 +6,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using HexInnovation;
 using payments_system_lib.Classes;
+using payments_system_lib.Classes.Cards.Creators;
 using payments_system_lib.Classes.Users;
 using payments_system_lib.Classes.Users.Creators;
 using payments_system_lib.Utilities;
@@ -46,6 +47,7 @@ namespace payments_system_ui.UI.Main
             InitializeComponent();
 
             SettingsGrid.Visibility = Visibility.Collapsed;
+            PopupWindowGrid.Visibility = Visibility.Collapsed;
         }
 
 
@@ -80,6 +82,13 @@ namespace payments_system_ui.UI.Main
             
         }
 
+        private void LogOutButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (!(Window.GetWindow(this) is MainWindow mainWindow))
+                throw new InvalidCastException("Window.GetWindow(this)");
+            mainWindow.RestartFromRegistrationWindow();
+        }
+
         private void DeleteCurrentAccountButton_Click(object sender, RoutedEventArgs e)
         {
             var creator = new ClientCreator();
@@ -88,6 +97,24 @@ namespace payments_system_ui.UI.Main
                 throw new InvalidCastException("Window.GetWindow(this)");
             mainWindow.RestartFromRegistrationWindow();
         }
+
+        private void CreateNewCardButton_Click(object sender, RoutedEventArgs e)
+        {
+            PopupWindowGrid.Visibility = Visibility.Visible;
+
+            var addNewCardUi = new AddNewCardUi();
+            PopupWindowFrame.Content = addNewCardUi;
+
+            addNewCardUi.CloseEvent = (o, args) => ClosePopupWindow();
+
+            addNewCardUi.CreateCardEvent = CreateNewCard;
+        }
+
+        private void CloseSelectedCardButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
 
         private void InitCardsStackPanel()
         {
@@ -151,6 +178,28 @@ namespace payments_system_ui.UI.Main
             var card = _client.Cards[_currentCardIndex];
             CardBalanceTextBox.Text = $"Card Balance: {card.ClientMoney}";
             CardCreditLimitTextBox.Text = $"Credit Limit: {card.CreditLimit}";
+        }
+
+        private void ClosePopupWindow()
+        {
+            PopupWindowFrame.Content = null;
+            PopupWindowGrid.Visibility = Visibility.Collapsed;
+        }
+
+        private void CreateNewCard(object sender, CreateCardInfo e)
+        {
+            var creditCardCreator = new CreditCardCreator()
+            {
+                Client = _client
+            };
+            var creditCard = creditCardCreator.CreateNew();
+            creditCard.CreditLimit = e.CreditLimit;
+
+            creditCardCreator.Save(creditCard);
+
+            User = new ClientCreator { PhoneNumber = _client.PhoneNumber, EncryptedPassword = _client.EncryptedPassword }.TryGetFromDb();
+
+            ClosePopupWindow();
         }
     }
 }

@@ -41,6 +41,10 @@ namespace payments_system_lib.Classes.Cards.Creators
 
             using (var db = new ApplicationContext())
             {
+                var client = db.Client.FirstOrDefault(c => c.Id == Client.Id);
+                if (client == null)
+                    throw new InvalidParamException(nameof(Client));
+
                 BaseCard card;
                 do
                 {
@@ -52,7 +56,7 @@ namespace payments_system_lib.Classes.Cards.Creators
                     num = numBuilder.ToString();
                 } while (card != null);
 
-                toRet = new CreditCard(num, cvc, clientMoney, creditLimit, expiresEnd, Client);
+                toRet = new CreditCard(num, cvc, clientMoney, creditLimit, expiresEnd, client);
 
                 db.ClientCard.Add(toRet);
                 db.Client.Update(toRet.Client);

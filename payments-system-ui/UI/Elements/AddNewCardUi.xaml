@@ -1,0 +1,171 @@
+﻿<Page x:Class="payments_system_ui.UI.Elements.AddNewCardUi"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:payments_system_ui.UI.Elements"
+
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:main="clr-namespace:payments_system_ui.UI.Main"
+      TextElement.Foreground="{DynamicResource MaterialDesign.Brush.Foreground}"
+      Background="{DynamicResource MaterialDesign.Brush.Background}"
+      TextElement.FontWeight="Medium"
+      TextElement.FontSize="14"
+      FontFamily="{materialDesign:MaterialDesignFont}"
+
+      mc:Ignorable="d" 
+      d:DesignHeight="200" d:DesignWidth="300"
+      Title="AddNewCardUi">
+
+    <Canvas Name="RootCanvas">
+        <Rectangle Width="{Binding ActualWidth, ElementName=RootCanvas}"
+                   Height="{Binding ActualHeight, ElementName=RootCanvas}">
+            <Rectangle.Fill>
+                <SolidColorBrush Color="Azure" />
+            </Rectangle.Fill>
+            <Rectangle.Stroke>
+                <SolidColorBrush Color="Black" />
+            </Rectangle.Stroke>
+        </Rectangle>
+
+        <Grid Width="{Binding ActualWidth, ElementName=RootCanvas}"
+              Height="{Binding ActualHeight, ElementName=RootCanvas}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="7*"/>
+                <RowDefinition Height="43*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="9*"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <Button Grid.Row="0" Grid.Column="1" Height="28" Click="ClosePopupWindow"/>
+
+        </Grid>
+
+        <Grid 
+            Width="{Binding ActualWidth, ElementName=RootCanvas}"
+            Height="{Binding ActualHeight, ElementName=RootCanvas}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="36*"/>
+                <ColumnDefinition Width="13*"/>
+                <ColumnDefinition Width="31*"/>
+                <ColumnDefinition Width="184*"/>
+                <ColumnDefinition Width="36*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="229*"/>
+                <RowDefinition Height="71*"/>
+            </Grid.RowDefinitions>
+
+            <TextBox Name="CreditLimitTextBox" Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" Height="23" FontSize="10" TextAlignment="Right" Grid.ColumnSpan="2" Margin="0,0,5,0" Text="0"/>
+            <TextBlock Grid.Column="3" Grid.Row="1" VerticalAlignment="Center" Height="23" HorizontalAlignment="Left" Width="100" FontSize="18">Credit Limit</TextBlock>
+
+            <Button  Grid.Column="3" Grid.Row="1" HorizontalAlignment="Right" Width="80" Click="CreateCard" >Create</Button>
+
+            <Canvas Name="CreditCardCanvas" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" >
+                <Image Canvas.ZIndex="1"
+               Width="{Binding ActualWidth, ElementName=CreditCardCanvas}"
+               Height="{Binding ActualHeight, ElementName=CreditCardCanvas}">
+                    <Image.Source>
+                        <BitmapImage UriSource="pack://application:,,,/Resources/credit_card_template.png" />
+                    </Image.Source>
+                </Image>
+
+                <Grid Canvas.ZIndex="2" 
+              Width="{Binding ActualWidth, ElementName=CreditCardCanvas}"
+              Height="{Binding ActualHeight, ElementName=CreditCardCanvas}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="0.48*"></RowDefinition>
+                        <RowDefinition Height="0.12*"></RowDefinition>
+                        <RowDefinition Height="0.32*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.1*"></ColumnDefinition>
+                        <ColumnDefinition Width="0.8*"></ColumnDefinition>
+                        <ColumnDefinition Width="0.1*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Column="1" Grid.Row="1"
+                               Name="CreditCardNumber"
+                               Text="1234 1234 1234 1234"
+                               TextAlignment="Center"
+                               Foreground="Azure"
+                               FontSize="18" />
+                </Grid>
+
+                <Grid Canvas.ZIndex="2"
+              Width="{Binding ActualWidth, ElementName=CreditCardCanvas}"
+              Height="{Binding ActualHeight, ElementName=CreditCardCanvas}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="57*"></RowDefinition>
+                        <RowDefinition Height="13*"></RowDefinition>
+                        <RowDefinition Height="12*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="171*"></ColumnDefinition>
+                        <ColumnDefinition Width="67*"></ColumnDefinition>
+                        <ColumnDefinition Width="29*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Column="1" Grid.Row="1"
+                               Name="CreditCardCvc"
+                               Text="000"
+                               TextAlignment="Center"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               Foreground="Azure"
+                               FontSize="18" />
+                </Grid>
+
+                <Grid Canvas.ZIndex="2"
+              Width="{Binding ActualWidth, ElementName=CreditCardCanvas}"
+              Height="{Binding ActualHeight, ElementName=CreditCardCanvas}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="57*"></RowDefinition>
+                        <RowDefinition Height="5*"></RowDefinition>
+                        <RowDefinition Height="20*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="102*"></ColumnDefinition>
+                        <ColumnDefinition Width="32*"></ColumnDefinition>
+                        <ColumnDefinition Width="133*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Column="1" Grid.Row="1"
+                               Name="CreditCardExpiresEnd"
+                               Text="00/00"
+                               TextAlignment="Center"
+                               HorizontalAlignment="Left"
+                               VerticalAlignment="Center"
+                               Foreground="Azure"
+                               FontSize="10" />
+                </Grid>
+
+                <Grid Canvas.ZIndex="2"
+              Width="{Binding ActualWidth, ElementName=CreditCardCanvas}"
+              Height="{Binding ActualHeight, ElementName=CreditCardCanvas}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="131*"></RowDefinition>
+                        <RowDefinition Height="21*"></RowDefinition>
+                        <RowDefinition Height="12*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="7*"></ColumnDefinition>
+                        <ColumnDefinition Width="48*"></ColumnDefinition>
+                        <ColumnDefinition Width="34*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Column="1" Grid.Row="1"
+                               Name="CreditCardName"
+                               Text="NAME SURNAME"
+                               TextAlignment="Center"
+                               HorizontalAlignment="Left"
+                               VerticalAlignment="Center"
+                               Foreground="Azure"
+                               FontSize="14" />
+                </Grid>
+            </Canvas>
+        </Grid>
+    </Canvas>
+</Page>
