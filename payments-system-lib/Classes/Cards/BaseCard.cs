@@ -5,6 +5,8 @@ using System.Text;
 using Org.BouncyCastle.Security;
 using Org.BouncyCastle.Tls;
 using payments_system_lib.Classes.Cards.Creators;
+using payments_system_lib.Classes.Transaction;
+using payments_system_lib.Classes.Transaction.Creators;
 using payments_system_lib.Classes.Users;
 using payments_system_lib.Interfaces;
 using payments_system_lib.Utilities;
@@ -59,6 +61,13 @@ namespace payments_system_lib.Classes.Cards
 
             ClientMoney -= amount;
             receiver.ClientMoney += amount;
+
+            var transactionInfo = $"Receive {info.Amount}$ from '{Num}'";
+            new TransactionCreator { Type = TransactionType.Receiver, Amount = info.Amount, Card = receiver, Info = transactionInfo }.CreateNew();
+
+            transactionInfo = $"Send {info.Amount}$ to '{receiver.Num}'";
+            new TransactionCreator { Type = TransactionType.Send, Amount = info.Amount, Card = this, Info = transactionInfo }.CreateNew();
+
             return true;
         }
 
@@ -68,7 +77,8 @@ namespace payments_system_lib.Classes.Cards
                 return false;
             ClientMoney += info.Amount;
 
-            /*TODO CHECK*/
+            var transactionInfo = $"Receive {info.Amount}$ from '{info.ReplenishSource.ToString()}' source";
+            new TransactionCreator{ Type = TransactionType.Receiver, Amount = info.Amount, Card = this, Info = transactionInfo }.CreateNew();
             return true;
         }
     }

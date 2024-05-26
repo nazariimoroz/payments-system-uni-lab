@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.Extensions.Configuration;
 using payments_system_lib.Classes;
 using payments_system_lib.Classes.Cards;
+using payments_system_lib.Classes.Transaction;
 using payments_system_lib.Classes.Users;
 
 namespace payments_system_lib.Utilities
@@ -19,7 +20,7 @@ namespace payments_system_lib.Utilities
         public DbSet<Client> Client => Set<Client>();
         public DbSet<Admin> Admin => Set<Admin>();
         public DbSet<BaseCard> ClientCard => Set<BaseCard>();
-        //public DbSet<Transaction> Transaction => Set<Transaction>();
+        public DbSet<Transaction> Transaction => Set<Transaction>();
 
         public ApplicationContext()
         {
