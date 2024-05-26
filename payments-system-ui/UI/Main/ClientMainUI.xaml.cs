@@ -7,11 +7,13 @@ using System.Windows.Data;
 using System.Windows.Media.Imaging;
 using HexInnovation;
 using payments_system_lib.Classes;
+using payments_system_lib.Classes.Cards;
 using payments_system_lib.Classes.Cards.Creators;
 using payments_system_lib.Classes.Users;
 using payments_system_lib.Classes.Users.Creators;
 using payments_system_lib.Utilities;
 using payments_system_ui.UI.Elements;
+using payments_system_ui.UI.Elements.Replenish;
 using payments_system_ui.Windows;
 
 namespace payments_system_ui.UI.Main
@@ -81,6 +83,21 @@ namespace payments_system_ui.UI.Main
         private void SendButton_Click(object sender, RoutedEventArgs e)
         {
             
+        }
+        private void ReplenishButton_Click(object sender, RoutedEventArgs e)
+        {
+            PopupWindowGrid.Visibility = Visibility.Visible;
+
+            var ui = new ReplenishUi();
+            PopupWindowFrame.Content = ui;
+
+            ui.CloseEvent = (o, args) => ClosePopupWindow();
+
+            ui.ReplenishClicked = (o, info) =>
+            {
+                ReplenishSelectedCard(info);
+                ClosePopupWindow();
+            };
         }
 
         private void LogOutButton_Click(object sender, RoutedEventArgs e)
@@ -224,5 +241,15 @@ namespace payments_system_ui.UI.Main
 
             User = new ClientCreator { PhoneNumber = _client.PhoneNumber, EncryptedPassword = _client.EncryptedPassword }.TryGetFromDb();
         }
+
+        private void ReplenishSelectedCard(ReplenishInfo info)
+        {
+            var selectedCard = _client.Cards[_currentCardIndex];
+            selectedCard.ReplenishFromSource(info);
+
+            new CreditCardCreator().Save(selectedCard);
+            User = new ClientCreator { PhoneNumber = _client.PhoneNumber, EncryptedPassword = _client.EncryptedPassword }.TryGetFromDb();
+        }
+
     }
 }

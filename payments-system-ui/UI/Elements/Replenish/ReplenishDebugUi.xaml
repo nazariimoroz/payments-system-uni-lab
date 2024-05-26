@@ -1,0 +1,40 @@
+﻿<Page x:Class="payments_system_ui.UI.Elements.Replenish.ReplenishDebugUi"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:payments_system_ui.UI.Elements.Replenish"
+
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:main="clr-namespace:payments_system_ui.UI.Main"
+      TextElement.Foreground="{DynamicResource MaterialDesign.Brush.Foreground}"
+      Background="{DynamicResource MaterialDesign.Brush.Background}"
+      TextElement.FontWeight="Medium"
+      TextElement.FontSize="14"
+      FontFamily="{materialDesign:MaterialDesignFont}"
+
+      mc:Ignorable="d" 
+      d:DesignHeight="200" d:DesignWidth="300"
+      Title="ReplenishDebug">
+
+    <Grid>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="2*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="7*"/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBox Name="AmountOfMoneyTextBox" Grid.Row="1" Grid.Column="1" Height="30" materialDesign:HintAssist.Hint="AMOUNT OF MONEY" TextAlignment="Center" FontSize="18" />
+            <Button Grid.Row="3" Grid.Column="1" Height="30" Click="Replenish_Click">Replenish</Button>
+
+        </Grid>
+    </Grid>
+</Page>

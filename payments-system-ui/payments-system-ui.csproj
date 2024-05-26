@@ -104,6 +104,15 @@
     <Compile Include="UI\Elements\CloseSelectedCardUi.xaml.cs">
       <DependentUpon>CloseSelectedCardUi.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UI\Elements\Replenish\ReplenishChoosingMenu.xaml.cs">
+      <DependentUpon>ReplenishChoosingMenu.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Elements\Replenish\ReplenishDebugUi.xaml.cs">
+      <DependentUpon>ReplenishDebugUi.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Elements\Replenish\ReplenishUi.xaml.cs">
+      <DependentUpon>ReplenishUi.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI\Main\AdminMainUI.xaml.cs">
       <DependentUpon>AdminMainUI.xaml</DependentUpon>
     </Compile>
@@ -168,6 +177,18 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UI\Elements\CloseSelectedCardUi.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Elements\Replenish\ReplenishChoosingMenu.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Elements\Replenish\ReplenishDebugUi.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Elements\Replenish\ReplenishUi.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -57,14 +57,25 @@ namespace payments_system_lib.Classes.Cards
             return true;
         }
 
-        public virtual bool ReplenishFromSource(float amountOfMoney, object source /*TODO*/)
+        public virtual bool ReplenishFromSource(ReplenishInfo info)
         {
-            if (source == null)
-            {
-                ClientMoney += amountOfMoney;
-            }
+            if (info.Amount <= 0.0F)
+                return false;
+            ClientMoney += info.Amount;
 
-            return false;
+            /*TODO CHECK*/
+            return true;
         }
+    }
+
+    public struct ReplenishInfo
+    {
+        public float Amount { get; set; }
+        public ReplenishSource ReplenishSource { get; set; }
+    }
+
+    public enum ReplenishSource
+    {
+        Debug, ApplePay
     }
 }
