@@ -14,6 +14,7 @@ using payments_system_lib.Classes.Users.Creators;
 using payments_system_lib.Utilities;
 using payments_system_ui.UI.Elements;
 using payments_system_ui.UI.Elements.Replenish;
+using payments_system_ui.UI.Elements.Send;
 using payments_system_ui.Windows;
 
 namespace payments_system_ui.UI.Main
@@ -82,8 +83,20 @@ namespace payments_system_ui.UI.Main
 
         private void SendButton_Click(object sender, RoutedEventArgs e)
         {
-            
+            PopupWindowGrid.Visibility = Visibility.Visible;
+
+            var ui = new SendToOtherCardUi();
+            PopupWindowFrame.Content = ui;
+
+            ui.CloseEvent = (o, args) => ClosePopupWindow();
+
+            ui.SendClicked = (o, info) =>
+            {
+                SendFromSelectedCardToOtherCard(info);
+                ClosePopupWindow();
+            };
         }
+
         private void ReplenishButton_Click(object sender, RoutedEventArgs e)
         {
             PopupWindowGrid.Visibility = Visibility.Visible;
@@ -239,6 +252,15 @@ namespace payments_system_ui.UI.Main
             var selectedCard = _client.Cards[_currentCardIndex];
             new CreditCardCreator(){Client = _client}.Destroy(selectedCard);
 
+            User = new ClientCreator { PhoneNumber = _client.PhoneNumber, EncryptedPassword = _client.EncryptedPassword }.TryGetFromDb();
+        }
+
+        private void SendFromSelectedCardToOtherCard(SendInfo info)
+        {
+            var selectedCard = _client.Cards[_currentCardIndex];
+            if (!selectedCard.SendMoneyToOtherCard(info, out var receiver)) return;
+            new CreditCardCreator().Save(selectedCard);
+            new CreditCardCreator().Save(receiver);
             User = new ClientCreator { PhoneNumber = _client.PhoneNumber, EncryptedPassword = _client.EncryptedPassword }.TryGetFromDb();
         }
 

@@ -9,10 +9,24 @@ using Pomelo.EntityFrameworkCore.MySql.Storage;
 
 namespace payments_system_lib.Classes.Cards.Creators
 {
-    public abstract class BaseCardCreator : DbAgentCreator<BaseCard>
+    public class BaseCardCreator : DbAgentCreator<BaseCard>
     {
-        public abstract override BaseCard TryGetFromDb();
-        public abstract override BaseCard CreateNew();
+        public string Num { get; set; } = null;
+
+        public override BaseCard TryGetFromDb()
+        {
+            if (Num == null)
+                throw new InvalidParamException(nameof(Num));
+            using (var db = new ApplicationContext())
+            {
+                var baseCard = db
+                    .ClientCard
+                    .Include(c => c.Client)
+                    .FirstOrDefault(c => c.Num == Num);
+
+                return baseCard;
+            }
+        }
 
         public override List<T> GetAll<T>()
         {
@@ -36,6 +50,16 @@ namespace payments_system_lib.Classes.Cards.Creators
                 db.Update(card);
                 db.SaveChanges();
             }
+        }
+
+        public override BaseCard CreateNew()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void Destroy(BaseCard toDestroy)
+        {
+            throw new NotImplementedException();
         }
     }
 }

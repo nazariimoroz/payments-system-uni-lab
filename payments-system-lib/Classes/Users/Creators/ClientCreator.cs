@@ -21,6 +21,10 @@ namespace payments_system_lib.Classes.Users.Creators
         public override BaseUser TryGetFromDb()
         {
             var encryptedPassword = GetEncryptedPassword();
+            if (PhoneNumber == null)
+                throw new InvalidParamException(nameof(PhoneNumber));
+            if (PhoneNumber == null)
+                throw new InvalidParamException($"{nameof(RealPassword)} OR {nameof(EncryptedPassword)}");
 
             using (var db = new ApplicationContext())
             {

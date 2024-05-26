@@ -2,6 +2,9 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
+using Org.BouncyCastle.Security;
+using Org.BouncyCastle.Tls;
+using payments_system_lib.Classes.Cards.Creators;
 using payments_system_lib.Classes.Users;
 using payments_system_lib.Interfaces;
 using payments_system_lib.Utilities;
@@ -44,16 +47,18 @@ namespace payments_system_lib.Classes.Cards
             CreditLimit = 0;
         }
 
-        public virtual bool SendMoneyToOtherCard(float amountOfMoney, BaseCard otherCard)
+        public virtual bool SendMoneyToOtherCard(SendInfo info, out BaseCard receiver)
         {
-            if (otherCard == null)
+            receiver = new BaseCardCreator { Num = info.NumOfReceiver }.TryGetFromDb();
+            var amount = info.Amount;
+            if (receiver == null)
                 return false;
 
-            if (amountOfMoney > ClientMoney)
+            if (amount <= 0.0F || amount > ClientMoney)
                 return false;
 
-            ClientMoney -= amountOfMoney;
-            otherCard.ClientMoney += amountOfMoney;
+            ClientMoney -= amount;
+            receiver.ClientMoney += amount;
             return true;
         }
 
@@ -77,5 +82,11 @@ namespace payments_system_lib.Classes.Cards
     public enum ReplenishSource
     {
         Debug, ApplePay
+    }
+
+    public struct SendInfo
+    {
+        public float Amount { get; set; }
+        public string NumOfReceiver { get; set; }
     }
 }

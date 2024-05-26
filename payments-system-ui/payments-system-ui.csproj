@@ -113,6 +113,9 @@
     <Compile Include="UI\Elements\Replenish\ReplenishUi.xaml.cs">
       <DependentUpon>ReplenishUi.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UI\Elements\Send\SendToOtherCardUi.xaml.cs">
+      <DependentUpon>SendToOtherCardUi.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI\Main\AdminMainUI.xaml.cs">
       <DependentUpon>AdminMainUI.xaml</DependentUpon>
     </Compile>
@@ -189,6 +192,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UI\Elements\Replenish\ReplenishUi.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Elements\Send\SendToOtherCardUi.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
