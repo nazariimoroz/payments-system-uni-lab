@@ -14,6 +14,6 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="540" Width="960">
     
-    <Frame Name="UserMainUi" />
+    <Frame NavigationUIVisibility="Hidden" Name="UserMainUi" />
 
 </Window>

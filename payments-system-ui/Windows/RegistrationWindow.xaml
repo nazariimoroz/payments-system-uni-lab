@@ -21,7 +21,7 @@
                 <Setter Property="Visibility" Value="Collapsed"/>
             </Style>
         </TabControl.ItemContainerStyle>
-        <Frame Name="ChoosingRegistrationUserFrame" Source="/UI/Registration/ChoosingRegistrationUser.xaml"></Frame>
-        <Frame Name="RegistrationMenuFrame"></Frame>
+        <Frame NavigationUIVisibility="Hidden" Name="ChoosingRegistrationUserFrame" Source="/UI/Registration/ChoosingRegistrationUser.xaml"></Frame>
+        <Frame NavigationUIVisibility="Hidden" Name="RegistrationMenuFrame"></Frame>
     </TabControl>
 </Window>

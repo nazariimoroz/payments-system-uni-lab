@@ -265,7 +265,7 @@
                 <ColumnDefinition Width="0.3*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
 
-            <Frame Name="PopupWindowFrame" Grid.Column="1" Grid.Row="1"></Frame>
+            <Frame NavigationUIVisibility="Hidden" Name="PopupWindowFrame" Grid.Column="1" Grid.Row="1"></Frame>
         </Grid>
     </Canvas>
 </main:UserMainUI>

@@ -60,7 +60,7 @@
 
             <Button Grid.Column="2" Grid.Row="1" HorizontalAlignment="Right" Width="80" Click="CloseButton" >Close</Button>
 
-            <Frame Name="BaseCardUiFrame" Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="2" Margin="5,5,5,5"></Frame>
+            <Frame NavigationUIVisibility="Hidden" Name="BaseCardUiFrame" Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="2" Margin="5,5,5,5"></Frame>
         </Grid>
     </Canvas>
 </Page>
