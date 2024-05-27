@@ -16,6 +16,7 @@ using payments_system_ui.UI.Elements;
 using payments_system_ui.UI.Elements.Replenish;
 using payments_system_ui.UI.Elements.Send;
 using payments_system_ui.Windows;
+using payments_system_ui.Windows.Elements;
 
 namespace payments_system_ui.UI.Main
 {
@@ -111,6 +112,16 @@ namespace payments_system_ui.UI.Main
                 ReplenishSelectedCard(info);
                 ClosePopupWindow();
             };
+        }
+
+        private void TransactionsButton_Click(object sender, RoutedEventArgs e)
+        {
+            var selectedCard = _client.Cards[_currentCardIndex];
+
+            var transactionWindow = new TransactionsWindow(selectedCard);
+            transactionWindow.Owner = Window.GetWindow(this);
+
+            transactionWindow.ShowDialog();
         }
 
         private void LogOutButton_Click(object sender, RoutedEventArgs e)

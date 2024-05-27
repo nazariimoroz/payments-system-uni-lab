@@ -54,7 +54,7 @@ namespace payments_system_lib.Classes.Transaction.Creators
                 if(card == null)
                     throw new InvalidParamException(nameof(Card));
 
-                transaction = new Transaction(Type, Info, Amount, card);
+                transaction = new Transaction(Type, Info, Amount, DateTime.Now, card);
 
                 db.Transaction.Add(transaction);
                 db.SaveChanges();
@@ -71,8 +71,8 @@ namespace payments_system_lib.Classes.Transaction.Creators
                 return db
                     .Transaction
                     .Include(t=> t.Card)
-                    .Select(t => t as T)
                     .Where(t => (Card == null || t.Card == Card) && (Type == (TransactionType)(-1) || t.Type == Type))
+                    .Select(t => t as T)
                     .ToList();
             }
         }

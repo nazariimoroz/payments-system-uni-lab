@@ -127,12 +127,12 @@
                     HorizontalContentAlignment="Center"
                     VerticalContentAlignment="Center"
                     Content="REPLENISH" Height="Auto" Click="ReplenishButton_Click"/>
-            <Button Name="PaymentsButton"
+            <Button Name="TransactionsButton"
                     Grid.Column="3" Grid.Row="1"
                     Margin="10,13,10,15"
                     HorizontalContentAlignment="Center"
                     VerticalContentAlignment="Center"
-                    Content="PAYMENTS" Height="Auto"/>
+                    Content="TRANSACTIONS" Height="Auto" Click="TransactionsButton_Click"/>
 
             <TextBlock Name ="CardBalanceTextBox"
                      Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="2"
