@@ -57,7 +57,7 @@ namespace payments_system_lib.Classes.Users.Creators
                 db.SaveChanges();
             }
 
-            var ccCreator = new CreditCardCreator()
+            var ccCreator = new BaseCardCreator()
             {
                 Client = client
             };

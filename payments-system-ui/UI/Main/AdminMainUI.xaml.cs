@@ -47,7 +47,7 @@ namespace payments_system_ui.UI.Main
         private void updateUsersDataGrid(string phoneRegex)
         {
             var clientCreator = new ClientCreator();
-            var cardCreator = new CreditCardCreator();
+            var cardCreator = new BaseCardCreator();
             try
             {
                 UsersDataGrid.ItemsSource =

@@ -245,7 +245,7 @@ namespace payments_system_ui.UI.Main
 
         private void CreateNewCard(object sender, CreateCardInfo e)
         {
-            var creditCardCreator = new CreditCardCreator()
+            var creditCardCreator = new BaseCardCreator()
             {
                 Client = _client
             };
@@ -261,7 +261,7 @@ namespace payments_system_ui.UI.Main
         private void CloseSelectedCard()
         {
             var selectedCard = _client.Cards[_currentCardIndex];
-            new CreditCardCreator(){Client = _client}.Destroy(selectedCard);
+            new BaseCardCreator(){Client = _client}.Destroy(selectedCard);
 
             User = new ClientCreator { PhoneNumber = _client.PhoneNumber, EncryptedPassword = _client.EncryptedPassword }.TryGetFromDb();
         }
@@ -270,8 +270,8 @@ namespace payments_system_ui.UI.Main
         {
             var selectedCard = _client.Cards[_currentCardIndex];
             if (!selectedCard.SendMoneyToOtherCard(info, out var receiver)) return;
-            new CreditCardCreator().Save(selectedCard);
-            new CreditCardCreator().Save(receiver);
+            new BaseCardCreator().Save(selectedCard);
+            new BaseCardCreator().Save(receiver);
             User = new ClientCreator { PhoneNumber = _client.PhoneNumber, EncryptedPassword = _client.EncryptedPassword }.TryGetFromDb();
         }
 
@@ -280,7 +280,7 @@ namespace payments_system_ui.UI.Main
             var selectedCard = _client.Cards[_currentCardIndex];
             selectedCard.ReplenishFromSource(info);
 
-            new CreditCardCreator().Save(selectedCard);
+            new BaseCardCreator().Save(selectedCard);
             User = new ClientCreator { PhoneNumber = _client.PhoneNumber, EncryptedPassword = _client.EncryptedPassword }.TryGetFromDb();
         }
 

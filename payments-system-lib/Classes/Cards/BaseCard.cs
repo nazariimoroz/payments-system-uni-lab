@@ -28,25 +28,23 @@ namespace payments_system_lib.Classes.Cards
         /*
          * For EC Core
          */
-        protected BaseCard(string num, string cvc, float clientMoney, DateTime expiresEnd)
+        public BaseCard(string num, string cvc, float clientMoney, float creditLimit, DateTime expiresEnd)
         {
             Num = num;
             Cvc = cvc;
             ClientMoney = clientMoney;
+            CreditLimit = creditLimit;
             ExpiresEnd = expiresEnd;
-
-            CreditLimit = 0;
         }
 
-        protected BaseCard(string num, string cvc, float clientMoney, DateTime expiresEnd, Client client)
+        public BaseCard(string num, string cvc, float clientMoney, float creditLimit, DateTime expiresEnd, Client client)
         {
             Num = num;
             Cvc = cvc;
             ClientMoney = clientMoney;
+            CreditLimit = creditLimit;
             ExpiresEnd = expiresEnd;
             Client = client;
-
-            CreditLimit = 0;
         }
 
         public virtual bool SendMoneyToOtherCard(SendInfo info, out BaseCard receiver)
