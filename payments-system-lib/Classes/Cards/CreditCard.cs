@@ -13,7 +13,7 @@ using payments_system_lib.Utilities;
 
 namespace payments_system_lib.Classes.Cards
 {
-    public class BaseCard
+    public class CreditCard
     {
         public int Id { get; set; }
         public string Num { get; protected set; }
@@ -28,7 +28,7 @@ namespace payments_system_lib.Classes.Cards
         /*
          * For EC Core
          */
-        public BaseCard(string num, string cvc, float clientMoney, float creditLimit, DateTime expiresEnd)
+        public CreditCard(string num, string cvc, float clientMoney, float creditLimit, DateTime expiresEnd)
         {
             Num = num;
             Cvc = cvc;
@@ -37,7 +37,7 @@ namespace payments_system_lib.Classes.Cards
             ExpiresEnd = expiresEnd;
         }
 
-        public BaseCard(string num, string cvc, float clientMoney, float creditLimit, DateTime expiresEnd, Client client)
+        public CreditCard(string num, string cvc, float clientMoney, float creditLimit, DateTime expiresEnd, Client client)
         {
             Num = num;
             Cvc = cvc;
@@ -47,9 +47,9 @@ namespace payments_system_lib.Classes.Cards
             Client = client;
         }
 
-        public virtual bool SendMoneyToOtherCard(SendInfo info, out BaseCard receiver)
+        public virtual bool SendMoneyToOtherCard(SendInfo info, out CreditCard receiver)
         {
-            receiver = new BaseCardCreator { Num = info.NumOfReceiver }.TryGetFromDb();
+            receiver = new CreditCardCreator { Num = info.NumOfReceiver }.TryGetFromDb();
             var amount = info.Amount;
             if (receiver == null)
                 return false;

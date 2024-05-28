@@ -19,7 +19,7 @@ namespace payments_system_lib.Utilities
     {
         public DbSet<Client> Client => Set<Client>();
         public DbSet<Admin> Admin => Set<Admin>();
-        public DbSet<BaseCard> ClientCard => Set<BaseCard>();
+        public DbSet<CreditCard> CreditCard => Set<CreditCard>();
         public DbSet<Transaction> Transaction => Set<Transaction>();
 
         public ApplicationContext()

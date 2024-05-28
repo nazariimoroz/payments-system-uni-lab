@@ -53,11 +53,11 @@ namespace payments_system_lib.Classes.Users.Creators
                     return null;
 
                 db.Client.Add(client);
-                db.ClientCard.UpdateRange(client.Cards);
+                db.CreditCard.UpdateRange(client.Cards);
                 db.SaveChanges();
             }
 
-            var ccCreator = new BaseCardCreator()
+            var ccCreator = new CreditCardCreator()
             {
                 Client = client
             };
@@ -107,7 +107,7 @@ namespace payments_system_lib.Classes.Users.Creators
                 if (foundClient == null)
                     return false;
 
-                db.ClientCard.RemoveRange(foundClient.Cards);
+                db.CreditCard.RemoveRange(foundClient.Cards);
                 db.Client.Remove(foundClient);
                 db.SaveChanges();
             }

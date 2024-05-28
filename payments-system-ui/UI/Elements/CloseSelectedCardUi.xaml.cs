@@ -22,16 +22,16 @@ namespace payments_system_ui.UI.Elements
     /// </summary>
     public partial class CloseSelectedCardUi : Page
     {
-        private readonly BaseCard _baseCard;
+        private readonly CreditCard _creditCard;
         public EventHandler CloseEvent;
         public EventHandler CloseCardEvent;
 
-        public CloseSelectedCardUi(in BaseCard baseCard)
+        public CloseSelectedCardUi(in CreditCard creditCard)
         {
-            _baseCard = baseCard;
+            _creditCard = creditCard;
             InitializeComponent();
 
-            BaseCardUiFrame.Content = new BaseCardUi(baseCard);
+            BaseCardUiFrame.Content = new CreditCardUi(creditCard);
         }
 
         private void ClosePopupWindow(object sender, RoutedEventArgs e)
@@ -41,7 +41,7 @@ namespace payments_system_ui.UI.Elements
 
         private void CloseButton(object sender, RoutedEventArgs e)
         {
-            if (_baseCard != null && CreditLimitTextBox.Text == _baseCard.Num)
+            if (_creditCard != null && CreditLimitTextBox.Text == _creditCard.Num)
             {
                 CloseCardEvent(this, EventArgs.Empty);
             }

@@ -178,8 +178,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Classes\DbAgentCreator.cs" />
-    <Compile Include="Classes\Cards\BaseCard.cs" />
-    <Compile Include="Classes\Cards\Creators\BaseCardCreator.cs" />
+    <Compile Include="Classes\Cards\CreditCard.cs" />
+    <Compile Include="Classes\Cards\Creators\CreditCardCreator.cs" />
     <Compile Include="Classes\Transaction\Creators\TransactionCreator.cs" />
     <Compile Include="Classes\Transaction\Transaction.cs" />
     <Compile Include="Classes\Users\Admin.cs" />

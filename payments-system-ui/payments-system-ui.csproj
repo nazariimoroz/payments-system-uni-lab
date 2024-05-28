@@ -98,8 +98,8 @@
     <Compile Include="UI\Elements\AddNewCardUi.xaml.cs">
       <DependentUpon>AddNewCardUi.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UI\Elements\BaseCardUi.xaml.cs">
-      <DependentUpon>BaseCardUi.xaml</DependentUpon>
+    <Compile Include="UI\Elements\CreditCardUi.xaml.cs">
+      <DependentUpon>CreditCardUi.xaml</DependentUpon>
     </Compile>
     <Compile Include="UI\Elements\CloseSelectedCardUi.xaml.cs">
       <DependentUpon>CloseSelectedCardUi.xaml</DependentUpon>
@@ -178,7 +178,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UI\Elements\BaseCardUi.xaml">
+    <Page Include="UI\Elements\CreditCardUi.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

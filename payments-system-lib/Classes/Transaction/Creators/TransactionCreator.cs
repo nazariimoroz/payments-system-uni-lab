@@ -14,7 +14,7 @@ namespace payments_system_lib.Classes.Transaction.Creators
     public class TransactionCreator : DbAgentCreator<Transaction>
     {
         public int Id { get; set; } = -1;
-        public BaseCard Card { get; set; } = null;
+        public CreditCard Card { get; set; } = null;
         public float Amount { get; set; } = float.NaN;
         public string Info { get; set; } = null;
         public TransactionType Type { get; set; } = (TransactionType)(-1);
@@ -50,7 +50,7 @@ namespace payments_system_lib.Classes.Transaction.Creators
 
             using (var db = new ApplicationContext())
             {
-                var card = db.ClientCard.FirstOrDefault(c => c.Id == Card.Id);
+                var card = db.CreditCard.FirstOrDefault(c => c.Id == Card.Id);
                 if(card == null)
                     throw new InvalidParamException(nameof(Card));
 

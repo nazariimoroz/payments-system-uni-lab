@@ -14,7 +14,7 @@ namespace payments_system_lib.Classes.Users
         [Required]
         public string PhoneNumber { get; set ; }
         public string EncryptedPassword { get; set; }
-        public List<BaseCard> Cards { get; set; } = new List<BaseCard>();
+        public List<CreditCard> Cards { get; set; } = new List<CreditCard>();
 
         /*
          * For EF Core and Creator

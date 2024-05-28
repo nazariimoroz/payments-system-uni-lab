@@ -19,9 +19,9 @@ namespace payments_system_ui.UI.Elements
     /// <summary>
     /// Interaction logic for CreditCard.xaml
     /// </summary>
-    public partial class BaseCardUi : Page
+    public partial class CreditCardUi : Page
     {
-        public BaseCardUi(string creditCardName, string cardNumber, string cardCvc, string cardExpiresEnd)
+        public CreditCardUi(string creditCardName, string cardNumber, string cardCvc, string cardExpiresEnd)
         {
             InitializeComponent();
 
@@ -31,14 +31,14 @@ namespace payments_system_ui.UI.Elements
             this.CreditCardExpiresEnd.Text = cardExpiresEnd;
         }
 
-        public BaseCardUi(in BaseCard baseCard)
+        public CreditCardUi(in CreditCard creditCard)
         {
             InitializeComponent();
 
             this.CreditCardName.Text = "TODO";
-            this.CreditCardNumber.Text = baseCard.Num;
-            this.CreditCardCvc.Text = baseCard.Cvc;
-            this.CreditCardExpiresEnd.Text = baseCard.ExpiresEnd.ToString("mm/yy");
+            this.CreditCardNumber.Text = creditCard.Num;
+            this.CreditCardCvc.Text = creditCard.Cvc;
+            this.CreditCardExpiresEnd.Text = creditCard.ExpiresEnd.ToString("mm/yy");
         }
     }
 }

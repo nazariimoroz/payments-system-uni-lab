@@ -6,7 +6,7 @@ namespace payments_system_lib.Classes.Transaction
     public class Transaction
     {
         public int Id { get; protected set; }
-        public BaseCard Card  { get; protected set; }
+        public CreditCard Card  { get; protected set; }
         public TransactionType Type { get; protected set; }
         public string Info { get; protected set; }
         public float Amount { get; protected set; }
@@ -20,7 +20,7 @@ namespace payments_system_lib.Classes.Transaction
             CreationDate = creationDate;
         }
 
-        public Transaction(TransactionType type, string info, float amount, DateTime creationDate, BaseCard card)
+        public Transaction(TransactionType type, string info, float amount, DateTime creationDate, CreditCard card)
         {
             Type = type;
             Info = info;

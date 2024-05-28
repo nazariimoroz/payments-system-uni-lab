@@ -10,20 +10,20 @@ using Pomelo.EntityFrameworkCore.MySql.Storage;
 
 namespace payments_system_lib.Classes.Cards.Creators
 {
-    public class BaseCardCreator : DbAgentCreator<BaseCard>
+    public class CreditCardCreator : DbAgentCreator<CreditCard>
     {
         public string Num { get; set; } = null;
 
         public Client Client;
 
-        public override BaseCard TryGetFromDb()
+        public override CreditCard TryGetFromDb()
         {
             if (Num == null)
                 throw new InvalidParamException(nameof(Num));
             using (var db = new ApplicationContext())
             {
                 var baseCard = db
-                    .ClientCard
+                    .CreditCard
                     .Include(c => c.Client)
                     .FirstOrDefault(c => c.Num == Num);
 
@@ -31,7 +31,7 @@ namespace payments_system_lib.Classes.Cards.Creators
             }
         }
 
-        public override BaseCard CreateNew()
+        public override CreditCard CreateNew()
         {
             if (Client == null)
                 return null;
@@ -51,7 +51,7 @@ namespace payments_system_lib.Classes.Cards.Creators
             const float creditLimit = 100000;
             var expiresEnd = new DateTime(DateTime.Now.Year + 5, DateTime.Now.Month, DateTime.Now.Day);
 
-            BaseCard toRet;
+            CreditCard toRet;
 
             using (var db = new ApplicationContext())
             {
@@ -59,10 +59,10 @@ namespace payments_system_lib.Classes.Cards.Creators
                 if (client == null)
                     throw new InvalidParamException(nameof(Client));
 
-                BaseCard card;
+                CreditCard card;
                 do
                 {
-                    card = db.ClientCard.FirstOrDefault(c => c.Num == num);
+                    card = db.CreditCard.FirstOrDefault(c => c.Num == num);
 
                     numBuilder = new StringBuilder();
                     for (int i = 0; i < 16; ++i)
@@ -70,9 +70,9 @@ namespace payments_system_lib.Classes.Cards.Creators
                     num = numBuilder.ToString();
                 } while (card != null);
 
-                toRet = new BaseCard(num, cvc, clientMoney, creditLimit, expiresEnd, client);
+                toRet = new CreditCard(num, cvc, clientMoney, creditLimit, expiresEnd, client);
 
-                db.ClientCard.Add(toRet);
+                db.CreditCard.Add(toRet);
                 db.Client.Update(toRet.Client);
                 db.SaveChanges();
             }
@@ -85,17 +85,17 @@ namespace payments_system_lib.Classes.Cards.Creators
             using (var db = new ApplicationContext())
             {
                 return db
-                    .ClientCard
+                    .CreditCard
                     .Include(c => c.Client)
                     .Select(c => c as T).ToList();
             }
         }
 
-        public override void Save(BaseCard toSave)
+        public override void Save(CreditCard toSave)
         {
             using (var db = new ApplicationContext())
             {
-                var card = db.ClientCard.FirstOrDefault(c => c.Id == toSave.Id);
+                var card = db.CreditCard.FirstOrDefault(c => c.Id == toSave.Id);
                 if (card == null)
                     throw new InvalidParamException(nameof(toSave));
                 db.Entry(card).CurrentValues.SetValues(toSave);
@@ -104,11 +104,11 @@ namespace payments_system_lib.Classes.Cards.Creators
             }
         }
 
-        public override void Destroy(BaseCard toDestroy)
+        public override void Destroy(CreditCard toDestroy)
         {
             using (var db = new ApplicationContext())
             {
-                var card = db.ClientCard.FirstOrDefault(c => c.Id == toDestroy.Id);
+                var card = db.CreditCard.FirstOrDefault(c => c.Id == toDestroy.Id);
                 if (card == null)
                     throw new InvalidParamException(nameof(toDestroy));
 
@@ -116,7 +116,7 @@ namespace payments_system_lib.Classes.Cards.Creators
                 if (client == null)
                     throw new InvalidParamException(nameof(Client));
 
-                db.ClientCard.Remove(card);
+                db.CreditCard.Remove(card);
                 db.Client.Update(client);
                 db.SaveChanges();
             }

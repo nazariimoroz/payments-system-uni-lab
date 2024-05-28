@@ -179,7 +179,7 @@ namespace payments_system_ui.UI.Main
             CardsStackPanel.Children.Clear();
             foreach (var baseCard in cards)
             {
-                var baseCardUi = new BaseCardUi("TODO",
+                var baseCardUi = new CreditCardUi("TODO",
                     baseCard.Num,
                     baseCard.Cvc,
                     baseCard.ExpiresEnd.ToString("mm/yy"));
@@ -208,7 +208,7 @@ namespace payments_system_ui.UI.Main
                 {
                     if (!(sender is Frame f))
                         return;
-                    if (!(f.Content is BaseCardUi cardUi))
+                    if (!(f.Content is CreditCardUi cardUi))
                         return;
                     foreach (var cardIndex in cards.Select((value, i) => new { i, value }))
                     {
@@ -245,7 +245,7 @@ namespace payments_system_ui.UI.Main
 
         private void CreateNewCard(object sender, CreateCardInfo e)
         {
-            var creditCardCreator = new BaseCardCreator()
+            var creditCardCreator = new CreditCardCreator()
             {
                 Client = _client
             };
@@ -261,7 +261,7 @@ namespace payments_system_ui.UI.Main
         private void CloseSelectedCard()
         {
             var selectedCard = _client.Cards[_currentCardIndex];
-            new BaseCardCreator(){Client = _client}.Destroy(selectedCard);
+            new CreditCardCreator(){Client = _client}.Destroy(selectedCard);
 
             User = new ClientCreator { PhoneNumber = _client.PhoneNumber, EncryptedPassword = _client.EncryptedPassword }.TryGetFromDb();
         }
@@ -270,8 +270,8 @@ namespace payments_system_ui.UI.Main
         {
             var selectedCard = _client.Cards[_currentCardIndex];
             if (!selectedCard.SendMoneyToOtherCard(info, out var receiver)) return;
-            new BaseCardCreator().Save(selectedCard);
-            new BaseCardCreator().Save(receiver);
+            new CreditCardCreator().Save(selectedCard);
+            new CreditCardCreator().Save(receiver);
             User = new ClientCreator { PhoneNumber = _client.PhoneNumber, EncryptedPassword = _client.EncryptedPassword }.TryGetFromDb();
         }
 
@@ -280,7 +280,7 @@ namespace payments_system_ui.UI.Main
             var selectedCard = _client.Cards[_currentCardIndex];
             selectedCard.ReplenishFromSource(info);
 
-            new BaseCardCreator().Save(selectedCard);
+            new CreditCardCreator().Save(selectedCard);
             User = new ClientCreator { PhoneNumber = _client.PhoneNumber, EncryptedPassword = _client.EncryptedPassword }.TryGetFromDb();
         }
 

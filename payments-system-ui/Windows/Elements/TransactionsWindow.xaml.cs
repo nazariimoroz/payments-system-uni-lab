@@ -24,28 +24,28 @@ namespace payments_system_ui.Windows.Elements
     /// </summary>
     public partial class TransactionsWindow : Window
     {
-        public TransactionsWindow(in BaseCard baseCard)
+        public TransactionsWindow(in CreditCard creditCard)
         {
             InitializeComponent();
             
-            InitCardNum(in baseCard);
-            InitAmount(in baseCard);
-            InitTransactions(in baseCard);
+            InitCardNum(in creditCard);
+            InitAmount(in creditCard);
+            InitTransactions(in creditCard);
         }
 
-        private void InitCardNum(in BaseCard baseCard)
+        private void InitCardNum(in CreditCard creditCard)
         {
-            CardNumTextBlock.Text = baseCard.Num;
+            CardNumTextBlock.Text = creditCard.Num;
         }
 
-        private void InitAmount(in BaseCard baseCard)
+        private void InitAmount(in CreditCard creditCard)
         {
-            AmountTextBlock.Text = baseCard.ClientMoney.ToString(CultureInfo.CurrentCulture) + "$";
+            AmountTextBlock.Text = creditCard.ClientMoney.ToString(CultureInfo.CurrentCulture) + "$";
         }
 
-        private void InitTransactions(in BaseCard baseCard)
+        private void InitTransactions(in CreditCard creditCard)
         {
-            var transactions = new TransactionCreator() { Card = baseCard }.GetAll<Transaction>();
+            var transactions = new TransactionCreator() { Card = creditCard }.GetAll<Transaction>();
             transactions.Sort((t1, t2) => t2.CreationDate.CompareTo(t1.CreationDate));
             TransactionsDataGrid.ItemsSource = transactions;
         }
