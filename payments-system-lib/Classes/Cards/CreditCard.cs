@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
+using Microsoft.Extensions.Options;
 using Org.BouncyCastle.Security;
 using Org.BouncyCastle.Tls;
 using payments_system_lib.Classes.Cards.Creators;
@@ -24,6 +25,18 @@ namespace payments_system_lib.Classes.Cards
 
         [ForeignKey("ClientId")]
         public Client Client { get; protected set; }
+
+        [NotMapped]
+        public float AllMoney
+        {
+            get => ClientMoney + CreditLimit;
+            set
+            {
+                if (value < 0)
+                    throw new WithdrawFromCardError(AllMoney, value - AllMoney);
+                ClientMoney = value - CreditLimit;
+            }
+        }
 
         /*
          * For EC Core
@@ -53,12 +66,19 @@ namespace payments_system_lib.Classes.Cards
             var amount = info.Amount;
             if (receiver == null)
                 return false;
-
-            if (amount <= 0.0F || amount > ClientMoney)
+            if (amount <= 0.0F)
                 return false;
+            
+            try
+            {
+                AllMoney -= amount;
+            } catch (WithdrawFromCardError e)
+            {
+                Console.WriteLine(e);
+                return false;
+            }
 
-            ClientMoney -= amount;
-            receiver.ClientMoney += amount;
+            receiver.AllMoney += amount;
 
             var transactionInfo = $"Receive {info.Amount}$ from '{Num}'";
             new TransactionCreator { Type = TransactionType.Receiver, Amount = info.Amount, Card = receiver, Info = transactionInfo }.CreateNew();
@@ -73,7 +93,7 @@ namespace payments_system_lib.Classes.Cards
         {
             if (info.Amount <= 0.0F)
                 return false;
-            ClientMoney += info.Amount;
+            AllMoney += info.Amount;
 
             var transactionInfo = $"Receive {info.Amount}$ from '{info.ReplenishSource.ToString()}' source";
             new TransactionCreator{ Type = TransactionType.Receiver, Amount = info.Amount, Card = this, Info = transactionInfo }.CreateNew();
@@ -96,5 +116,14 @@ namespace payments_system_lib.Classes.Cards
     {
         public float Amount { get; set; }
         public string NumOfReceiver { get; set; }
+    }
+
+    class WithdrawFromCardError : Exception
+    {
+        public WithdrawFromCardError(float currentMoney, float tryToWithdraw)
+            : base($"{currentMoney} < {-tryToWithdraw}")
+        {
+
+        }
     }
 }
