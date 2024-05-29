@@ -11,7 +11,5 @@ namespace payments_system_lib.Classes.Users.Creators
         public abstract override BaseUser CreateNew();
         public abstract bool CanBeRegistered();
         public abstract bool IsValidArgs();
-
-        public abstract bool DestroyUser(BaseUser toDestroy);
     }
 }

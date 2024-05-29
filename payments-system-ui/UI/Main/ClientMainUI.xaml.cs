@@ -134,7 +134,7 @@ namespace payments_system_ui.UI.Main
         private void DeleteCurrentAccountButton_Click(object sender, RoutedEventArgs e)
         {
             var creator = new ClientCreator();
-            creator.DestroyUser(User);
+            creator.Destroy(User);
             if (!(Window.GetWindow(this) is MainWindow mainWindow))
                 throw new InvalidCastException("Window.GetWindow(this)");
             mainWindow.RestartFromRegistrationWindow();

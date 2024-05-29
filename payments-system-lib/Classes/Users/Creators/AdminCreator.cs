@@ -67,26 +67,6 @@ namespace payments_system_lib.Classes.Users.Creators
             return RealPassword != null && RealPassword.Length < 8;
         }
 
-        public override bool DestroyUser(BaseUser toDestroy)
-        {
-            if (!(toDestroy is Admin admin))
-                return false;
-            using (var db = new ApplicationContext())
-            {
-                var foundAdmin = db
-                    .Admin
-                    .FirstOrDefault(a => a.Id == admin.Id);
-
-                if (foundAdmin == null)
-                    return false;
-
-                db.Admin.Remove(foundAdmin);
-                db.SaveChanges();
-            }
-
-            return true;
-        }
-
         public override List<T> GetAll<T>()
         {
             using (var db = new ApplicationContext())
@@ -112,7 +92,22 @@ namespace payments_system_lib.Classes.Users.Creators
 
         public override void Destroy(BaseUser toDestroy)
         {
-            throw new NotImplementedException();
+            if (!(toDestroy is Admin admin))
+                return;
+            using (var db = new ApplicationContext())
+            {
+                var foundAdmin = db
+                    .Admin
+                    .FirstOrDefault(a => a.Id == admin.Id);
+
+                if (foundAdmin == null)
+                    return;
+
+                db.Admin.Remove(foundAdmin);
+                db.SaveChanges();
+            }
+
+            return;
         }
     }
 }

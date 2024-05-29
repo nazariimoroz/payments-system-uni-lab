@@ -63,10 +63,22 @@ namespace payments_system_ui.UI.Main
             }
         }
 
+        private void BlockClientButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (_selectedClient == null)
+                return;
+
+            new ClientCreator().Destroy(_selectedClient);
+            UpdateUsersDataGrid(PhoneRegexTextBox.Text);
+        }
+
         private void OnClientDataGridOnSelectedCellsChanged(object sender, SelectedCellsChangedEventArgs args)
         {
             if (args == null || args.AddedCells.Count == 0)
+            {
+                SelectClient(null);
                 return;
+            }
             
             dynamic clientInfo = args.AddedCells[0].Item;
             var phoneNumber = clientInfo.PhoneNumber as string;
@@ -79,6 +91,8 @@ namespace payments_system_ui.UI.Main
         {
             try
             {
+                ClientDataGrid.UnselectAllCells();
+
                 _clients = new ClientCreator
                 {
                     WherePredicate =

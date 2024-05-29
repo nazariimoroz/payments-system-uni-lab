@@ -102,27 +102,6 @@ namespace payments_system_lib.Classes.Users.Creators
             return true;
         }
 
-        public override bool DestroyUser(BaseUser toDestroy)
-        {
-            if (!(toDestroy is Client client))
-                return false;
-            using (var db = new ApplicationContext())
-            {
-                var foundClient = db
-                    .Client
-                    .Include(c => c.Cards)
-                    .FirstOrDefault(c => c.Id == client.Id);
-
-                if (foundClient == null)
-                    return false;
-
-                db.CreditCard.RemoveRange(foundClient.Cards);
-                db.Client.Remove(foundClient);
-                db.SaveChanges();
-            }
-
-            return true;
-        }
         public override List<T> GetAll<T>()
         {
             using (var db = new ApplicationContext())
@@ -154,7 +133,32 @@ namespace payments_system_lib.Classes.Users.Creators
 
         public override void Destroy(BaseUser toDestroy)
         {
-            throw new NotImplementedException();
+            if (!(toDestroy is Client client))
+                return;
+            using (var db = new ApplicationContext())
+            {
+                var foundClient = db
+                    .Client
+                    .Include(c => c.Cards)
+                    .FirstOrDefault(c => c.Id == client.Id);
+
+                if (foundClient == null)
+                    return;
+
+                foreach (var foundClientCard in foundClient.Cards)
+                {
+                    db.Transaction.RemoveRange(
+                        db
+                            .Transaction
+                            .Include(t => t.Card)
+                            .Where(t => t.Card.Id == foundClientCard.Id)
+                            .AsEnumerable()
+                        );
+                }
+                db.CreditCard.RemoveRange(foundClient.Cards);
+                db.Client.Remove(foundClient);
+                db.SaveChanges();
+            }
         }
     }
 }
