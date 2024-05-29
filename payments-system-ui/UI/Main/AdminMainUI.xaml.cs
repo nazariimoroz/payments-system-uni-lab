@@ -18,6 +18,7 @@ using payments_system_lib.Classes.Cards;
 using payments_system_lib.Classes.Cards.Creators;
 using payments_system_lib.Classes.Users;
 using payments_system_lib.Classes.Users.Creators;
+using payments_system_ui.Windows.Elements;
 
 namespace payments_system_ui.UI.Main
 {
@@ -27,32 +28,60 @@ namespace payments_system_ui.UI.Main
     public partial class AdminMainUI : UserMainUI
     {
         public override BaseUser User { get; set; }
+        private Client _selectedClient = null;
+        private List<Client> _clients;
 
         public AdminMainUI()
         {
             InitializeComponent();
 
-            updateUsersDataGrid(PhoneRegexTextBox.Text);
+            ClientMenuPanel.Visibility = Visibility.Collapsed;
+
+            ClientDataGrid.SelectedCellsChanged += OnClientDataGridOnSelectedCellsChanged;
+
+            UpdateUsersDataGrid(PhoneRegexTextBox.Text);
         }
 
         private void PhoneRegex_OnTextChanged(object sender, TextChangedEventArgs e)
         {
             if (sender is TextBox textBox)
             {
-                updateUsersDataGrid(textBox.Text);
+                UpdateUsersDataGrid(textBox.Text);
             }
-
         }
 
-        private void updateUsersDataGrid(string phoneRegex)
+        private void ViewClientCreditCardsButton_Click(object sender, RoutedEventArgs e)
         {
-            var clientCreator = new ClientCreator();
-            var cardCreator = new CreditCardCreator();
+            if (_selectedClient == null)
+                return;
+
+            var viewWinCreditCard = new ViewClientCreditCardsWindow(_selectedClient);
+            viewWinCreditCard.Owner = Window.GetWindow(this);
+            viewWinCreditCard.ShowDialog();
+        }
+
+        private void OnClientDataGridOnSelectedCellsChanged(object sender, SelectedCellsChangedEventArgs args)
+        {
+            dynamic clientInfo = args.AddedCells[0].Item;
+            var phoneNumber = clientInfo.PhoneNumber as string;
+            var client = _clients.Find(c => c.PhoneNumber == phoneNumber);
+            if (client == null) throw new Exception("Bad client number");
+            SelectClient(client);
+        }
+
+        private void UpdateUsersDataGrid(string phoneRegex)
+        {
             try
             {
-                UsersDataGrid.ItemsSource =
-                    from client in clientCreator.GetAll<Client>()
-                    where Regex.IsMatch(client.PhoneNumber, phoneRegex)
+                _clients = new ClientCreator
+                {
+                    WherePredicate =
+                        client => Regex.IsMatch(client.PhoneNumber,
+                            phoneRegex)
+                }.GetAll<Client>();
+
+                ClientDataGrid.ItemsSource =
+                    from client in _clients
                     select new
                     {
                         PhoneNumber=client.PhoneNumber, 
@@ -62,8 +91,21 @@ namespace payments_system_ui.UI.Main
             }
             catch (Exception e)
             {
-                UsersDataGrid.ItemsSource = null;
+                ClientDataGrid.ItemsSource = null;
             }
+        }
+
+        private void SelectClient(Client client)
+        {
+            _selectedClient = client;
+            if (_selectedClient == null)
+            {
+                ClientMenuPanel.Visibility = Visibility.Collapsed;
+                return;
+            }
+            
+            ClientMenuPanel.Visibility = Visibility.Visible;
+            ClientPhoneNumberTextBox.Text = _selectedClient.PhoneNumber;
         }
 
     }

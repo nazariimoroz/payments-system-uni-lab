@@ -61,6 +61,7 @@
     <Reference Include="MathConverter, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c3adc7c4c35d5d95, processorArchitecture=MSIL">
       <HintPath>..\packages\MathConverter.2.2.1\lib\net35\MathConverter.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Xaml.Behaviors, Version=1.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Xaml.Behaviors.Wpf.1.1.39\lib\net45\Microsoft.Xaml.Behaviors.dll</HintPath>
     </Reference>
@@ -135,6 +136,9 @@
     </Compile>
     <Compile Include="Windows\Elements\TransactionsWindow.xaml.cs">
       <DependentUpon>TransactionsWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\Elements\ViewClientCreditCardsWindow.xaml.cs">
+      <DependentUpon>ViewClientCreditCardsWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -223,6 +227,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\Elements\TransactionsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\Elements\ViewClientCreditCardsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

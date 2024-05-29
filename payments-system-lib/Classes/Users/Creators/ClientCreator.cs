@@ -15,6 +15,7 @@ namespace payments_system_lib.Classes.Users.Creators
         public string PhoneNumber { get; set; } = null;
         public string RealPassword { get; set; } = null;
         public string EncryptedPassword { get; set; } = null;
+        public Func<Client, bool> WherePredicate = (Client c) => true;
 
         private string GetEncryptedPassword() => RealPassword == null ? EncryptedPassword : Utilities.Utilities.CreateMD5(RealPassword);
 
@@ -121,7 +122,9 @@ namespace payments_system_lib.Classes.Users.Creators
                 return db
                     .Client
                     .Include(c => c.Cards)
-                    .Select(c => c as T).ToList();
+                    .Where(WherePredicate)
+                    .Select(c => c as T)
+                    .ToList();
             }
         }
 

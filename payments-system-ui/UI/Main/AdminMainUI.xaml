@@ -32,7 +32,7 @@
                 <RowDefinition Height="150*" />
             </Grid.RowDefinitions>
 
-            <DataGrid Name="UsersDataGrid" IsReadOnly="True" AutoGenerateColumns="False" Grid.Column="1" Grid.Row="1" >
+            <DataGrid Name="ClientDataGrid" IsReadOnly="True" AutoGenerateColumns="False" Grid.Column="1" Grid.Row="1" >
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Phone Number" Binding="{Binding Path=PhoneNumber}"></DataGridTextColumn>
                     <DataGridTextColumn Header="Registration Date" Binding="{Binding Path=RegistrationDate}"></DataGridTextColumn>
@@ -60,8 +60,14 @@
                      Text="\+[0-9]*"
                      HorizontalAlignment="Left"
                      VerticalAlignment="Center"
-                     Width="150"
-                     Margin="10,0,0,0" Height="24"/>
+                     Width="184"
+                     Margin="10.4,6.6,0,7" Height="24"/>
+
+            <StackPanel Name="ClientMenuPanel" Grid.Column="1" Grid.Row="2" Margin="10.4,10,240,276.6">
+                <TextBlock Name="ClientPhoneNumberTextBox">Phone Number: +1234567890</TextBlock>
+                <Button Name="ViewClientCreditCardsButton" Margin="0,5,0,0" Click="ViewClientCreditCardsButton_Click">View Client Credit Cards</Button>
+                <Button Name="BlockClientButton" Margin="0,5,0,0">Block Client</Button>
+            </StackPanel>
         </Grid>
     </Canvas>
 
