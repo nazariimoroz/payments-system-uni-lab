@@ -15,7 +15,7 @@ namespace payments_system_lib.Classes.Users.Creators
         public string PhoneNumber { get; set; } = null;
         public string RealPassword { get; set; } = null;
         public string EncryptedPassword { get; set; } = null;
-        public Func<Client, bool> WherePredicate = (Client c) => true;
+        public Func<Client, bool> WherePredicate { get; set; } = (Client c) => true;
 
         private string GetEncryptedPassword() => RealPassword == null ? EncryptedPassword : Utilities.Utilities.CreateMD5(RealPassword);
 

@@ -13,8 +13,7 @@ namespace payments_system_lib.Classes.Cards.Creators
     public class CreditCardCreator : DbAgentCreator<CreditCard>
     {
         public string Num { get; set; } = null;
-
-        public Client Client;
+        public Client Client { get; set; } = null;
 
         public override CreditCard TryGetFromDb()
         {

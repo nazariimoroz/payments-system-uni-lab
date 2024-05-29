@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="payments_system_lib.Classes.Cards.Creators.CreditCardCreator">
+    <Position X="0.75" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAIAAAAAAAAAAAAACAgAAAABAAAAAAgAAAAAAAAQ=</HashCode>
+      <FileName>Classes\Cards\Creators\CreditCardCreator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="payments_system_lib.Classes.Cards.CreditCard">
+    <Position X="14.75" Y="5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>IAACQAAAAAAABAAAAAABAAAAAAAAAAAAAAAAGAEAAAY=</HashCode>
+      <FileName>Classes\Cards\CreditCard.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="payments_system_lib.Classes.DbAgentCreator&lt;T&gt;">
+    <Position X="4" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAAAAAAAAAAAAACAgAAAABAAAAAAgAAAAAAAAA=</HashCode>
+      <FileName>Classes\DbAgentCreator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="payments_system_lib.Classes.Transaction.Creators.TransactionCreator">
+    <Position X="7.5" Y="2.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AABCAIAAAAAAAAAAAAACAgCAAABAAAAAAwAAAEAAAAA=</HashCode>
+      <FileName>Classes\Transaction\Creators\TransactionCreator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="payments_system_lib.Classes.Transaction.Transaction">
+    <Position X="14.75" Y="2" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>QABCAAAAAAAAAAAAAAAAAACAAAAAAAAAAQAAAEAAAAA=</HashCode>
+      <FileName>Classes\Transaction\Transaction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="payments_system_lib.Classes.Users.Admin">
+    <Position X="10.25" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAAAAAAQAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Classes\Users\Admin.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="payments_system_lib.Classes.Users.BaseUser">
+    <Position X="11.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Classes\Users\BaseUser.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="payments_system_lib.Classes.Users.Client">
+    <Position X="12.75" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAQAAIAQAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Classes\Users\Client.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="payments_system_lib.Classes.Users.Creators.AdminCreator">
+    <Position X="5.25" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAEAAAAAAQQAAACAgAAAABAAAAAAgAAAAAgAAA=</HashCode>
+      <FileName>Classes\Users\Creators\AdminCreator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="payments_system_lib.Classes.Users.Creators.BaseUserCreator">
+    <Position X="4" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAEAAAAAAAAAAACAgAAAAAAAAAAAAAAAAAgAAA=</HashCode>
+      <FileName>Classes\Users\Creators\BaseUserCreator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="payments_system_lib.Classes.Users.Creators.ClientCreator">
+    <Position X="3" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAEAAAAAAAQAAACQgAAAQBAAAAAAgAAAAAgAQA=</HashCode>
+      <FileName>Classes\Users\Creators\ClientCreator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
