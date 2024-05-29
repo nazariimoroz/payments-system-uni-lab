@@ -106,9 +106,16 @@ namespace payments_system_lib.Classes.Cards.Creators
 
         public override void Destroy(CreditCard toDestroy)
         {
+            if (Client == null)
+                throw new InvalidParamException(nameof(Client));
+            
             using (var db = new ApplicationContext())
             {
-                var card = db.CreditCard.FirstOrDefault(c => c.Id == toDestroy.Id);
+                var card = db
+                    .CreditCard
+                    .Include(c => Client)
+                    .Include(c => Client)
+                    .FirstOrDefault(c => c.Id == toDestroy.Id);
                 if (card == null)
                     throw new InvalidParamException(nameof(toDestroy));
 
@@ -116,8 +123,17 @@ namespace payments_system_lib.Classes.Cards.Creators
                 if (client == null)
                     throw new InvalidParamException(nameof(Client));
 
+                var transactions = db
+                    .Transaction
+                    .Include(t => client)
+                    .Where(t => t.Card.Id == card.Id)
+                    .AsEnumerable();
+                if (client == null)
+                    throw new InvalidParamException(nameof(Client));
+
                 db.CreditCard.Remove(card);
                 db.Client.Update(client);
+                db.Transaction.UpdateRange(transactions);
                 db.SaveChanges();
             }
         }

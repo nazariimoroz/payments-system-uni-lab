@@ -64,6 +64,14 @@ namespace payments_system_lib.Classes.Users.Creators
             };
             ccCreator.CreateNew(); // Will be added automatically to array 
 
+            using (var db = new ApplicationContext())
+            {
+                client = db
+                    .Client
+                    .Include(c => c.Cards)
+                    .FirstOrDefault(c => c.Id == client.Id);
+            }
+
             return client;
         }
 

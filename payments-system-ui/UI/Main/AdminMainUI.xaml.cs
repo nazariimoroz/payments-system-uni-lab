@@ -57,11 +57,17 @@ namespace payments_system_ui.UI.Main
 
             var viewWinCreditCard = new ViewClientCreditCardsWindow(_selectedClient);
             viewWinCreditCard.Owner = Window.GetWindow(this);
-            viewWinCreditCard.ShowDialog();
+            if (viewWinCreditCard.ShowDialog().GetValueOrDefault(false))
+            {
+                UpdateUsersDataGrid(PhoneRegexTextBox.Text);
+            }
         }
 
         private void OnClientDataGridOnSelectedCellsChanged(object sender, SelectedCellsChangedEventArgs args)
         {
+            if (args == null || args.AddedCells.Count == 0)
+                return;
+            
             dynamic clientInfo = args.AddedCells[0].Item;
             var phoneNumber = clientInfo.PhoneNumber as string;
             var client = _clients.Find(c => c.PhoneNumber == phoneNumber);

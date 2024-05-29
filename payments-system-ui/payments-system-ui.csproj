@@ -134,6 +134,9 @@
     <Compile Include="UI\Registration\ClientRegistrationMenu.xaml.cs">
       <DependentUpon>ClientRegistrationMenu.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Windows\Elements\ChangeCardCreditLimitWindow.xaml.cs">
+      <DependentUpon>ChangeCardCreditLimitWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\Elements\TransactionsWindow.xaml.cs">
       <DependentUpon>TransactionsWindow.xaml</DependentUpon>
     </Compile>
@@ -223,6 +226,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UI\Main\ClientMainUI.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\Elements\ChangeCardCreditLimitWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
