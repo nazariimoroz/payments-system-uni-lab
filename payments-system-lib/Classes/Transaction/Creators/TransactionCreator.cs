@@ -1,11 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using payments_system_lib.Classes.Users;
-using payments_system_lib.Utilities;
+﻿using payments_system_lib.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using payments_system_lib.Classes.Cards;
 

@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Microsoft.EntityFrameworkCore;
-using Org.BouncyCastle.Security;
-using payments_system_lib.Classes.Cards;
 using payments_system_lib.Classes.Cards.Creators;
 using payments_system_lib.Utilities;
 

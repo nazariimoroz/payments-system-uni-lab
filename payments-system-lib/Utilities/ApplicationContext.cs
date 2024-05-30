@@ -1,9 +1,7 @@
 ﻿using System;
 using System.IO;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.Extensions.Configuration;
-using payments_system_lib.Classes;
 using payments_system_lib.Classes.Cards;
 using payments_system_lib.Classes.Transaction;
 using payments_system_lib.Classes.Users;

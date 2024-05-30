@@ -1,7 +1,5 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using payments_system_lib.Interfaces;
 
 namespace payments_system_lib.Classes.Users
 {

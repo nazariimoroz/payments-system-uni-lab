@@ -5,8 +5,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
-using Org.BouncyCastle.Security;
-using Pomelo.EntityFrameworkCore.MySql.Storage;
 
 namespace payments_system_lib.Classes.Cards.Creators
 {

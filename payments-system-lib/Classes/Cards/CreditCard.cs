@@ -1,16 +1,9 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using Microsoft.Extensions.Options;
-using Org.BouncyCastle.Security;
-using Org.BouncyCastle.Tls;
 using payments_system_lib.Classes.Cards.Creators;
 using payments_system_lib.Classes.Transaction;
 using payments_system_lib.Classes.Transaction.Creators;
 using payments_system_lib.Classes.Users;
-using payments_system_lib.Interfaces;
-using payments_system_lib.Utilities;
 
 namespace payments_system_lib.Classes.Cards
 {
