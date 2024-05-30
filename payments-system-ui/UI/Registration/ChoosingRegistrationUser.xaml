@@ -30,7 +30,7 @@
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <TextBlock Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="5"
-                   Text="You Registration As:"
+                   Text="MINI BANK"
                    FontSize="30"
                    HorizontalAlignment="Center"
                    VerticalAlignment="Center"></TextBlock>

@@ -12,7 +12,7 @@
         FontFamily="{materialDesign:MaterialDesignFont}"
 
         mc:Ignorable="d"
-        Title="MainWindow" Height="540" Width="960">
+        Title="Mini Bank" Height="540" Width="960">
     
     <Frame NavigationUIVisibility="Hidden" Name="UserMainUi" />
 

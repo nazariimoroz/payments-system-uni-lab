@@ -35,10 +35,10 @@ namespace payments_system_ui.UI.Elements
         {
             InitializeComponent();
 
-            this.CreditCardName.Text = "TODO";
+            this.CreditCardName.Text = "CREDIT CARD";
             this.CreditCardNumber.Text = creditCard.Num;
             this.CreditCardCvc.Text = creditCard.Cvc;
-            this.CreditCardExpiresEnd.Text = creditCard.ExpiresEnd.ToString("mm/yy");
+            this.CreditCardExpiresEnd.Text = creditCard.ExpiresEnd.ToString("MM/yy");
         }
     }
 }

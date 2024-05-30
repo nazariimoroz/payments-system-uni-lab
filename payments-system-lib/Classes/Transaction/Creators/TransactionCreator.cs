@@ -84,8 +84,6 @@ namespace payments_system_lib.Classes.Transaction.Creators
                     .Select(t => t as T)
                     .ToList(); // TODO MAKE ASYNC
 
-                await Task.Delay(1000);
-
                 return toRet;
             }
         }

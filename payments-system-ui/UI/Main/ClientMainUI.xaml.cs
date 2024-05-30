@@ -180,10 +180,7 @@ namespace payments_system_ui.UI.Main
             CardsStackPanel.Children.Clear();
             foreach (var baseCard in cards)
             {
-                var baseCardUi = new CreditCardUi("TODO",
-                    baseCard.Num,
-                    baseCard.Cvc,
-                    baseCard.ExpiresEnd.ToString("mm/yy"));
+                var baseCardUi = new CreditCardUi(baseCard);
                 var frame = new Frame
                 {
                     Content = baseCardUi
