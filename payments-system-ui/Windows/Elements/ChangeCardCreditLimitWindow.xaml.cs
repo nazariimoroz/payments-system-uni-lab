@@ -33,12 +33,12 @@ namespace payments_system_ui.Windows.Elements
             OldCreditLimitTextBlock.Text = $"Old Credit Limit: {_creditCard.CreditLimit}";
         }
 
-        private void AcceptButton_Click(object sender, RoutedEventArgs e)
+        private async void AcceptButton_Click(object sender, RoutedEventArgs e)
         {
             if (_creditCard == null || !float.TryParse(NewCreditLimitTextBox.Text, out var newCreditLimit) || newCreditLimit < 0.0F)
                 return;
             _creditCard.CreditLimit = newCreditLimit;
-            new CreditCardCreator().Save(_creditCard);
+            await new CreditCardCreator().Save(_creditCard);
             DialogResult = true;
             Close();
         }

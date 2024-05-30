@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Threading.Tasks;
 using payments_system_lib.Classes.Cards.Creators;
 using payments_system_lib.Classes.Transaction;
 using payments_system_lib.Classes.Transaction.Creators;
@@ -53,14 +54,14 @@ namespace payments_system_lib.Classes.Cards
             Client = client;
         }
 
-        public virtual bool SendMoneyToOtherCard(SendInfo info, out CreditCard receiver)
+        public virtual async Task<(bool isSuccess, CreditCard receiver)> SendMoneyToOtherCard(SendInfo info)
         {
-            receiver = new CreditCardCreator { Num = info.NumOfReceiver }.TryGetFromDb();
+            var receiver = await new CreditCardCreator { Num = info.NumOfReceiver }.TryGetFromDb();
             var amount = info.Amount;
             if (receiver == null)
-                return false;
+                return (false, receiver);
             if (amount <= 0.0F)
-                return false;
+                return (false, receiver);
             
             try
             {
@@ -68,28 +69,28 @@ namespace payments_system_lib.Classes.Cards
             } catch (WithdrawFromCardError e)
             {
                 Console.WriteLine(e);
-                return false;
+                return (false, receiver);
             }
 
             receiver.AllMoney += amount;
 
             var transactionInfo = $"Receive {info.Amount}$ from '{Num}'";
-            new TransactionCreator { Type = TransactionType.Receiver, Amount = info.Amount, Card = receiver, Info = transactionInfo }.CreateNew();
+            await new TransactionCreator { Type = TransactionType.Receiver, Amount = info.Amount, Card = receiver, Info = transactionInfo }.CreateNew();
 
             transactionInfo = $"Send {info.Amount}$ to '{receiver.Num}'";
-            new TransactionCreator { Type = TransactionType.Send, Amount = info.Amount, Card = this, Info = transactionInfo }.CreateNew();
+            await new TransactionCreator { Type = TransactionType.Send, Amount = info.Amount, Card = this, Info = transactionInfo }.CreateNew();
 
-            return true;
+            return (true, receiver);
         }
 
-        public virtual bool ReplenishFromSource(ReplenishInfo info)
+        public virtual async Task<bool> ReplenishFromSource(ReplenishInfo info)
         {
             if (info.Amount <= 0.0F)
                 return false;
             AllMoney += info.Amount;
 
             var transactionInfo = $"Receive {info.Amount}$ from '{info.ReplenishSource.ToString()}' source";
-            new TransactionCreator{ Type = TransactionType.Receiver, Amount = info.Amount, Card = this, Info = transactionInfo }.CreateNew();
+            await new TransactionCreator{ Type = TransactionType.Receiver, Amount = info.Amount, Card = this, Info = transactionInfo }.CreateNew();
             return true;
         }
     }
@@ -111,7 +112,7 @@ namespace payments_system_lib.Classes.Cards
         public string NumOfReceiver { get; set; }
     }
 
-    class WithdrawFromCardError : Exception
+    public class WithdrawFromCardError : Exception
     {
         public WithdrawFromCardError(float currentMoney, float tryToWithdraw)
             : base($"{currentMoney} < {-tryToWithdraw}")

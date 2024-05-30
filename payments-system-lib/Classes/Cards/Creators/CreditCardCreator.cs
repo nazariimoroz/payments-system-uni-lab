@@ -4,6 +4,7 @@ using payments_system_lib.Utilities;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
 namespace payments_system_lib.Classes.Cards.Creators
@@ -16,17 +17,17 @@ namespace payments_system_lib.Classes.Cards.Creators
         /// <summary>
         /// + Num
         /// </summary>
-        public override CreditCard TryGetFromDb()
+        public override async Task<CreditCard> TryGetFromDb()
         {
             if (Num == null)
                 throw new InvalidParamException(nameof(Num));
 
             using (var db = new ApplicationContext())
             {
-                var baseCard = db
+                var baseCard = await db
                     .CreditCard
                     .Include(c => c.Client)
-                    .FirstOrDefault(c => c.Num == Num);
+                    .FirstOrDefaultAsync(c => c.Num == Num);
 
                 return baseCard;
             }
@@ -35,7 +36,7 @@ namespace payments_system_lib.Classes.Cards.Creators
         /// <summary>
         /// + Client
         /// </summary>
-        public override CreditCard CreateNew()
+        public override async Task<CreditCard> CreateNew()
         {
             if (Client == null)
                 throw new InvalidParamException(nameof(Num));
@@ -60,14 +61,14 @@ namespace payments_system_lib.Classes.Cards.Creators
 
             using (var db = new ApplicationContext())
             {
-                var client = db.Client.FirstOrDefault(c => c.Id == Client.Id);
+                var client = await db.Client.FirstOrDefaultAsync(c => c.Id == Client.Id);
                 if (client == null)
                     throw new InvalidParamException(nameof(Client));
 
                 CreditCard card;
                 do
                 {
-                    card = db.CreditCard.FirstOrDefault(c => c.Num == num);
+                    card = await db.CreditCard.FirstOrDefaultAsync(c => c.Num == num);
 
                     numBuilder = new StringBuilder();
                     for (int i = 0; i < 16; ++i)
@@ -77,73 +78,73 @@ namespace payments_system_lib.Classes.Cards.Creators
 
                 toRet = new CreditCard(num, cvc, clientMoney, creditLimit, expiresEnd, client);
 
-                db.CreditCard.Add(toRet);
+                await db.CreditCard.AddAsync(toRet);
                 db.Client.Update(toRet.Client);
-                db.SaveChanges();
+                await db.SaveChangesAsync();
             }
 
             return toRet;
         }
 
-        public override List<T> GetAll<T>()
+        public override async Task<List<T>> GetAll<T>()
         {
             using (var db = new ApplicationContext())
             {
-                return db
+                return await db
                     .CreditCard
                     .Include(c => c.Client)
                     .Select(c => c as T)
-                    .ToList();
+                    .ToListAsync();
             }
         }
 
-        public override void Save(CreditCard toSave)
+        public override async Task Save(CreditCard toSave)
         {
             using (var db = new ApplicationContext())
             {
-                var card = db.CreditCard.FirstOrDefault(c => c.Id == toSave.Id);
+                var card = await db.CreditCard.FirstOrDefaultAsync(c => c.Id == toSave.Id);
                 if (card == null)
                     throw new InvalidParamException(nameof(toSave));
                 db.Entry(card).CurrentValues.SetValues(toSave);
                 db.Update(card);
-                db.SaveChanges();
+                await db.SaveChangesAsync();
             }
         }
 
         /// <summary>
         /// + Client
         /// </summary>
-        public override void Destroy(CreditCard toDestroy)
+        public override async Task Destroy(CreditCard toDestroy)
         {
             if (Client == null)
                 throw new InvalidParamException(nameof(Client));
             
             using (var db = new ApplicationContext())
             {
-                var card = db
+                var card = await db
                     .CreditCard
                     .Include(c => Client)
                     .Include(c => Client)
-                    .FirstOrDefault(c => c.Id == toDestroy.Id);
+                    .FirstOrDefaultAsync(c => c.Id == toDestroy.Id);
                 if (card == null)
                     throw new InvalidParamException(nameof(toDestroy));
 
-                var client = db.Client.FirstOrDefault(c => c.Id == Client.Id);
+                var client = await db.Client.FirstOrDefaultAsync(c => c.Id == Client.Id);
                 if (client == null)
                     throw new InvalidParamException(nameof(Client));
 
-                var transactions = db
+                var transactions = await db
                     .Transaction
                     .Include(t => client)
                     .Where(t => t.Card.Id == card.Id)
-                    .AsEnumerable();
+                    .ToListAsync();
                 if (client == null)
                     throw new InvalidParamException(nameof(Client));
 
                 db.CreditCard.Remove(card);
                 db.Client.Update(client);
                 db.Transaction.UpdateRange(transactions);
-                db.SaveChanges();
+                await db.SaveChangesAsync();
             }
         }
     }

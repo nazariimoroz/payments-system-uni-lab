@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using payments_system_lib.Utilities;
 using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace payments_system_lib.Classes.Users.Creators
 {
@@ -14,7 +16,7 @@ namespace payments_system_lib.Classes.Users.Creators
         /// + RealPassword <br/>
         /// + Key
         /// </summary>
-        public override BaseUser TryGetFromDb()
+        public override async Task<BaseUser> TryGetFromDb()
         {
             if (RealPassword == null)
                 throw new InvalidParamException(nameof(RealPassword));
@@ -25,9 +27,9 @@ namespace payments_system_lib.Classes.Users.Creators
 
             using (var db = new ApplicationContext())
             {
-                var admin= db
+                var admin= await db
                     .Admin
-                    .FirstOrDefault(c => c.Key == Key && c.EncryptedPassword == encryptedPassword);
+                    .FirstOrDefaultAsync(c => c.Key == Key && c.EncryptedPassword == encryptedPassword);
 
                 return admin;
             }
@@ -37,7 +39,7 @@ namespace payments_system_lib.Classes.Users.Creators
         /// + RealPassword <br/>
         /// + Key
         /// </summary>
-        public override BaseUser CreateNew()
+        public override async Task<BaseUser> CreateNew()
         {
             if (RealPassword == null)
                 throw new InvalidParamException(nameof(RealPassword));
@@ -50,16 +52,15 @@ namespace payments_system_lib.Classes.Users.Creators
 
             using (var db = new ApplicationContext())
             {
-                var query = db.Admin
+                var query = await db.Admin
                     .Where(c => c.Key == admin.Key)
-                    .ToList();
+                    .ToListAsync();
 
                 if (query.Count != 0)
                     return null;
                 
-
-                db.Admin.Add(admin);
-                db.SaveChanges();
+                await db.Admin.AddAsync(admin);
+                await db.SaveChangesAsync();
             }
 
             return admin;
@@ -69,15 +70,15 @@ namespace payments_system_lib.Classes.Users.Creators
         /// + RealPassword(optional) <br/>
         /// + Key
         /// </summary>
-        public override bool CanBeRegistered()
+        public override async Task<bool> CanBeRegistered()
         {
-            if (!IsValidArgs())
+            if (!await IsValidArgs())
                 return false;
 
             using (var db = new ApplicationContext())
             {
-                var query = db.Admin
-                    .FirstOrDefault(a => a.Key == Key);
+                var query = await db.Admin
+                    .FirstOrDefaultAsync(a => a.Key == Key);
 
                 return query == null;
             }
@@ -86,54 +87,52 @@ namespace payments_system_lib.Classes.Users.Creators
         /// <summary>
         /// + RealPassword(optional)
         /// </summary>
-        public override bool IsValidArgs()
+        public override async Task<bool> IsValidArgs()
         {
             return RealPassword != null && RealPassword.Length < 8;
         }
 
-        public override List<T> GetAll<T>()
+        public override async Task<List<T>> GetAll<T>()
         {
             using (var db = new ApplicationContext())
             {
-                return db.Admin.Select(admin => admin as T).ToList();
+                return await db.Admin.Select(admin => admin as T).ToListAsync();
             }
         }
 
-        public override void Save(BaseUser toSave)
+        public override async Task Save(BaseUser toSave)
         {
             if (!(toSave is Admin adminToSave))
                 throw new InvalidParamException(nameof(toSave));
 
             using (var db = new ApplicationContext())
             {
-                var admin = db.Admin.FirstOrDefault(a => a.Id == adminToSave.Id);
+                var admin = await db.Admin.FirstOrDefaultAsync(a => a.Id == adminToSave.Id);
                 if (admin == null)
                     throw new InvalidParamException(nameof(toSave));
                 db.Entry(admin).CurrentValues.SetValues(adminToSave);
                 db.Update(admin);
-                db.SaveChanges();
+                await db.SaveChangesAsync();
             }
         }
 
-        public override void Destroy(BaseUser toDestroy)
+        public override async Task Destroy(BaseUser toDestroy)
         {
             if (!(toDestroy is Admin admin))
                 throw new InvalidParamException(nameof(toDestroy));
 
             using (var db = new ApplicationContext())
             {
-                var foundAdmin = db
+                var foundAdmin = await db
                     .Admin
-                    .FirstOrDefault(a => a.Id == admin.Id);
+                    .FirstOrDefaultAsync(a => a.Id == admin.Id);
 
                 if (foundAdmin == null)
                     throw new InvalidParamException(nameof(toDestroy));
 
                 db.Admin.Remove(foundAdmin);
-                db.SaveChanges();
+                await db.SaveChangesAsync();
             }
-
-            return;
         }
     }
 }

@@ -39,18 +39,18 @@ namespace payments_system_ui.UI.Main
 
             ClientDataGrid.SelectedCellsChanged += OnClientDataGridOnSelectedCellsChanged;
 
-            UpdateUsersDataGrid(PhoneRegexTextBox.Text);
+            UpdateUsersDataGrid(PhoneRegexTextBox.Text).Wait();
         }
 
-        private void PhoneRegex_OnTextChanged(object sender, TextChangedEventArgs e)
+        private async void PhoneRegex_OnTextChanged(object sender, TextChangedEventArgs e)
         {
             if (sender is TextBox textBox)
             {
-                UpdateUsersDataGrid(textBox.Text);
+                await UpdateUsersDataGrid(textBox.Text);
             }
         }
 
-        private void ViewClientCreditCardsButton_Click(object sender, RoutedEventArgs e)
+        private async void ViewClientCreditCardsButton_Click(object sender, RoutedEventArgs e)
         {
             if (_selectedClient == null)
                 return;
@@ -59,17 +59,17 @@ namespace payments_system_ui.UI.Main
             viewWinCreditCard.Owner = Window.GetWindow(this);
             if (viewWinCreditCard.ShowDialog().GetValueOrDefault(false))
             {
-                UpdateUsersDataGrid(PhoneRegexTextBox.Text);
+                await UpdateUsersDataGrid(PhoneRegexTextBox.Text);
             }
         }
 
-        private void BlockClientButton_Click(object sender, RoutedEventArgs e)
+        private async void BlockClientButton_Click(object sender, RoutedEventArgs e)
         {
             if (_selectedClient == null)
                 return;
 
-            new ClientCreator().Destroy(_selectedClient);
-            UpdateUsersDataGrid(PhoneRegexTextBox.Text);
+            await new ClientCreator().Destroy(_selectedClient);
+            await UpdateUsersDataGrid(PhoneRegexTextBox.Text);
         }
 
         private void OnClientDataGridOnSelectedCellsChanged(object sender, SelectedCellsChangedEventArgs args)
@@ -87,13 +87,13 @@ namespace payments_system_ui.UI.Main
             SelectClient(client);
         }
 
-        private void UpdateUsersDataGrid(string phoneRegex)
+        private async Task UpdateUsersDataGrid(string phoneRegex)
         {
             try
             {
                 ClientDataGrid.UnselectAllCells();
 
-                _clients = new ClientCreator
+                _clients = await new ClientCreator
                 {
                     WherePredicate =
                         client => Regex.IsMatch(client.PhoneNumber,

@@ -30,7 +30,7 @@ namespace payments_system_ui.Windows.Elements
             
             InitCardNum(in creditCard);
             InitAmount(in creditCard);
-            InitTransactions(in creditCard);
+            InitTransactions(creditCard);
         }
 
         private void InitCardNum(in CreditCard creditCard)
@@ -43,9 +43,9 @@ namespace payments_system_ui.Windows.Elements
             AmountTextBlock.Text = creditCard.ClientMoney.ToString(CultureInfo.CurrentCulture) + "$";
         }
 
-        private void InitTransactions(in CreditCard creditCard)
+        private void InitTransactions(CreditCard creditCard)
         {
-            var transactions = new TransactionCreator() { Card = creditCard }.GetAll<Transaction>();
+            var transactions = new TransactionCreator{ Card = creditCard }.GetAll<Transaction>().Result;
             transactions.Sort((t1, t2) => t2.CreationDate.CompareTo(t1.CreationDate));
             TransactionsDataGrid.ItemsSource = transactions;
         }

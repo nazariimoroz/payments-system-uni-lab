@@ -32,7 +32,7 @@ namespace payments_system_ui.UI.Registration
             ClickBackButtonEvent(this, EventArgs.Empty);
         }
 
-        private void LoginButton_Click(object sender, RoutedEventArgs e)
+        private async void LoginButton_Click(object sender, RoutedEventArgs e)
         {
             var key = AdminKeyTextBox.Text;
             var realPassword = AdminPasswordBox.Password;
@@ -43,13 +43,13 @@ namespace payments_system_ui.UI.Registration
                 RealPassword = realPassword
             };
 
-            if (!creator.IsValidArgs())
+            if (!await creator.IsValidArgs())
             {
                 Console.WriteLine("Invalid args");
                 return;
             }
 
-            var admin = creator.TryGetFromDb();
+            var admin = await creator.TryGetFromDb();
             if (admin != null)
             {
                 UserLoggedEvent(this, admin);

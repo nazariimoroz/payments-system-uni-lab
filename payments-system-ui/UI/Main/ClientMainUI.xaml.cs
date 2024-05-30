@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -63,18 +64,18 @@ namespace payments_system_ui.UI.Main
                 : Visibility.Collapsed;
         }
 
-        private void NewPhoneNumberButton_Click(object sender, RoutedEventArgs e)
+        private async void NewPhoneNumberButton_Click(object sender, RoutedEventArgs e)
         {
             var clientCreator = new ClientCreator()
             {
                 PhoneNumber = NewPhoneNumberTextBox.Text
             };
-            if(clientCreator.CanBeRegistered())
+            if(await clientCreator.CanBeRegistered())
             {
                 _client.PhoneNumber = NewPhoneNumberTextBox.Text;
                 try
                 {
-                    new ClientCreator().Save(_client);
+                    await new ClientCreator().Save(_client);
                     SettingsGrid.Visibility = Visibility.Collapsed;
                     User = _client;
                 }
@@ -91,9 +92,9 @@ namespace payments_system_ui.UI.Main
 
             ui.CloseEvent = (o, args) => ClosePopupWindow();
 
-            ui.SendClicked = (o, info) =>
+            ui.SendClicked = async (o, info) =>
             {
-                SendFromSelectedCardToOtherCard(info);
+                await SendFromSelectedCardToOtherCard(info);
                 ClosePopupWindow();
             };
         }
@@ -107,9 +108,9 @@ namespace payments_system_ui.UI.Main
 
             ui.CloseEvent = (o, args) => ClosePopupWindow();
 
-            ui.ReplenishClicked = (o, info) =>
+            ui.ReplenishClicked = async (o, info) =>
             {
-                ReplenishSelectedCard(info);
+                await ReplenishSelectedCard(info);
                 ClosePopupWindow();
             };
         }
@@ -131,10 +132,10 @@ namespace payments_system_ui.UI.Main
             mainWindow.RestartFromRegistrationWindow();
         }
 
-        private void DeleteCurrentAccountButton_Click(object sender, RoutedEventArgs e)
+        private async void DeleteCurrentAccountButton_Click(object sender, RoutedEventArgs e)
         {
             var creator = new ClientCreator();
-            creator.Destroy(User);
+            await creator.Destroy(User);
             if (!(Window.GetWindow(this) is MainWindow mainWindow))
                 throw new InvalidCastException("Window.GetWindow(this)");
             mainWindow.RestartFromRegistrationWindow();
@@ -149,9 +150,9 @@ namespace payments_system_ui.UI.Main
 
             addNewCardUi.CloseEvent = (o, args) => ClosePopupWindow();
 
-            addNewCardUi.CreateCardEvent = (o, info) =>
+            addNewCardUi.CreateCardEvent = async (o, info) =>
             {
-                CreateNewCard(o, info);
+                await CreateNewCard(o, info);
                 ClosePopupWindow();
             };
         }
@@ -165,9 +166,9 @@ namespace payments_system_ui.UI.Main
             PopupWindowFrame.Content = ui;
 
             ui.CloseEvent = (o, args) => ClosePopupWindow();
-            ui.CloseCardEvent = (o, args) =>
+            ui.CloseCardEvent = async (o, args) =>
             {
-                CloseSelectedCard();
+                await CloseSelectedCard();
                 ClosePopupWindow();
             };
         }
@@ -243,45 +244,46 @@ namespace payments_system_ui.UI.Main
             PopupWindowGrid.Visibility = Visibility.Collapsed;
         }
 
-        private void CreateNewCard(object sender, CreateCardInfo e)
+        private async Task CreateNewCard(object sender, CreateCardInfo e)
         {
             var creditCardCreator = new CreditCardCreator()
             {
                 Client = _client
             };
-            var creditCard = creditCardCreator.CreateNew();
+            var creditCard = await creditCardCreator.CreateNew();
             creditCard.CreditLimit = e.CreditLimit;
 
-            creditCardCreator.Save(creditCard);
+            await creditCardCreator.Save(creditCard);
 
-            User = new ClientCreator { PhoneNumber = _client.PhoneNumber, EncryptedPassword = _client.EncryptedPassword }.TryGetFromDb();
+            User = await new ClientCreator { PhoneNumber = _client.PhoneNumber, EncryptedPassword = _client.EncryptedPassword }.TryGetFromDb();
         }
 
 
-        private void CloseSelectedCard()
+        private async Task CloseSelectedCard()
         {
             var selectedCard = _client.Cards[_currentCardIndex];
-            new CreditCardCreator(){Client = _client}.Destroy(selectedCard);
+            await new CreditCardCreator(){Client = _client}.Destroy(selectedCard);
 
-            User = new ClientCreator { PhoneNumber = _client.PhoneNumber, EncryptedPassword = _client.EncryptedPassword }.TryGetFromDb();
+            User = await new ClientCreator { PhoneNumber = _client.PhoneNumber, EncryptedPassword = _client.EncryptedPassword }.TryGetFromDb();
         }
 
-        private void SendFromSelectedCardToOtherCard(SendInfo info)
+        private async Task SendFromSelectedCardToOtherCard(SendInfo info)
         {
             var selectedCard = _client.Cards[_currentCardIndex];
-            if (!selectedCard.SendMoneyToOtherCard(info, out var receiver)) return;
-            new CreditCardCreator().Save(selectedCard);
-            new CreditCardCreator().Save(receiver);
-            User = new ClientCreator { PhoneNumber = _client.PhoneNumber, EncryptedPassword = _client.EncryptedPassword }.TryGetFromDb();
+            var (isSuccess, receiver) = await selectedCard.SendMoneyToOtherCard(info);
+            if (!isSuccess) return;
+            await new CreditCardCreator().Save(selectedCard);
+            await new CreditCardCreator().Save(receiver);
+            User = await new ClientCreator { PhoneNumber = _client.PhoneNumber, EncryptedPassword = _client.EncryptedPassword }.TryGetFromDb();
         }
 
-        private void ReplenishSelectedCard(ReplenishInfo info)
+        private async Task ReplenishSelectedCard(ReplenishInfo info)
         {
             var selectedCard = _client.Cards[_currentCardIndex];
-            selectedCard.ReplenishFromSource(info);
+            await selectedCard.ReplenishFromSource(info);
 
-            new CreditCardCreator().Save(selectedCard);
-            User = new ClientCreator { PhoneNumber = _client.PhoneNumber, EncryptedPassword = _client.EncryptedPassword }.TryGetFromDb();
+            await new CreditCardCreator().Save(selectedCard);
+            User = await new ClientCreator { PhoneNumber = _client.PhoneNumber, EncryptedPassword = _client.EncryptedPassword }.TryGetFromDb();
         }
 
     }

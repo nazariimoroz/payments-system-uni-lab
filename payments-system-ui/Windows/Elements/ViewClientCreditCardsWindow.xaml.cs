@@ -53,7 +53,7 @@ namespace payments_system_ui.Windows.Elements
             }
         }
 
-        private void BlockCardButton_Click(object sender, RoutedEventArgs e)
+        private async void BlockCardButton_Click(object sender, RoutedEventArgs e)
         {
             if (CreditCardsDataGrid == null || CreditCardsDataGrid.SelectedCells.Count == 0)
                 return;
@@ -62,7 +62,7 @@ namespace payments_system_ui.Windows.Elements
             if (_client.Cards.Count <= 1 || _client.Cards[0] == creditCard)
                 return;
 
-            new CreditCardCreator{Client = _client}.Destroy(creditCard);
+            await new CreditCardCreator{Client = _client}.Destroy(creditCard);
             DialogResult = true;
             Close();
         }

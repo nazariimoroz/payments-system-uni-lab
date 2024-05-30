@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using payments_system_lib.Classes.Cards.Creators;
 using payments_system_lib.Utilities;
@@ -21,7 +22,7 @@ namespace payments_system_lib.Classes.Users.Creators
         /// + RealPassword OR EncryptedPassword <br/>
         /// + PhoneNumber
         /// </summary>
-        public override BaseUser TryGetFromDb()
+        public override async Task<BaseUser> TryGetFromDb()
         {
             var encryptedPassword = GetEncryptedPassword();
             if (PhoneNumber == null)
@@ -31,10 +32,10 @@ namespace payments_system_lib.Classes.Users.Creators
 
             using (var db = new ApplicationContext())
             {
-                var client = db
+                var client = await db
                     .Client
                     .Include(c => c.Cards)
-                    .FirstOrDefault(c => c.PhoneNumber == PhoneNumber && c.EncryptedPassword == encryptedPassword);
+                    .FirstOrDefaultAsync(c => c.PhoneNumber == PhoneNumber && c.EncryptedPassword == encryptedPassword);
 
                 return client;
             }
@@ -44,7 +45,7 @@ namespace payments_system_lib.Classes.Users.Creators
         /// + RealPassword OR EncryptedPassword <br/>
         /// + PhoneNumber
         /// </summary>
-        public override BaseUser CreateNew()
+        public override async Task<BaseUser> CreateNew()
         {
             var encryptedPassword = GetEncryptedPassword();
             if (PhoneNumber == null)
@@ -56,26 +57,27 @@ namespace payments_system_lib.Classes.Users.Creators
 
             using (var db = new ApplicationContext())
             {
-                var query = db.Client
+                var query = await db
+                    .Client
                     .Where(c => c.PhoneNumber == client.PhoneNumber)
-                    .ToList();
+                    .ToListAsync();
 
                 if (query.Count != 0)
                     return null;
 
-                db.Client.Add(client);
+                await db.Client.AddAsync(client);
                 db.CreditCard.UpdateRange(client.Cards);
-                db.SaveChanges();
+                await db.SaveChangesAsync();
             }
 
-            new CreditCardCreator(){ Client = client }.CreateNew();
+            await new CreditCardCreator(){ Client = client }.CreateNew();
 
             using (var db = new ApplicationContext())
             {
-                client = db
+                client = await db
                     .Client
                     .Include(c => c.Cards)
-                    .FirstOrDefault(c => c.Id == client.Id);
+                    .FirstOrDefaultAsync(c => c.Id == client.Id);
             }
 
             return client;
@@ -85,15 +87,15 @@ namespace payments_system_lib.Classes.Users.Creators
         /// + RealPassword(optional) <br/>
         /// + PhoneNumber
         /// </summary>
-        public override bool CanBeRegistered()
+        public override async Task<bool> CanBeRegistered()
         {
-            if (!IsValidArgs())
+            if (!await IsValidArgs())
                 return false;
 
             using (var db = new ApplicationContext())
             {
-                var query = db.Client
-                    .FirstOrDefault(c => c.PhoneNumber == PhoneNumber);
+                var query = await db.Client
+                    .FirstOrDefaultAsync(c => c.PhoneNumber == PhoneNumber);
 
                 return query == null;
             }
@@ -103,7 +105,7 @@ namespace payments_system_lib.Classes.Users.Creators
         /// + RealPassword(optional) <br/>
         /// + PhoneNumber(optional)
         /// </summary>
-        public override bool IsValidArgs()
+        public override async Task<bool> IsValidArgs()
         {
             if (RealPassword != null && RealPassword.Length < 8)
                 return false;
@@ -120,7 +122,7 @@ namespace payments_system_lib.Classes.Users.Creators
         /// <summary>
         /// + WherePredicate(optional)
         /// </summary>
-        public override List<T> GetAll<T>()
+        public override async Task<List<T>> GetAll<T>()
         {
             using (var db = new ApplicationContext())
             {
@@ -133,33 +135,33 @@ namespace payments_system_lib.Classes.Users.Creators
             }
         }
 
-        public override void Save(BaseUser toSave)
+        public override async Task Save(BaseUser toSave)
         {
             if (!(toSave is Client clientToSave))
                 throw new InvalidParamException(nameof(toSave));
 
             using (var db = new ApplicationContext())
             {
-                var client = db.Client.FirstOrDefault(c => c.Id == clientToSave.Id);
+                var client = await db.Client.FirstOrDefaultAsync(c => c.Id == clientToSave.Id);
                 if (client == null)
                     throw new InvalidParamException(nameof(toSave));
                 db.Entry(client).CurrentValues.SetValues(clientToSave);
                 db.Update(client);
-                db.SaveChanges();
+                await db.SaveChangesAsync();
             }
         }
 
-        public override void Destroy(BaseUser toDestroy)
+        public override async Task Destroy(BaseUser toDestroy)
         {
             if (!(toDestroy is Client client))
                 throw new InvalidParamException(nameof(toDestroy));
 
             using (var db = new ApplicationContext())
             {
-                var foundClient = db
+                var foundClient = await db
                     .Client
                     .Include(c => c.Cards)
-                    .FirstOrDefault(c => c.Id == client.Id);
+                    .FirstOrDefaultAsync(c => c.Id == client.Id);
 
                 if (foundClient == null)
                     return;
@@ -167,16 +169,16 @@ namespace payments_system_lib.Classes.Users.Creators
                 foreach (var foundClientCard in foundClient.Cards)
                 {
                     db.Transaction.RemoveRange(
-                        db
+                        await db
                             .Transaction
                             .Include(t => t.Card)
                             .Where(t => t.Card.Id == foundClientCard.Id)
-                            .AsEnumerable()
+                            .ToListAsync()
                         );
                 }
                 db.CreditCard.RemoveRange(foundClient.Cards);
                 db.Client.Remove(foundClient);
-                db.SaveChanges();
+                await db.SaveChangesAsync();
             }
         }
     }

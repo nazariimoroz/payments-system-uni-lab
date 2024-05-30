@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using payments_system_lib.Classes.Cards;
 
@@ -18,17 +19,17 @@ namespace payments_system_lib.Classes.Transaction.Creators
         /// <summary>
         /// + Id
         /// </summary>
-        public override Transaction TryGetFromDb()
+        public override async Task<Transaction> TryGetFromDb()
         {
             if (Id == -1)
                 throw new InvalidParamException(nameof(Id));
 
             using (var db = new ApplicationContext())
             {
-                var transaction = db
+                var transaction = await db
                     .Transaction
                     .Include(t => t.Card)
-                    .FirstOrDefault(t => t.Id == Id);
+                    .FirstOrDefaultAsync(t => t.Id == Id);
                 return transaction;
             }
         }
@@ -39,7 +40,7 @@ namespace payments_system_lib.Classes.Transaction.Creators
         /// + Amount <br/>
         /// + Card
         /// </summary>
-        public override Transaction CreateNew()
+        public override async Task<Transaction> CreateNew()
         {
             if (Type == (TransactionType)(-1))
                 throw new InvalidParamException(nameof(Type));
@@ -54,14 +55,14 @@ namespace payments_system_lib.Classes.Transaction.Creators
 
             using (var db = new ApplicationContext())
             {
-                var card = db.CreditCard.FirstOrDefault(c => c.Id == Card.Id);
+                var card = await db.CreditCard.FirstOrDefaultAsync(c => c.Id == Card.Id);
                 if(card == null)
                     throw new InvalidParamException(nameof(Card));
 
                 transaction = new Transaction(Type, Info, Amount, DateTime.Now, card);
 
-                db.Transaction.Add(transaction);
-                db.SaveChanges();
+                await db.Transaction.AddAsync(transaction);
+                await db.SaveChangesAsync();
             }
 
             return transaction;
@@ -71,25 +72,30 @@ namespace payments_system_lib.Classes.Transaction.Creators
         /// + Card(optional) <br/>
         /// + Type(optional)
         /// </summary>
-        public override List<T> GetAll<T>()
+        public override async Task<List<T>> GetAll<T>()
         {
             using (var db = new ApplicationContext())
             {
-                return db
+                var toRet = db
                     .Transaction
-                    .Include(t=> t.Card)
-                    .Where(t => (Card == null || t.Card == Card) && (Type == (TransactionType)(-1) || t.Type == Type))
+                    .Include(t => t.Card)
+                    .Where(t => (Card == null || t.Card.Id == Card.Id) 
+                                && (Type == (TransactionType)(-1) || t.Type == Type))
                     .Select(t => t as T)
-                    .ToList();
+                    .ToList(); // TODO MAKE ASYNC
+
+                await Task.Delay(1000);
+
+                return toRet;
             }
         }
 
-        public override void Save(Transaction toSave)
+        public override async Task Save(Transaction toSave)
         {
             throw new Exception("Can not be changed after creating");
         }
 
-        public override void Destroy(Transaction toDestroy)
+        public override async Task Destroy(Transaction toDestroy)
         {
             throw new Exception("Can not be destroyed manually");
         }

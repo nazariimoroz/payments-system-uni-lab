@@ -22,7 +22,7 @@ namespace payments_system_ui.UI.Registration
             ClickBackButtonEvent(this, EventArgs.Empty);
         }
 
-        private void RegisterButton_Click(object sender, RoutedEventArgs e)
+        private async void RegisterButton_Click(object sender, RoutedEventArgs e)
         {
             var phoneNumber = ClientPhoneNumberTextBox.Text;
             var realPassword = ClientPasswordBox.Password;
@@ -34,20 +34,20 @@ namespace payments_system_ui.UI.Registration
                 RealPassword = realPassword
             };
 
-            if (!creator.CanBeRegistered())
+            if (!await creator.CanBeRegistered())
             {
                 Console.WriteLine("User cannot be registered");
                 return;
             }
 
-            var client = creator.CreateNew();
+            var client = await creator.CreateNew();
             if (client != null)
             {
                 UserLoggedEvent(this, client);
             }
         }
 
-        private void LoginButton_Click(object sender, RoutedEventArgs e)
+        private async void LoginButton_Click(object sender, RoutedEventArgs e)
         {
             var phoneNumber = ClientPhoneNumberTextBox.Text;
             var realPassword = ClientPasswordBox.Password;
@@ -58,13 +58,13 @@ namespace payments_system_ui.UI.Registration
                 RealPassword = realPassword
             };
 
-            if (!creator.IsValidArgs())
+            if (!await creator.IsValidArgs())
             {
                 Console.WriteLine("Invalid args");
                 return;
             }
 
-            var client = creator.TryGetFromDb();
+            var client = await creator.TryGetFromDb();
             if (client != null)
             {
                 UserLoggedEvent(this, client);
