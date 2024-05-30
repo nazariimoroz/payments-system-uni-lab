@@ -15,10 +15,14 @@ namespace payments_system_lib.Classes.Cards.Creators
         public string Num { get; set; } = null;
         public Client Client { get; set; } = null;
 
+        /// <summary>
+        /// + Num
+        /// </summary>
         public override CreditCard TryGetFromDb()
         {
             if (Num == null)
                 throw new InvalidParamException(nameof(Num));
+
             using (var db = new ApplicationContext())
             {
                 var baseCard = db
@@ -30,10 +34,14 @@ namespace payments_system_lib.Classes.Cards.Creators
             }
         }
 
+        /// <summary>
+        /// + Client
+        /// </summary>
         public override CreditCard CreateNew()
         {
             if (Client == null)
-                return null;
+                throw new InvalidParamException(nameof(Num));
+
             var random = new Random();
 
             var numBuilder = new StringBuilder();
@@ -86,7 +94,8 @@ namespace payments_system_lib.Classes.Cards.Creators
                 return db
                     .CreditCard
                     .Include(c => c.Client)
-                    .Select(c => c as T).ToList();
+                    .Select(c => c as T)
+                    .ToList();
             }
         }
 
@@ -103,6 +112,9 @@ namespace payments_system_lib.Classes.Cards.Creators
             }
         }
 
+        /// <summary>
+        /// + Client
+        /// </summary>
         public override void Destroy(CreditCard toDestroy)
         {
             if (Client == null)

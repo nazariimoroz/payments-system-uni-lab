@@ -19,7 +19,9 @@ namespace payments_system_lib.Classes.Transaction.Creators
         public string Info { get; set; } = null;
         public TransactionType Type { get; set; } = (TransactionType)(-1);
 
-
+        /// <summary>
+        /// + Id
+        /// </summary>
         public override Transaction TryGetFromDb()
         {
             if (Id == -1)
@@ -35,6 +37,12 @@ namespace payments_system_lib.Classes.Transaction.Creators
             }
         }
 
+        /// <summary>
+        /// + Type <br/>
+        /// + Info <br/>
+        /// + Amount <br/>
+        /// + Card
+        /// </summary>
         public override Transaction CreateNew()
         {
             if (Type == (TransactionType)(-1))
@@ -63,7 +71,10 @@ namespace payments_system_lib.Classes.Transaction.Creators
             return transaction;
         }
 
-        // Use Card and Type
+        /// <summary>
+        /// + Card(optional) <br/>
+        /// + Type(optional)
+        /// </summary>
         public override List<T> GetAll<T>()
         {
             using (var db = new ApplicationContext())
@@ -79,12 +90,12 @@ namespace payments_system_lib.Classes.Transaction.Creators
 
         public override void Save(Transaction toSave)
         {
-            throw new NotImplementedException();
+            throw new Exception("Can not be changed after creating");
         }
 
         public override void Destroy(Transaction toDestroy)
         {
-            throw new NotImplementedException();
+            throw new Exception("Can not be destroyed manually");
         }
     }
 }

@@ -19,12 +19,16 @@ namespace payments_system_lib.Classes.Users.Creators
 
         private string GetEncryptedPassword() => RealPassword == null ? EncryptedPassword : Utilities.Utilities.CreateMD5(RealPassword);
 
+        /// <summary>
+        /// + RealPassword OR EncryptedPassword <br/>
+        /// + PhoneNumber
+        /// </summary>
         public override BaseUser TryGetFromDb()
         {
             var encryptedPassword = GetEncryptedPassword();
             if (PhoneNumber == null)
                 throw new InvalidParamException(nameof(PhoneNumber));
-            if (PhoneNumber == null)
+            if (encryptedPassword == null)
                 throw new InvalidParamException($"{nameof(RealPassword)} OR {nameof(EncryptedPassword)}");
 
             using (var db = new ApplicationContext())
@@ -38,9 +42,17 @@ namespace payments_system_lib.Classes.Users.Creators
             }
         }
 
+        /// <summary>
+        /// + RealPassword OR EncryptedPassword <br/>
+        /// + PhoneNumber
+        /// </summary>
         public override BaseUser CreateNew()
         {
             var encryptedPassword = GetEncryptedPassword();
+            if (PhoneNumber == null)
+                throw new InvalidParamException(nameof(PhoneNumber));
+            if (encryptedPassword == null)
+                throw new InvalidParamException($"{nameof(RealPassword)} OR {nameof(EncryptedPassword)}");
 
             var client = new Client(PhoneNumber, encryptedPassword, DateTime.Now);
 
@@ -58,11 +70,7 @@ namespace payments_system_lib.Classes.Users.Creators
                 db.SaveChanges();
             }
 
-            var ccCreator = new CreditCardCreator()
-            {
-                Client = client
-            };
-            ccCreator.CreateNew(); // Will be added automatically to array 
+            new CreditCardCreator(){ Client = client }.CreateNew();
 
             using (var db = new ApplicationContext())
             {
@@ -75,6 +83,10 @@ namespace payments_system_lib.Classes.Users.Creators
             return client;
         }
 
+        /// <summary>
+        /// + RealPassword(optional) <br/>
+        /// + PhoneNumber
+        /// </summary>
         public override bool CanBeRegistered()
         {
             if (!IsValidArgs())
@@ -89,6 +101,10 @@ namespace payments_system_lib.Classes.Users.Creators
             }
         }
 
+        /// <summary>
+        /// + RealPassword(optional) <br/>
+        /// + PhoneNumber(optional)
+        /// </summary>
         public override bool IsValidArgs()
         {
             if (RealPassword != null && RealPassword.Length < 8)
@@ -102,6 +118,10 @@ namespace payments_system_lib.Classes.Users.Creators
             return true;
         }
 
+
+        /// <summary>
+        /// + WherePredicate(optional)
+        /// </summary>
         public override List<T> GetAll<T>()
         {
             using (var db = new ApplicationContext())
@@ -134,7 +154,8 @@ namespace payments_system_lib.Classes.Users.Creators
         public override void Destroy(BaseUser toDestroy)
         {
             if (!(toDestroy is Client client))
-                return;
+                throw new InvalidParamException(nameof(toDestroy));
+
             using (var db = new ApplicationContext())
             {
                 var foundClient = db

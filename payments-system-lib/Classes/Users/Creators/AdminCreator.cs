@@ -8,11 +8,20 @@ namespace payments_system_lib.Classes.Users.Creators
 {
     public class AdminCreator : BaseUserCreator
     {
-        public string Key { get; set; }
-        public string RealPassword { get; set; }
+        public string Key { get; set; } = null;
+        public string RealPassword { get; set; } = null;
 
+        /// <summary>
+        /// + RealPassword <br/>
+        /// + Key
+        /// </summary>
         public override BaseUser TryGetFromDb()
         {
+            if (RealPassword == null)
+                throw new InvalidParamException(nameof(RealPassword));
+            if (Key == null)
+                throw new InvalidParamException(nameof(Key));
+
             var encryptedPassword = Utilities.Utilities.CreateMD5(RealPassword);
 
             using (var db = new ApplicationContext())
@@ -25,8 +34,17 @@ namespace payments_system_lib.Classes.Users.Creators
             }
         }
 
+        /// <summary>
+        /// + RealPassword <br/>
+        /// + Key
+        /// </summary>
         public override BaseUser CreateNew()
         {
+            if (RealPassword == null)
+                throw new InvalidParamException(nameof(RealPassword));
+            if (Key == null)
+                throw new InvalidParamException(nameof(Key));
+
             var encryptedPassword = Utilities.Utilities.CreateMD5(RealPassword);
             
             var admin = new Admin(Key, encryptedPassword, DateTime.Now);
@@ -48,6 +66,10 @@ namespace payments_system_lib.Classes.Users.Creators
             return admin;
         }
 
+        /// <summary>
+        /// + RealPassword(optional) <br/>
+        /// + Key
+        /// </summary>
         public override bool CanBeRegistered()
         {
             if (!IsValidArgs())
@@ -62,6 +84,9 @@ namespace payments_system_lib.Classes.Users.Creators
             }
         }
 
+        /// <summary>
+        /// + RealPassword(optional)
+        /// </summary>
         public override bool IsValidArgs()
         {
             return RealPassword != null && RealPassword.Length < 8;
@@ -79,6 +104,7 @@ namespace payments_system_lib.Classes.Users.Creators
         {
             if (!(toSave is Admin adminToSave))
                 throw new InvalidParamException(nameof(toSave));
+
             using (var db = new ApplicationContext())
             {
                 var admin = db.Admin.FirstOrDefault(a => a.Id == adminToSave.Id);
@@ -93,7 +119,8 @@ namespace payments_system_lib.Classes.Users.Creators
         public override void Destroy(BaseUser toDestroy)
         {
             if (!(toDestroy is Admin admin))
-                return;
+                throw new InvalidParamException(nameof(toDestroy));
+
             using (var db = new ApplicationContext())
             {
                 var foundAdmin = db
@@ -101,7 +128,7 @@ namespace payments_system_lib.Classes.Users.Creators
                     .FirstOrDefault(a => a.Id == admin.Id);
 
                 if (foundAdmin == null)
-                    return;
+                    throw new InvalidParamException(nameof(toDestroy));
 
                 db.Admin.Remove(foundAdmin);
                 db.SaveChanges();
